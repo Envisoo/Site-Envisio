@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
@@ -10,6 +10,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [servicosDropdownOpen, setServicosDropdownOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -36,6 +37,26 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Função para scroll suave até rentingsection
+  const handleRentingClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setServicosDropdownOpen(false);
+    if (location.pathname === "/servicos") {
+      const section = document.getElementById("rentingsection");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate("/servicos#rentingsection");
+      setTimeout(() => {
+        const section = document.getElementById("rentingsection");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    }
+  };
 
   return (
     <motion.nav
@@ -75,9 +96,8 @@ export default function Navbar() {
                   className="relative h-full flex items-center"
                   onMouseEnter={() => setServicosDropdownOpen(true)}
                   onMouseLeave={() => setServicosDropdownOpen(false)}>
-                  <Link
-                    to="/servicos"
-                    className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative ${
+                  <span
+                    className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative cursor-pointer ${
                       isServicosActive() || servicosDropdownOpen
                         ? "text-red-600"
                         : "text-black hover:text-red-600"
@@ -105,8 +125,8 @@ export default function Navbar() {
                         style={{ bottom: "-1px" }}
                       />
                     )}
-                  </Link>
-                  {/* Menu dropdown Serviços */}
+                  </span>
+                  {/* Novo Dropdown */}
                   {servicosDropdownOpen && (
                     <div
                       className="absolute w-64 bg-white border border-gray-200 shadow-lg z-50"
@@ -118,31 +138,23 @@ export default function Navbar() {
                         marginTop: "2px",
                       }}>
                       <Link
-                        to="/servicos/consultoria"
+                        to="/servicos"
                         className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos/consultoria"
+                          location.pathname === "/servicos"
                             ? "bg-red-50 text-red-600 font-medium"
                             : "text-black"
-                        }`}>
-                        Consultoria
+                        }`}
+                        onClick={() => setServicosDropdownOpen(false)}>
+                        Hardware e Software
                       </Link>
                       <Link
-                        to="/servicos/desenvolvimento"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos/desenvolvimento"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}>
-                        Desenvolvimento
-                      </Link>
-                      <Link
-                        to="/servicos/suporte"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos/suporte"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}>
-                        Suporte Técnico
+                        to="/servicos/renting"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setServicosDropdownOpen(false);
+                        }}
+                        className="block px-4 py-2 hover:bg-red-50 hover:text-red-600 text-black">
+                        Produto Renting
                       </Link>
                     </div>
                   )}
@@ -154,9 +166,8 @@ export default function Navbar() {
                   className="relative h-full flex items-center"
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}>
-                  <Link
-                    to="/apoio"
-                    className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative ${
+                  <span
+                    className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative cursor-pointer ${
                       isApoioActive() || dropdownOpen
                         ? "text-red-600"
                         : "text-black hover:text-red-600"
@@ -184,11 +195,11 @@ export default function Navbar() {
                         style={{ bottom: "-1px" }}
                       />
                     )}
-                  </Link>
+                  </span>
                   {/* Menu dropdown Apoio */}
                   {dropdownOpen && (
                     <div
-                      className="absolute w-64 bg-white border border-gray-200 shadow-lg z-50"
+                      className="absolute w-56 bg-white border border-gray-200 shadow-lg z-50"
                       style={{
                         fontFamily: "Segoe UI Regular",
                         top: "var(--dropdown-offset)",
@@ -197,31 +208,16 @@ export default function Navbar() {
                         marginTop: "2px",
                       }}>
                       <Link
-                        to="/apoio/faq"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/apoio/faq"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}>
-                        FAQ
+                        to="/pages/contato"
+                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                        onClick={() => setDropdownOpen(false)}>
+                        Contato
                       </Link>
                       <Link
-                        to="/apoio/documentos"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/apoio/documentos"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}>
-                        Documentos
-                      </Link>
-                      <Link
-                        to="/apoio/contato"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/apoio/contato"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}>
-                        Contato Apoio
+                        to="/pages/suporte-tecnico"
+                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                        onClick={() => setDropdownOpen(false)}>
+                        Suporte Técnico
                       </Link>
                     </div>
                   )}

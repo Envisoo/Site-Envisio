@@ -7,6 +7,8 @@ import QuemSomos from "./pages/Quem_Somos";
 import Servicos from "./pages/Servicos";
 import Footer from "./components/Footer";
 import RentingSection from "./serviços/RentingSection";
+import Contato from "./pages/Contato";
+import SuporteTecnico from "./pages/SuporteTecnico";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         {/* Corrigido o path */}
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/servicos/renting" element={<RentingSection />} />
+        <Route path="/pages/contato" element={<Contato />} />
+        <Route path="/pages/suporte-tecnico" element={<SuporteTecnico />} />
       </Routes>
       <Footer />
     </Router>

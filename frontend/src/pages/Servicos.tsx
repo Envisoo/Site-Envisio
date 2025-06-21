@@ -73,27 +73,6 @@ const services: ServiceCategory[] = [
       },
     ],
   },
-  {
-    category: "Renting",
-    services: [
-      {
-        title: "Impressoras Profissionais",
-        description:
-          "Soluções em renting de impressoras coloridas e multifuncionais para empresas.",
-        items: ["bizhub C3351i", "bizhub C301i", "bizhub C251i"],
-      },
-      {
-        title: "Computador Profissional",
-        description:
-          "Aluguel de computadores de alto desempenho para escritórios e projetos específicos.",
-        items: [
-          "Intel i7, 16GB RAM, SSD 512GB",
-          "Windows 11 Pro",
-          "Assistência técnica inclusa",
-        ],
-      },
-    ],
-  },
 ];
 
 // Ícones para cada categoria
@@ -223,7 +202,10 @@ const Servicos: React.FC = () => {
         </p>
 
         {services.map((category, index) => (
-          <section key={index} className="mb-24">
+          <section
+            key={index}
+            className="mb-24"
+            id={category.category === "Renting" ? "rentingsection" : undefined}>
             <div className="flex flex-col items-center mb-10">
               <div className="flex items-center justify-center mb-3">
                 <span className="bg-white/80 shadow-lg rounded-full p-4 border border-gray-200">

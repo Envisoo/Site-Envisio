@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle, Phone, Mail } from "lucide-react";
+import { CheckCircle, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const RentingSection: React.FC = () => {
@@ -38,22 +38,22 @@ const RentingSection: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative py-20 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Soluções em <span className="text-blue-200">Renting</span>
+            className="text-4xl md:text-6xl font-black text-black mb-6">
+            Soluções em <span className="text-red-600">Renting</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-blue-100 max-w-3xl mx-auto">
+            className="text-xl text-gray-700 max-w-3xl mx-auto">
             Equipamentos profissionais com manutenção inclusa, sem investimento
             inicial. A solução ideal para sua empresa crescer sem preocupações.
           </motion.p>
@@ -78,16 +78,16 @@ const RentingSection: React.FC = () => {
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-96 object-cover rounded-2xl shadow-2xl"
+                    className="w-full h-96 object-cover rounded-2xl border border-gray-200"
                   />
                 </div>
 
                 {/* Conteúdo */}
                 <div className="flex-1 space-y-6">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  <h2 className="text-3xl md:text-4xl font-bold text-black">
                     {service.title}
                   </h2>
-                  <p className="text-lg text-gray-600 leading-relaxed">
+                  <p className="text-lg text-gray-700 leading-relaxed">
                     {service.description}
                   </p>
 
@@ -95,8 +95,8 @@ const RentingSection: React.FC = () => {
                   <div className="space-y-3">
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-3">
-                        <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700">{feature}</span>
+                        <CheckCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-800">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -105,7 +105,7 @@ const RentingSection: React.FC = () => {
                   <div className="pt-4">
                     <Link
                       to="/contact"
-                      className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+                      className="inline-block bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors shadow">
                       Solicitar Orçamento
                     </Link>
                   </div>
@@ -117,13 +117,13 @@ const RentingSection: React.FC = () => {
       </section>
 
       {/* Vantagens do Renting */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 border-t border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
               Por que escolher Renting?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
               Descubra as vantagens de ter equipamentos profissionais sem o
               investimento inicial
             </p>
@@ -172,12 +172,12 @@ const RentingSection: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">{advantage.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-xl font-bold text-black mb-3">
                   {advantage.title}
                 </h3>
-                <p className="text-gray-600">{advantage.description}</p>
+                <p className="text-gray-700">{advantage.description}</p>
               </motion.div>
             ))}
           </div>
@@ -185,25 +185,25 @@ const RentingSection: React.FC = () => {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 bg-blue-600">
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
             Pronto para começar?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-gray-700 mb-8">
             Entre em contato conosco e descubra como o renting pode transformar
             sua empresa
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              className="inline-flex items-center justify-center bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
               <Mail className="w-5 h-5 mr-2" />
               Solicitar Contato
             </Link>
             <a
-              href="tel:+351234567890"
-              className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+              href="tel:+244947137676"
+              className="inline-flex items-center justify-center border-2 border-red-600 text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-600 hover:text-white transition-colors">
               <Phone className="w-5 h-5 mr-2" />
               Ligar Agora
             </a>
