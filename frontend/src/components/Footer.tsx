@@ -42,13 +42,15 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-6 py-12">
+    <footer className="bg-white relative z-10 shadow-2xl border-t border-gray-200">
+      {/* Gradiente decorativo no topo do rodapé */}
+      <div className="absolute -top-8 left-0 w-full h-8 bg-gradient-to-t from-gray-200 to-transparent pointer-events-none rounded-t-2xl" />
+      <div className="container mx-auto px-6 pt-40 pb-12 relative z-10">
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Logo e Endereço */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/">
-              <img src="/imagens/logo.png" alt="Envisio" className="h-8" />
+              <img src="/images/logo.jpg" alt="Envisio" className="h-8" />
             </Link>
             <p className="text-gray-600 text-sm max-w-sm">
               Condomínio Jardins do Talatona, Torre 5 - Nº 003 Distrito Urbano

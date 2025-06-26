@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Partner, partners } from "../types/partners";
+import PartnersCarousel from "../components/Carrossel";
 
 type SegmentKey = "contabilidade" | "tecnicos" | "academia";
 
@@ -974,7 +975,7 @@ export default function HeroSection() {
       </section>
 
       {/* Seção de Parceiros Redesenhada */}
-      <section className="py-32 relative overflow-hidden bg-gradient-to-b from-white to-gray-50">
+      <section className="py-32 relative overflow-visible bg-gradient-to-b from-white to-gray-50 pt-32">
         {/* Elementos decorativos */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-gray-50 to-transparent" />
@@ -987,86 +988,64 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-sm uppercase tracking-wider text-gray-500 mb-4 block">
+            <span className="text-xs uppercase tracking-[0.2em] text-red-600 font-semibold mb-3 block">
               Parcerias Estratégicas
             </span>
-            <h2 className="text-4xl font-bold mb-6">Nossos Parceiros</h2>
-            <div className="w-24 h-1 bg-black mx-auto mb-8" />
-            <p className="text-xl text-gray-600">
-              Colaboramos com as principais empresas do mercado para oferecer as
-              melhores soluções
+            <h2 className="text-5xl font-extrabold mb-4 text-gray-900 drop-shadow-sm">
+              Nossos Parceiros
+            </h2>
+            <div className="flex justify-center mb-8">
+              <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-red-600 via-black to-red-600 shadow-md" />
+            </div>
+            <p className="text-lg text-gray-500 font-medium leading-relaxed">
+              Colaboramos com as principais empresas do mercado
+              <br />
+              para oferecer as melhores soluções
             </p>
           </motion.div>
 
-          {/* Grid de Parceiros */}
+          {/* Grid de Parceiros - Apenas Logos */}
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-12">
-              {partners.map((partner, index) => (
-                <motion.div
-                  key={partner.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  whileHover={{ y: -10 }}
-                  className="group relative h-full">
-                  {/* Card do Parceiro */}
-                  <div className="relative bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all h-full flex flex-col">
-                    {/* Logo */}
-                    <div className="h-40 flex items-center justify-center mb-6 bg-white/5 rounded-xl p-4">
-                      <img
-                        src={partner.imageUrl}
-                        alt={partner.name}
-                        className="max-h-full max-w-full object-contain transition-all duration-500"
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://via.placeholder.com/200x100/111827/ffffff?text=Partner";
-                        }}
-                      />
-                    </div>
-
-                    {/* Linha Decorativa */}
-                    <div className="w-12 h-1 bg-red-600/30 mx-auto mb-6 group-hover:w-full group-hover:bg-red-600 transition-all duration-300" />
-
-                    {/* Informações do Parceiro */}
-                    <div className="text-center flex-grow">
-                      <h3 className="text-xl font-bold mb-3 text-white">
-                        {partner.name}
-                      </h3>
-                      {partner.description && (
-                        <p className="text-gray-300">{partner.description}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Efeito de Borda */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-2xl transform rotate-1 -z-10 opacity-0 group-hover:opacity-20 transition-opacity" />
-                </motion.div>
+            <div className="flex flex-wrap justify-center items-center gap-16 py-8 mb-20">
+              {partners.map((partner) => (
+                <div key={partner.id} className="flex items-center">
+                  <img
+                    src={partner.imageUrl}
+                    alt={partner.name}
+                    className="h-20 w-auto object-contain"
+                    style={{ maxWidth: 180 }}
+                  />
+                </div>
               ))}
             </div>
 
-            {/* Seção de Destaque */}
+            {/* Bloco sobreposto */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="mt-20 text-center">
-              <div className="bg-gradient-to-br from-gray-900 to-black text-white p-12 rounded-2xl">
-                <h3 className="text-3xl font-bold mb-6">
+              className="relative z-30 max-w-3xl mx-auto"
+              style={{ marginBottom: "-240px" }} // ajuste se necessário
+            >
+              <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+                <h3 className="text-2xl font-bold mb-4 text-center">
                   Quer se Tornar um Parceiro?
                 </h3>
-                <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+                <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-center text-base">
                   Junte-se a nós e faça parte de uma rede de empresas
                   comprometidas com a excelência e inovação
                 </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate("/parcerias")}
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
-                  Entre em Contato
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                    →
-                  </span>
-                </motion.button>
+                <div className="flex justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate("/parcerias")}
+                    className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
+                    Entre em Contato
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">
+                      →
+                    </span>
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -1076,85 +1055,11 @@ export default function HeroSection() {
   );
 }
 
-const PartnersSection = () => {
-  return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Nossos Parceiros
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Trabalhamos com empresas líderes em seus segmentos para oferecer as
-            melhores soluções para nossos clientes.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {partners.map((partner, index) => (
-            <motion.div
-              key={partner.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}>
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
-                <div className="relative aspect-video">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  <img
-                    src={partner.imageUrl}
-                    alt={partner.name}
-                    className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {partner.name}
-                  </h3>
-                  {partner.description && (
-                    <p className="text-gray-600 mb-4">{partner.description}</p>
-                  )}
-                  {partner.link && (
-                    <a
-                      href={partner.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors">
-                      Saiba mais
-                      <svg
-                        className="w-4 h-4 ml-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
-                      </svg>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 export function Home() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <PartnersSection />
+      <PartnersCarousel />
     </div>
   );
 }
