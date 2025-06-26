@@ -104,7 +104,7 @@ const RentingSection: React.FC = () => {
                   {/* CTA Button */}
                   <div className="pt-4">
                     <Link
-                      to="/contact"
+                      to="/pages/contato"
                       className="inline-block bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors shadow">
                       Solicitar Orçamento
                     </Link>

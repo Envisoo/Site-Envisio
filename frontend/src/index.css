@@ -1,9 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
-  body {
-    font-family: "Segoe UI Regular", sans-serif;
-  }
+    body {
+        font-family: "Segoe UI Regular", sans-serif;
+    }
+}
+
+
+/* Adicione ao seu arquivo global de estilos */
+
+@keyframes logo-marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-logo-marquee {
+    animation: logo-marquee 18s linear infinite;
 }

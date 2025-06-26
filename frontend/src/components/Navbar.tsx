@@ -138,14 +138,24 @@ export default function Navbar() {
                         marginTop: "2px",
                       }}>
                       <Link
-                        to="/servicos"
+                        to="/servicos/hardware"
                         className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos"
+                          location.pathname === "/servicos/hardware"
                             ? "bg-red-50 text-red-600 font-medium"
                             : "text-black"
                         }`}
                         onClick={() => setServicosDropdownOpen(false)}>
-                        Hardware e Software
+                        Hardware
+                      </Link>
+                      <Link
+                        to="/servicos/software"
+                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
+                          location.pathname === "/servicos/software"
+                            ? "bg-red-50 text-red-600 font-medium"
+                            : "text-black"
+                        }`}
+                        onClick={() => setServicosDropdownOpen(false)}>
+                        Software
                       </Link>
                       <Link
                         to="/servicos/renting"
@@ -153,7 +163,7 @@ export default function Navbar() {
                           setIsOpen(false);
                           setServicosDropdownOpen(false);
                         }}
-                        className="block px-4 py-2 hover:bg-red-50 hover:text-red-600 text-black">
+                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black">
                         Produto Renting
                       </Link>
                     </div>

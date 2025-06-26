@@ -2,9 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Partner, partners } from "../types/partners";
-import PartnersCarousel from "../components/Carrossel";
 
 type SegmentKey = "contabilidade" | "tecnicos" | "academia";
 
@@ -317,6 +316,31 @@ export default function HeroSection() {
     }, 6000); // Transição mais lenta e elegante
     return () => clearInterval(timer);
   }, [isPaused, heroSlides.length]);
+
+  // Carrossel de logos dos parceiros
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const logosToShow = 5; // Quantas logos aparecem ao mesmo tempo
+  const logoWidth = 180; // Largura máxima de cada logo (px)
+  const gap = 64; // gap-16 em px
+
+  // Efeito de carrossel automático
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!carouselRef.current) return;
+      const totalWidth = partners.length * (logoWidth + gap) - gap;
+      const visibleWidth = logosToShow * (logoWidth + gap) - gap;
+      const maxScroll = totalWidth - visibleWidth;
+      if (carouselRef.current.scrollLeft >= maxScroll - 10) {
+        carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        carouselRef.current.scrollBy({
+          left: logoWidth + gap,
+          behavior: "smooth",
+        });
+      }
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white pt-16">
@@ -853,31 +877,32 @@ export default function HeroSection() {
       </section>
 
       {/* Seção 7: Depoimentos */}
-      <section className="py-32 bg-black relative overflow-hidden">
-        {/* Background com efeito gradiente suave */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-red-900/5 via-black to-gray-900/5" />
-        </div>
+      <section className="py-32 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
+        <div className="absolute inset-0 w-full h-full bg-black/50" />
 
         <div className="container mx-auto px-6 relative z-10">
           {/* Cabeçalho */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-sm uppercase tracking-wider text-red-500 mb-4 block">
+            className="text-center max-w-3xl mx-auto mb-20">
+            <span className="text-sm uppercase tracking-wider text-red-400 font-semibold mb-4 block">
               Depoimentos
             </span>
-            <h2 className="text-4xl font-bold text-white mb-4">
-              O que nossos clientes dizem 🤔?
+            <h2 className="text-5xl font-bold text-white mb-6">
+              O Que Nossos Clientes Dizem
             </h2>
-            <div className="w-20 h-1 bg-red-600 mx-auto" />
+            <div className="w-24 h-1 bg-red-600 mx-auto mb-8" />
+            <p className="text-xl text-gray-300">
+              Histórias de sucesso e transformação
+            </p>
           </motion.div>
 
           {/* Carrossel de Depoimentos */}
-          <div className="max-w-4xl mx-auto relative">
-            {/* Setas de Navegação */}
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between z-20 px-4">
+          <div className="flex flex-col items-center justify-center relative z-10">
+            {/* Card centralizado */}
+            <div className="relative w-full max-w-xl mx-auto flex items-center justify-center min-h-[370px]">
+              {/* Botão Anterior */}
               <button
                 onClick={() =>
                   setCurrentSlide((prev) =>
@@ -886,9 +911,73 @@ export default function HeroSection() {
                       : prev - 1
                   )
                 }
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all">
-                ←
+                className="absolute left-[-80px] top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-gray-800 via-gray-900 to-black border-2 border-white/10 shadow-2xl hover:from-red-700 hover:to-red-900 hover:border-red-500 hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-400/40"
+                aria-label="Anterior"
+                style={{ marginRight: "24px" }}>
+                <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="12" fill="none" />
+                  <path
+                    d="M15 19l-7-7 7-7"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
+
+              {/* Depoimento ÚNICO centralizado */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, scale: 0.96, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96, y: -30 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="relative bg-gradient-to-br from-white/10 via-black/40 to-gray-900/30 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/10 px-8 py-12 flex flex-col items-center w-full">
+                  {/* Aspas decorativas */}
+                  <div className="absolute -top-8 left-8 text-7xl text-red-600/20 select-none pointer-events-none">
+                    “
+                  </div>
+                  <div className="absolute -bottom-8 right-8 text-7xl text-red-600/20 select-none pointer-events-none">
+                    ”
+                  </div>
+
+                  {/* Texto do Depoimento */}
+                  <p className="text-gray-100 text-2xl md:text-2xl italic font-medium mb-8 text-center drop-shadow">
+                    {
+                      Object.values(businessSegments)[currentSlide].testimonial
+                        .text
+                    }
+                  </p>
+
+                  {/* Linha divisória */}
+                  <div className="w-24 h-[2px] bg-gradient-to-r from-red-600 via-white/60 to-red-600 rounded-full mb-6 opacity-70" />
+
+                  {/* Autor */}
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-16 h-16 rounded-full bg-red-600/30 flex items-center justify-center shadow-lg ring-2 ring-red-600/30 mb-2">
+                      <span className="text-3xl">
+                        {Object.values(businessSegments)[currentSlide].icon}
+                      </span>
+                    </div>
+                    <h4 className="text-white font-bold text-lg">
+                      {
+                        Object.values(businessSegments)[currentSlide]
+                          .testimonial.author
+                      }
+                    </h4>
+                    <p className="text-red-400 text-sm">
+                      {
+                        Object.values(businessSegments)[currentSlide]
+                          .testimonial.role
+                      }
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Botão Próximo */}
               <button
                 onClick={() =>
                   setCurrentSlide((prev) =>
@@ -897,80 +986,38 @@ export default function HeroSection() {
                       : prev + 1
                   )
                 }
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all">
-                →
+                className="absolute right-[-80px] top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-800 border-2 border-white/10 shadow-2xl hover:from-red-700 hover:to-black hover:border-red-500 hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-400/40"
+                aria-label="Próximo"
+                style={{ marginLeft: "24px" }}>
+                <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="12" fill="none" />
+                  <path
+                    d="M9 5l7 7-7 7"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
             </div>
 
-            {/* Cards de Depoimentos */}
-            <div className="overflow-hidden">
-              <motion.div
-                animate={{ x: `${-currentSlide * 100}%` }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="flex">
-                {Object.values(businessSegments).map((segment, index) => (
-                  <motion.div key={index} className="w-full flex-shrink-0 px-4">
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10">
-                      {/* Aspas Decorativas */}
-                      <div className="text-red-500 text-4xl mb-4">❝</div>
-
-                      {/* Texto do Depoimento */}
-                      <p className="text-gray-300 text-lg mb-6 min-h-[80px]">
-                        {segment.testimonial.text}
-                      </p>
-
-                      {/* Autor */}
-                      <div className="flex items-center gap-4 border-t border-white/10 pt-6">
-                        <div className="w-12 h-12 rounded-full bg-red-600/20 flex items-center justify-center">
-                          <span className="text-xl">{segment.icon}</span>
-                        </div>
-                        <div>
-                          <h4 className="text-white font-medium">
-                            {segment.testimonial.author}
-                          </h4>
-                          <p className="text-red-400 text-sm">
-                            {segment.testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Indicadores */}
-            <div className="flex justify-center gap-3 mt-8">
+            {/* Indicadores minimalistas */}
+            <div className="flex justify-center gap-2 mt-10 z-10">
               {Object.values(businessSegments).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className={`transition-all duration-300 focus:outline-none ${
                     currentSlide === index
-                      ? "w-8 bg-red-600"
-                      : "w-2 bg-white/20"
+                      ? "w-8 h-3 bg-gradient-to-r from-red-600 via-white to-red-600 rounded-full shadow-lg ring-2 ring-red-400/70"
+                      : "w-3 h-3 bg-white/20 rounded-full hover:bg-red-600/40"
                   }`}
+                  aria-label={`Ir para o depoimento ${index + 1}`}
                 />
               ))}
             </div>
           </div>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-center mt-16">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/depoimentos")}
-              className="group px-8 py-3 bg-red-600 text-white rounded-lg inline-flex items-center hover:bg-red-700 transition-colors">
-              Compartilhe sua experiência
-              <span className="ml-2 group-hover:rotate-12 transition-transform">
-                💫
-              </span>
-            </motion.button>
-          </motion.div>
         </div>
       </section>
 
@@ -1004,51 +1051,70 @@ export default function HeroSection() {
             </p>
           </motion.div>
 
-          {/* Grid de Parceiros - Apenas Logos */}
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap justify-center items-center gap-16 py-8 mb-20">
-              {partners.map((partner) => (
-                <div key={partner.id} className="flex items-center">
-                  <img
-                    src={partner.imageUrl}
-                    alt={partner.name}
-                    className="h-20 w-auto object-contain"
-                    style={{ maxWidth: 180 }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Bloco sobreposto */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="relative z-30 max-w-3xl mx-auto"
-              style={{ marginBottom: "-240px" }} // ajuste se necessário
-            >
-              <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
-                <h3 className="text-2xl font-bold mb-4 text-center">
-                  Quer se Tornar um Parceiro?
-                </h3>
-                <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-center text-base">
-                  Junte-se a nós e faça parte de uma rede de empresas
-                  comprometidas com a excelência e inovação
-                </p>
-                <div className="flex justify-center">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => navigate("/parcerias")}
-                    className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
-                    Entre em Contato
-                    <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </motion.button>
-                </div>
+          {/* Carrossel de Parceiros */}
+          <div className="max-w-5xl mx-auto mb-20 overflow-hidden">
+            <div
+              className="relative w-full"
+              style={{
+                maskImage:
+                  "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+              }}>
+              <div
+                className="flex items-center gap-16 py-8 animate-logo-marquee"
+                style={{
+                  width: `${
+                    partners.length * 2 * 180 + partners.length * 2 * 64
+                  }px`, // largura total para loop
+                  animation: "logo-marquee 18s linear infinite",
+                }}>
+                {[...partners, ...partners].map((partner, idx) => (
+                  <div
+                    key={partner.id + "-" + idx}
+                    className="flex items-center flex-shrink-0"
+                    style={{ width: 180 }}>
+                    <img
+                      src={partner.imageUrl}
+                      alt={partner.name}
+                      className="h-20 w-auto object-contain mx-auto transition"
+                      style={{ maxWidth: 180 }}
+                    />
+                  </div>
+                ))}
               </div>
-            </motion.div>
+            </div>
           </div>
+
+          {/* Bloco sobreposto */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="relative z-30 max-w-3xl mx-auto"
+            style={{ marginBottom: "-240px" }} // ajuste se necessário
+          >
+            <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+              <h3 className="text-2xl font-bold mb-4 text-center">
+                Quer se Tornar um Parceiro?
+              </h3>
+              <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-center text-base">
+                Junte-se a nós e faça parte de uma rede de empresas
+                comprometidas com a excelência e inovação
+              </p>
+              <div className="flex justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate("/parcerias")}
+                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
+                  Entre em Contato
+                  <span className="ml-2 group-hover:translate-x-1 transition-transform">
+                    →
+                  </span>
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
@@ -1059,7 +1125,6 @@ export function Home() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <PartnersCarousel />
     </div>
   );
 }
