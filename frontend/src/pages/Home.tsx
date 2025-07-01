@@ -1,9 +1,16 @@
 /** @format */
 
+// Importações de bibliotecas e hooks
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { Partner, partners } from "../types/partners";
+import { partners } from "../types/partners";
+
+// ======================
+// TIPOS E INTERFACES
+// ======================
+// Tipos para os segmentos de negócio e depoimentos
+// Usados apenas no carrossel de depoimentos
 
 type SegmentKey = "contabilidade" | "tecnicos" | "academia";
 
@@ -21,73 +28,9 @@ interface Segment {
   };
 }
 
-const menuSections = [
-  {
-    id: "quem-somos",
-    title: "Quem Somos",
-    description:
-      "Uma empresa com mais de 25 anos de experiência em contabilidade, tecnologia e educação profissional.",
-    icon: "🏢",
-    image: "/images/about-bg.jpg",
-    highlights: [
-      "25 anos de mercado",
-      "Equipe especializada",
-      "Atendimento personalizado",
-      "Compromisso com excelência",
-    ],
-  },
-  {
-    id: "servicos",
-    title: "Nossos Serviços",
-    description:
-      "Soluções completas em contabilidade e consultoria técnica para sua empresa.",
-    icon: "⚡",
-    image: "/images/services-bg.jpg",
-    highlights: [
-      "Consultoria fiscal",
-      "Gestão contábil",
-      "Suporte técnico 24/7",
-      "Projetos personalizados",
-    ],
-  },
-  {
-    id: "academia",
-    title: "Academia Profissional",
-    description:
-      "Centro de formação e desenvolvimento profissional com cursos reconhecidos.",
-    icon: "🎓",
-    image: "/images/academy-bg.jpg",
-    highlights: [
-      "Cursos certificados",
-      "Professores especializados",
-      "Metodologia moderna",
-      "Formação continuada",
-    ],
-  },
-  {
-    id: "contato",
-    title: "Contato",
-    description:
-      "Entre em contato conosco e descubra como podemos ajudar no seu sucesso.",
-    icon: "📱",
-    image: "/images/contact-bg.jpg",
-    highlights: [
-      "Atendimento rápido",
-      "Consulta gratuita",
-      "Suporte especializado",
-      "Orçamento personalizado",
-    ],
-  },
-];
-
-// Primeiro, ajuste o array de frases para ter uma cópia extra para transição suave
-const highlightPhrases = [
-  "Contabilidade Digital",
-  "Expertise Técnica",
-  "Educação Profissional",
-  "Contabilidade Digital", // Repetir o primeiro para transição suave
-];
-
+// ======================
+// SLIDES DO HERO (carrossel principal do topo)
+// ======================
 const heroSlides = [
   {
     src: "/images/hero-card1.jpg",
@@ -106,224 +49,140 @@ const heroSlides = [
   },
 ];
 
+// ======================
+// SEGMENTOS DE NEGÓCIO (usado no carrossel de depoimentos)
+// ======================
+const businessSegments: Record<SegmentKey, Segment> = {
+  contabilidade: {
+    title: "Excelência em Contabilidade",
+    subtitle: "Transformando números em estratégias",
+    description:
+      "Soluções contábeis inovadoras para impulsionar seu negócio ao próximo nível",
+    features: [
+      "Consultoria Fiscal Especializada",
+      "Planejamento Tributário Estratégico",
+      "Gestão Financeira Integrada",
+      "Compliance e Governança",
+    ],
+    image: "/images/contabilidade-bg.jpg",
+    icon: "📊",
+    testimonial: {
+      text: "A parceria com a empresa revolucionou nossa gestão financeira",
+      author: "Maria Silva",
+      role: "CEO - Tech Solutions",
+    },
+  },
+  tecnicos: {
+    title: "Serviços Técnicos Especializados",
+    subtitle: "Tecnologia e inovação ao seu alcance",
+    description:
+      "Suporte técnico avançado e soluções personalizadas para sua empresa",
+    features: [
+      "Infraestrutura de TI",
+      "Segurança Digital",
+      "Automação de Processos",
+      "Consultoria Tecnológica",
+    ],
+    image: "/images/tecnicos-bg.jpg",
+    icon: "🔧",
+    testimonial: {
+      text: "Eficiência e profissionalismo em cada projeto executado",
+      author: "João Santos",
+      role: "Diretor de TI - Global Corp",
+    },
+  },
+  academia: {
+    title: "Academia de Formação Profissional",
+    subtitle: "Capacitação que transforma carreiras",
+    description: "Cursos e programas de formação com certificação reconhecida",
+    features: [
+      "Cursos Corporativos",
+      "Certificações Internacionais",
+      "Mentoria Especializada",
+      "Workshops Avançados",
+    ],
+    image: "/images/academia-bg.jpg",
+    icon: "🎓",
+    testimonial: {
+      text: "Os cursos abriram portas para oportunidades internacionais",
+      author: "Ana Oliveira",
+      role: "Analista Sênior - Multinacional",
+    },
+  },
+};
+
+// ======================
+// COMPONENTE PRINCIPAL DA HOME
+// ======================
+
+// Serviços oferecidos (mock para exibição na seção de serviços)
+const services = [
+  {
+    title: "ERP Eticadata/Primavera",
+    description:
+      "Implantação, customização e suporte de sistemas de gestão empresarial líderes de mercado.",
+    icon: "💻",
+    tipo: "software",
+  },
+  {
+    title: "Aluguel de Equipamentos",
+    description:
+      "Aluguel de impressoras, computadores e multifuncionais para empresas.",
+    icon: "🖨️",
+    tipo: "aluguel",
+  },
+  {
+    title: "Sistemas de Segurança",
+    description: "CFTV, controle de acesso, biometria e monitoramento 24h.",
+    icon: "🔒",
+    tipo: "hardware",
+  },
+  {
+    title: "Desenvolvimento Web",
+    description: "Criação de sites, sistemas web e aplicativos sob demanda.",
+    icon: "🌐",
+    tipo: "software",
+  },
+  {
+    title: "Consultoria em TI",
+    description: "Planejamento, diagnóstico e transformação digital.",
+    icon: "💡",
+    tipo: "software",
+  },
+  {
+    title: "Consultoria Digital",
+    description: "Soluções digitais para automação e crescimento.",
+    icon: "💡",
+    tipo: "software",
+  },
+];
+
 export default function HeroSection() {
+  // Navegação do React Router
   const navigate = useNavigate();
-  const [activeService, setActiveService] = useState<
-    "contabilidade" | "tecnicos"
-  >("contabilidade");
-  const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Estado do carrossel de slides do topo
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // NOVO: controla pausa do carrossel
+  const [isPaused, setIsPaused] = useState(false);
 
-  const businessSegments: Record<SegmentKey, Segment> = {
-    contabilidade: {
-      title: "Excelência em Contabilidade",
-      subtitle: "Transformando números em estratégias",
-      description:
-        "Soluções contábeis inovadoras para impulsionar seu negócio ao próximo nível",
-      features: [
-        "Consultoria Fiscal Especializada",
-        "Planejamento Tributário Estratégico",
-        "Gestão Financeira Integrada",
-        "Compliance e Governança",
-      ],
-      image: "/images/contabilidade-bg.jpg",
-      icon: "📊",
-      testimonial: {
-        text: "A parceria com a empresa revolucionou nossa gestão financeira",
-        author: "Maria Silva",
-        role: "CEO - Tech Solutions",
-      },
-    },
-    tecnicos: {
-      title: "Serviços Técnicos Especializados",
-      subtitle: "Tecnologia e inovação ao seu alcance",
-      description:
-        "Suporte técnico avançado e soluções personalizadas para sua empresa",
-      features: [
-        "Infraestrutura de TI",
-        "Segurança Digital",
-        "Automação de Processos",
-        "Consultoria Tecnológica",
-      ],
-      image: "/images/tecnicos-bg.jpg",
-      icon: "🔧",
-      testimonial: {
-        text: "Eficiência e profissionalismo em cada projeto executado",
-        author: "João Santos",
-        role: "Diretor de TI - Global Corp",
-      },
-    },
-    academia: {
-      title: "Academia de Formação Profissional",
-      subtitle: "Capacitação que transforma carreiras",
-      description:
-        "Cursos e programas de formação com certificação reconhecida",
-      features: [
-        "Cursos Corporativos",
-        "Certificações Internacionais",
-        "Mentoria Especializada",
-        "Workshops Avançados",
-      ],
-      image: "/images/academia-bg.jpg",
-      icon: "🎓",
-      testimonial: {
-        text: "Os cursos abriram portas para oportunidades internacionais",
-        author: "Ana Oliveira",
-        role: "Analista Sênior - Multinacional",
-      },
-    },
-  };
+  // Estado do carrossel de depoimentos
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const services = [
-    {
-      area: "contabilidade",
-      services: [
-        {
-          title: "Consultoria Fiscal",
-          description:
-            "Planejamento tributário estratégico e compliance fiscal",
-          icon: "📑",
-        },
-        {
-          title: "Gestão Contábil",
-          description: "Contabilidade completa e demonstrações financeiras",
-          icon: "💼",
-        },
-        {
-          title: "Departamento Pessoal",
-          description: "Gestão completa da folha e benefícios",
-          icon: "👥",
-        },
-      ],
-    },
-    {
-      area: "tecnicos",
-      services: [
-        {
-          title: "Manutenção Preventiva",
-          description: "Prevenção e diagnóstico antecipado",
-          icon: "🔍",
-        },
-        {
-          title: "Suporte Técnico",
-          description: "Atendimento especializado 24/7",
-          icon: "🛠️",
-        },
-        {
-          title: "Instalações",
-          description: "Projetos e instalações profissionais",
-          icon: "⚡",
-        },
-      ],
-    },
-    {
-      area: "academia",
-      services: [
-        {
-          title: "Personal Training",
-          description: "Treinos personalizados com profissionais certificados",
-          icon: "🏋️‍♂️",
-        },
-        {
-          title: "Nutrição Esportiva",
-          description: "Acompanhamento nutricional especializado",
-          icon: "🥗",
-        },
-        {
-          title: "Musculação",
-          description: "Equipamentos de última geração",
-          icon: "💪",
-        },
-      ],
-    },
-    {
-      area: "tecnologia",
-      services: [
-        {
-          title: "Desenvolvimento Web",
-          description: "Sites e sistemas web personalizados",
-          icon: "🌐",
-        },
-        {
-          title: "App Mobile",
-          description: "Aplicativos iOS e Android",
-          icon: "📱",
-        },
-        {
-          title: "Cloud Computing",
-          description: "Soluções em nuvem escaláveis",
-          icon: "☁️",
-        },
-      ],
-    },
-    {
-      area: "seguranca",
-      services: [
-        {
-          title: "Cybersegurança",
-          description: "Proteção contra ameaças digitais",
-          icon: "🔒",
-        },
-        {
-          title: "Backup em Nuvem",
-          description: "Backup seguro e automatizado",
-          icon: "💾",
-        },
-        {
-          title: "Firewall",
-          description: "Segurança de rede avançada",
-          icon: "🛡️",
-        },
-      ],
-    },
-    {
-      area: "consultoria",
-      services: [
-        {
-          title: "Consultoria Digital",
-          description: "Transformação digital para empresas",
-          icon: "💡",
-        },
-        {
-          title: "Business Intelligence",
-          description: "Análise de dados e relatórios",
-          icon: "📊",
-        },
-        {
-          title: "Gestão de Projetos",
-          description: "Metodologias ágeis e tradicionais",
-          icon: "📋",
-        },
-      ],
-    },
-  ];
-
-  // Efeito para alternar as frases
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentPhrase((prev) => (prev + 1) % highlightPhrases.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Carrossel com pausa elegante
+  // Efeito para alternar slides do topo automaticamente
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCarouselIndex((prev) => (prev + 1) % heroSlides.length);
-    }, 6000); // Transição mais lenta e elegante
+    }, 6000);
     return () => clearInterval(timer);
-  }, [isPaused, heroSlides.length]);
+  }, [isPaused]);
 
-  // Carrossel de logos dos parceiros
+  // Carrossel de logos dos parceiros (automático)
   const carouselRef = useRef<HTMLDivElement>(null);
   const logosToShow = 5; // Quantas logos aparecem ao mesmo tempo
   const logoWidth = 180; // Largura máxima de cada logo (px)
   const gap = 64; // gap-16 em px
 
-  // Efeito de carrossel automático
   useEffect(() => {
     const interval = setInterval(() => {
       if (!carouselRef.current) return;
@@ -342,9 +201,12 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  // ======================
+  // RENDERIZAÇÃO DA HOME
+  // ======================
   return (
     <div className="min-h-screen bg-white pt-16">
-      {/* Carrossel de Imagens de Fundo */}
+      {/* Carrossel de Imagens de Fundo (Hero) */}
       <section className="relative min-h-[93vh] mt-[-20px] w-full flex items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
@@ -499,7 +361,12 @@ export default function HeroSection() {
                     {/* Destaques sobrepostos à imagem */}
                     <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                       <div className="grid grid-cols-2 gap-8">
-                        {menuSections[0].highlights.map((highlight, index) => (
+                        {[
+                          "Equipe multidisciplinar experiente",
+                          "Atendimento personalizado ao cliente",
+                          "Soluções inovadoras e tecnológicas",
+                          "Compromisso com resultados",
+                        ].map((highlight, index) => (
                           <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
@@ -587,117 +454,29 @@ export default function HeroSection() {
                   duration: 0.5,
                   delay: index * 0.2,
                 }}
-                onClick={() => navigate(`/servicos/${service.area}`)} // Adicionado onClick
                 className="relative isolate transform-gpu group cursor-pointer">
-                {" "}
-                {/* Adicionado cursor-pointer */}
                 <div className="relative bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 group-hover:border-red-500/50 group-hover:bg-red-800/20 transition-all duration-300 h-full">
                   <div className="w-16 h-16 rounded-full bg-red-600/30 flex items-center justify-center mb-6">
-                    <span className="text-3xl">
-                      {index === 0
-                        ? "💻"
-                        : index === 1
-                        ? "🖨️"
-                        : index === 2
-                        ? "🎥"
-                        : index === 3
-                        ? "🌐"
-                        : index === 4
-                        ? "🔒"
-                        : "💡"}
-                    </span>
+                    <span className="text-3xl">{service.icon}</span>
                   </div>
-
-                  <h3
-                    className="text-2xl font-bold text-white mb-4"
-                    style={{ fontFamily: "Segoe UI Semibold" }}>
-                    {index === 0
-                      ? "Consultoria em TI"
-                      : index === 1
-                      ? "Aluguel de Equipamentos"
-                      : index === 2
-                      ? "Sistemas de Segurança"
-                      : index === 3
-                      ? "Desenvolvimento Web"
-                      : index === 4
-                      ? "Cybersegurança"
-                      : "Consultoria Digital"}
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {service.title}
                   </h3>
-
-                  <p
-                    className="text-gray-400 mb-6"
-                    style={{
-                      fontFamily: "Segoe UI Regular",
-                    }}>
-                    {index === 0
-                      ? "ERP Eticadata/Primavera"
-                      : index === 1
-                      ? "Soluções completas para empresas"
-                      : index === 2
-                      ? "CFTV e monitoramento"
-                      : index === 3
-                      ? "Sites e sistemas web personalizados"
-                      : index === 4
-                      ? "Proteção contra ameaças digitais"
-                      : "Transformação digital para empresas"}
-                  </p>
-
-                  <div
-                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      fontFamily: "Segoe UI Regular",
-                    }}>
-                    <ul className="space-y-3 text-gray-300 mb-6">
-                      {[1, 2, 3].map((_, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="text-red-500 mr-2">✓</span>
-                          {index === 0
-                            ? [
-                                "Integração completa de sistemas",
-                                "Migração de dados segura",
-                                "Suporte técnico especializado",
-                              ][i]
-                            : index === 1
-                            ? [
-                                "Impressoras e Multifuncionais",
-                                "Manutenção incluída",
-                                "Suporte técnico 24/7",
-                              ][i]
-                            : index === 2
-                            ? [
-                                "Câmeras de alta resolução",
-                                "Monitoramento 24 horas",
-                                "Controle de acesso",
-                              ][i]
-                            : index === 3
-                            ? [
-                                "Design responsivo",
-                                "SEO otimizado",
-                                "Painel administrativo",
-                              ][i]
-                            : index === 4
-                            ? [
-                                "Análise de vulnerabilidades",
-                                "Monitoramento 24/7",
-                                "Resposta a incidentes",
-                              ][i]
-                            : [
-                                "Análise de processos",
-                                "Implementação de melhorias",
-                                "Treinamento de equipes",
-                              ][i]}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-auto">
-                    <div className="flex items-center text-white group">
+                  <p className="text-gray-400 mb-6">{service.description}</p>
+                  <div className="mt-auto flex justify-end">
+                    <button
+                      className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-700 transition-all"
+                      onClick={() => {
+                        if (service.tipo === "software") {
+                          navigate("/servicos/software");
+                        } else if (service.tipo === "hardware") {
+                          navigate("/servicos/hardware");
+                        } else if (service.tipo === "aluguel") {
+                          navigate("/servicos/renting");
+                        }
+                      }}>
                       Saiba mais
-                      <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                        →
-                      </span>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -712,7 +491,7 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/servicos")}
+              onClick={() => navigate("/pages/contato")}
               className="px-12 py-5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-all inline-flex items-center group">
               Solicite uma consultoria
               <span className="ml-2 group-hover:translate-x-1 transition-transform">
@@ -821,6 +600,20 @@ export default function HeroSection() {
                         <span className="text-gray-700">{feature}</span>
                       </div>
                     ))}
+
+                    {/* Adicionado ícone de informação */}
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center">
+                        <span className="text-blue-600 text-sm">ℹ️</span>
+                      </div>
+                      <span className="text-gray-700">
+                        {curso.title === "Certificação Profissional"
+                          ? "Inclui acesso a plataforma online"
+                          : curso.title === "Mentoria Executiva"
+                          ? "Networking com profissionais da indústria"
+                          : "Apoio na construção de portfólio"}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Preço e Duração */}
@@ -857,22 +650,6 @@ export default function HeroSection() {
               </motion.div>
             ))}
           </div>
-          {/* Botão Ver Mais Cursos */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-center mt-16">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/academia")}
-              className="px-12 py-5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all inline-flex items-center group">
-              Ver Mais Cursos
-              <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </motion.button>
-          </motion.div>
         </div>
       </section>
 
@@ -1105,7 +882,7 @@ export default function HeroSection() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate("/parcerias")}
+                  onClick={() => navigate("/pages/contato")}
                   className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
                   Entre em Contato
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">
@@ -1121,6 +898,10 @@ export default function HeroSection() {
   );
 }
 
+// ======================
+// COMPONENTE WRAPPER DA HOME
+// ======================
+// Este componente é exportado e usado na rota principal do site
 export function Home() {
   return (
     <div className="min-h-screen">

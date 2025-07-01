@@ -43,201 +43,240 @@ const About = () => {
     },
   ];
 
+  // Altura do banner (ajuste conforme necessário)
+  const bannerHeight = "399px"; // Exemplo: "400px", "60vh", etc.
+
   return (
-    <section
-      id="sobre"
-      className="text-gray-800 bg-gradient-to-b from-white to-gray-100 py-20">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
-        <div className="mb-12 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-4xl font-semibold text-gray-900 mb-4 font-semibold">
-            Sobre Nós
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-lg text-gray-700 font-regular">
-            Conheça nossa história, missão e equipe
-          </motion.p>
-        </div>
+    <section className="relative">
+      {/* Banner informativo apenas com imagem de fundo, sem sobreposição */}
+      <div
+        className="w-full overflow-hidden flex items-center justify-center"
+        style={{ minHeight: bannerHeight }} // Altura ajustável
+      >
+        {/* Imagem de fundo nítida cobrindo toda a largura */}
+        <img
+          src="/images/quemsomo.jpg" // Altere para o caminho da imagem desejada
+          alt="Banner ENVISIO"
+          className="w-full h-full object-cover object-center"
+          style={{ minHeight: bannerHeight, maxHeight: bannerHeight }}
+        />
+      </div>
+      {/* Fim do banner */}
 
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
-          <motion.button
-            className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
-              activeTab === "historia"
-                ? "bg-red-600 text-white border-red-600"
-                : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
-            }`}
-            onClick={() => setActiveTab("historia")}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}>
-            Nossa História
-          </motion.button>
-          <motion.button
-            className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
-              activeTab === "missao"
-                ? "bg-red-600 text-white border-red-600"
-                : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
-            }`}
-            onClick={() => setActiveTab("missao")}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}>
-            Missão & Visão
-          </motion.button>
-          <motion.button
-            className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
-              activeTab === "equipe"
-                ? "bg-red-600 text-white border-red-600"
-                : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
-            }`}
-            onClick={() => setActiveTab("equipe")}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}>
-            Nossa Equipe
-          </motion.button>
-        </div>
-
-        <div className="w-full">
-          {activeTab === "historia" && (
-            <motion.div
+      {/* =====================
+        Conteúdo principal da página Quem Somos
+        ===================== */}
+      <div
+        id="sobre"
+        className="text-gray-800 bg-gradient-to-b from-white to-gray-100 py-20">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
+          {/* Cabeçalho da seção */}
+          <div className="mb-12 text-center">
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}>
-              <div className="grid md:grid-cols-2 gap-10 mb-10">
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl font-semibold text-red-600 mb-4">
-                    Nossa Trajetória
-                  </h3>
-                  <p className="text-gray-700 mb-4 font-regular">
-                    A ENVISIO, é uma empresa de direito Angolano, orientada para
-                    os problemas e soluções locais, que atua no mercado da
-                    Consultoria e provedor de serviços e soluções de tecnologia
-                    de informações apostando numa prestação de serviço eficaz e
-                    de qualidade desde 2018.
-                  </p>
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-4xl font-semibold text-gray-900 mb-4">
+              Sobre Nós
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-lg text-gray-700 font-regular">
+              Conheça nossa história, missão e equipe
+            </motion.p>
+          </div>
+
+          {/* Abas de navegação */}
+          <div className="flex flex-wrap justify-center gap-4 mb-10">
+            {/* Aba: Nossa História */}
+            <motion.button
+              className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
+                activeTab === "historia"
+                  ? "bg-red-600 text-white border-red-600"
+                  : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
+              }`}
+              onClick={() => setActiveTab("historia")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}>
+              Nossa História
+            </motion.button>
+            {/* Aba: Missão & Visão */}
+            <motion.button
+              className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
+                activeTab === "missao"
+                  ? "bg-red-600 text-white border-red-600"
+                  : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
+              }`}
+              onClick={() => setActiveTab("missao")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}>
+              Missão & Visão
+            </motion.button>
+            {/* Aba: Nossa Equipe */}
+            <motion.button
+              className={`px-6 py-2 rounded-full font-semibold border transition-all duration-300 ${
+                activeTab === "equipe"
+                  ? "bg-red-600 text-white border-red-600"
+                  : "bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white"
+              }`}
+              onClick={() => setActiveTab("equipe")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}>
+              Nossa Equipe
+            </motion.button>
+          </div>
+
+          {/* Conteúdo das abas */}
+          <div className="w-full">
+            {/* Aba: Nossa História */}
+            {activeTab === "historia" && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}>
+                <div className="grid md:grid-cols-2 gap-10 mb-10">
+                  {/* Texto da história */}
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-2xl font-semibold text-red-600 mb-4">
+                      Nossa Trajetória
+                    </h3>
+                    <p className="text-gray-700 mb-4 font-regular">
+                      A ENVISIO, é uma empresa de direito Angolano, orientada
+                      para os problemas e soluções locais, que atua no mercado
+                      da Consultoria e provedor de serviços e soluções de
+                      tecnologia de informações apostando numa prestação de
+                      serviço eficaz e de qualidade desde 2018.
+                    </p>
+                  </div>
+                  {/* Imagem ilustrativa */}
+                  <div className="flex items-center justify-center">
+                    <motion.img
+                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                      alt="Equipe ENVISIO"
+                      className="rounded-lg shadow-lg max-w-full h-64 object-cover"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                      viewport={{ once: true }}
+                    />
+                  </div>
                 </div>
-                <div className="flex items-center justify-center">
-                  <motion.img
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                    alt="Equipe ENVISIO"
-                    className="rounded-lg shadow-lg max-w-full h-64 object-cover"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}>
-                    <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-md hover:-translate-y-2 transition-transform">
-                      <div className="text-3xl text-red-600 mb-2">
-                        {stat.icon}
+                {/* Estatísticas */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                  {stats.map((stat, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}>
+                      <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-md hover:-translate-y-2 transition-transform">
+                        <div className="text-3xl text-red-600 mb-2">
+                          {stat.icon}
+                        </div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-1">
+                          {stat.value}
+                        </h4>
+                        <p className="text-gray-600 text-sm">{stat.label}</p>
                       </div>
-                      <h4 className="text-xl font-bold text-gray-900 mb-1">
-                        {stat.value}
-                      </h4>
-                      <p className="text-gray-600 text-sm">{stat.label}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
 
-          {activeTab === "missao" && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white rounded-lg p-8 shadow-md mb-6 md:mb-0">
-                  <h3 className="text-xl font-bold text-red-600 mb-3">
-                    Missão
+            {/* Aba: Missão & Visão */}
+            {activeTab === "missao" && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Missão */}
+                  <div className="bg-white rounded-lg p-8 shadow-md mb-6 md:mb-0">
+                    <h3 className="text-xl font-bold text-red-600 mb-3">
+                      Missão
+                    </h3>
+                    <p className="text-gray-700">
+                      Prestar serviços de consultoria e contabilidade com
+                      excelência, ajudando empresas a otimizar a sua gestão
+                      financeira, cumprir obrigações fiscais e tomar decisões
+                      estratégicas com base em dados sólidos.
+                    </p>
+                  </div>
+                  {/* Visão */}
+                  <div className="bg-white rounded-lg p-8 shadow-md">
+                    <h3 className="text-xl font-bold text-red-600 mb-3">
+                      Visão
+                    </h3>
+                    <p className="text-gray-700">
+                      Ser uma referência no setor de consultoria e
+                      contabilidade, reconhecida pela inovação, confiabilidade e
+                      impacto positivo no crescimento dos nossos clientes.
+                    </p>
+                  </div>
+                </div>
+                {/* Valores */}
+                <div className="bg-white rounded-lg p-8 shadow-md mt-8 border-l-4 border-red-600">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    Valores
                   </h3>
-                  <p className="text-gray-700">
-                    Prestar serviços de consultoria e contabilidade com
-                    excelência, ajudando empresas a otimizar a sua gestão
-                    financeira, cumprir obrigações fiscais e tomar decisões
-                    estratégicas com base em dados sólidos.
-                  </p>
+                  <ul className="text-gray-700 space-y-3 pl-2">
+                    <li className="flex items-start gap-2">
+                      <FaCheck color="#22c55e" size={20} />
+                      <span>
+                        Ética e Transparência – Atuamos com integridade,
+                        garantindo total conformidade com normas e regulamentos.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <FaCheck color="#22c55e" size={20} />
+                      <span>
+                        Compromisso com o Cliente – Entendemos as necessidades
+                        do cliente e oferecemos soluções personalizadas.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <FaCheck color="#22c55e" size={20} />
+                      <span>
+                        Excelência Profissional – Investimos na capacitação
+                        contínua da nossa equipa para oferecer o melhor serviço.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <FaCheck color="#22c55e" size={20} />
+                      <span>
+                        Inovação e Tecnologia – Utilizamos ferramentas modernas
+                        para otimizar processos e agregar valor aos negócios.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <FaCheck color="#22c55e" size={20} />
+                      <span>
+                        Sustentabilidade e Responsabilidade Social – Atuamos com
+                        responsabilidade, contribuindo para um mercado mais
+                        justo e sustentável.
+                      </span>
+                    </li>
+                  </ul>
                 </div>
-                <div className="bg-white rounded-lg p-8 shadow-md">
-                  <h3 className="text-xl font-bold text-red-600 mb-3">Visão</h3>
-                  <p className="text-gray-700">
-                    Ser uma referência no setor de consultoria e contabilidade,
-                    reconhecida pela inovação, confiabilidade e impacto positivo
-                    no crescimento dos nossos clientes.
-                  </p>
-                </div>
-              </div>
-              <div className="bg-white rounded-lg p-8 shadow-md mt-8 border-l-4 border-red-600">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Valores
-                </h3>
-                <ul className="text-gray-700 space-y-3 pl-2">
-                  <li className="flex items-start gap-2">
-                    <FaCheck color="#22c55e" size={20} />
-                    <span>
-                      Ética e Transparência – Atuamos com integridade,
-                      garantindo total conformidade com normas e regulamentos.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <FaCheck color="#22c55e" size={20} />
-                    <span>
-                      Compromisso com o Cliente – Entendemos as necessidades do
-                      cliente e oferecemos soluções personalizadas.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <FaCheck color="#22c55e" size={20} />
-                    <span>
-                      Excelência Profissional – Investimos na capacitação
-                      contínua da nossa equipa para oferecer o melhor serviço.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <FaCheck color="#22c55e" size={20} />
-                    <span>
-                      Inovação e Tecnologia – Utilizamos ferramentas modernas
-                      para otimizar processos e agregar valor aos negócios.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <FaCheck color="#22c55e" size={20} />
-                    <span>
-                      Sustentabilidade e Responsabilidade Social – Atuamos com
-                      responsabilidade, contribuindo para um mercado mais justo
-                      e sustentável.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
 
-          {activeTab === "equipe" && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}>
-              <div className="text-center mb-8">
+            {/* Aba: Nossa Equipe */}
+            {activeTab === "equipe" && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}>
+                <div className="text-center mb-8">
                   <h3 className="text-2xl font-semibold text-red-600 mb-2">
                     Conheça Nossa Equipe
                   </h3>
@@ -274,7 +313,8 @@ const About = () => {
             )}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   );
 };
 

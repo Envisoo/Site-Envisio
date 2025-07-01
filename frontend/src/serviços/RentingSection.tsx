@@ -19,7 +19,7 @@ const RentingSection: React.FC = () => {
         "Suporte técnico 24/7",
         "Substituição imediata em caso de defeito",
       ],
-      image: "/images/impressoras-renting.jpg",
+      image: "/images/renting/pc2.jpg",
     },
     {
       title: "Computadores Profissionais",
@@ -33,7 +33,7 @@ const RentingSection: React.FC = () => {
         "Assistência técnica inclusa",
         "Upgrade de hardware quando necessário",
       ],
-      image: "/images/computadores-renting.jpg",
+      image: "/images/renting/pc1.jpg",
     },
   ];
 
@@ -196,7 +196,7 @@ const RentingSection: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
+              to="/pages/contato"
               className="inline-flex items-center justify-center bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
               <Mail className="w-5 h-5 mr-2" />
               Solicitar Contato

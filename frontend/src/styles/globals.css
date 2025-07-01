@@ -1,0 +1,22 @@
+/* Efeito de máscara para carrossel de parceiros */
+
+.mask-carousel-partners {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+
+/* Animação marquee para logos dos parceiros */
+
+@keyframes logo-marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-logo-marquee {
+    animation: logo-marquee 18s linear infinite;
+}

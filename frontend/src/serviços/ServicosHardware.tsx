@@ -101,7 +101,7 @@ const ServiceCard: React.FC<{
     <div className="mt-8 text-center">
       <a
         href="/pages/contato"
-        className="inline-block px-6 py-2 rounded-full text-sm font-semibold shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-blue-600 to-pink-500 text-white hover:brightness-110">
+        className="inline-block px-6 py-2 rounded-full text-sm font-semibold shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-red-600 to-red-400 text-white hover:brightness-110">
         Fale Conosco
       </a>
     </div>
@@ -110,96 +110,86 @@ const ServiceCard: React.FC<{
 
 const ServicosHardware: React.FC = () => (
   <>
-    {/* Banner Hero */}
-    <section className="relative w-full min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 overflow-hidden">
-      {/* Efeito de partículas ou formas */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <svg width="100%" height="100%">
-          <circle cx="15%" cy="30%" r="120" fill="#fff" fillOpacity="0.04" />
-          <circle cx="85%" cy="70%" r="180" fill="#fff" fillOpacity="0.06" />
-          <circle cx="50%" cy="90%" r="80" fill="#fff" fillOpacity="0.03" />
-        </svg>
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/90" />
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-4 py-20">
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-black text-white text-center tracking-tight mb-6 drop-shadow-lg">
-          Soluções de Hardware
-          <br />
-          <span className="bg-gradient-to-r from-blue-400 via-pink-400 to-green-400 bg-clip-text text-transparent">
-            Inovação, Segurança e Performance
-          </span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-lg md:text-2xl text-white/90 font-light text-center max-w-2xl mx-auto mb-8">
-          Nossa equipe entrega projetos de infraestrutura, segurança eletrônica
-          e automação com tecnologia de ponta, garantindo eficiência, proteção e
-          tranquilidade para o seu negócio.
-        </motion.p>
-        <motion.a
-          href="/pages/contato"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="inline-block px-8 py-3 rounded-full text-lg font-semibold shadow-xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-blue-600 to-pink-500 text-white hover:brightness-110">
-          Solicite uma Consultoria Gratuita
-        </motion.a>
-      </div>
+    {/* Banner Hero com imagem de fundo */}
+    <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <img
+        src="/images/hardware.png"
+        alt="Banner Serviços de Hardware"
+        className="absolute inset-0 w-full h-full object-cover object-center z-0"
+      />
     </section>
 
-    {/* Destaques rápidos */}
-    <section className="relative z-10 -mt-12 mb-20 flex flex-wrap justify-center gap-6 px-4">
-      <div className="bg-white/90 rounded-2xl shadow-lg px-8 py-6 flex flex-col items-center max-w-xs border-t-4 border-blue-600">
-        <Server className="w-8 h-8 text-blue-600 mb-2" />
-        <span className="font-bold text-lg text-gray-800">+15 anos</span>
-        <span className="text-gray-500 text-sm">de experiência em TI</span>
-      </div>
-      <div className="bg-white/90 rounded-2xl shadow-lg px-8 py-6 flex flex-col items-center max-w-xs border-t-4 border-pink-500">
-        <ShieldCheck className="w-8 h-8 text-pink-500 mb-2" />
-        <span className="font-bold text-lg text-gray-800">Segurança Total</span>
-        <span className="text-gray-500 text-sm">Projetos certificados</span>
-      </div>
-      <div className="bg-white/90 rounded-2xl shadow-lg px-8 py-6 flex flex-col items-center max-w-xs border-t-4 border-green-500">
-        <Camera className="w-8 h-8 text-green-500 mb-2" />
-        <span className="font-bold text-lg text-gray-800">
-          Monitoramento 24/7
-        </span>
-        <span className="text-gray-500 text-sm">Suporte e manutenção</span>
-      </div>
-    </section>
-
-    {/* Lista de serviços */}
-    <section className="mb-24 relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="flex flex-col items-center mb-10">
-        <div className="flex items-center justify-center mb-3">
-          <span className="bg-white/80 shadow-lg rounded-full p-4 border border-gray-200">
-            <Server className="w-10 h-10 text-blue-500 drop-shadow-lg" />
-          </span>
+    {/* Seção de serviços detalhados estilo Renting */}
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+            Soluções Profissionais em{" "}
+            <span className="text-blue-600">Hardware</span>
+          </h1>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            Infraestrutura, segurança e tecnologia de ponta para sua empresa
+            crescer com confiança.
+          </p>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight mb-2">
-          Nossos Serviços de Hardware
-        </h2>
-        <div className="w-24 h-1 rounded-full bg-gradient-to-r from-blue-500 via-pink-400 to-green-400" />
-        <p className="text-gray-500 mt-4 max-w-2xl text-center">
-          Conheça as soluções que fazem a diferença na infraestrutura e
-          segurança da sua empresa.
-        </p>
-      </motion.div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-10 px-4">
-        {hardwareServices.map((service, idx) => (
-          <ServiceCard key={idx} service={service} delay={0.1 * idx} />
-        ))}
+        <div className="space-y-20">
+          {hardwareServices.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              className={`flex flex-col ${
+                index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+              } items-center gap-12`}>
+              {/* Imagem ilustrativa do serviço */}
+              <div className="flex-1">
+                <img
+                  src={
+                    index === 0
+                      ? "/images/hardware.png"
+                      : index === 1
+                      ? "/images/cctv.jpg"
+                      : index === 2
+                      ? "/images/fechadura.jpg"
+                      : "/images/biometrico.jpg"
+                  }
+                  alt={service.title}
+                  className="w-full h-96 object-cover rounded-2xl border border-gray-200 shadow-lg"
+                />
+              </div>
+              {/* Conteúdo do serviço */}
+              <div className="flex-1 space-y-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  {service.title}
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {service.description}
+                </p>
+                {/* Lista de features */}
+                <div className="space-y-3">
+                  {service.items.map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <span className="inline-block w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+                        •
+                      </span>
+                      <span className="text-gray-800">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Botão de contato */}
+                <div className="pt-4">
+                  <a
+                    href="/pages/contato"
+                    className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow">
+                    Solicitar Orçamento
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   </>
