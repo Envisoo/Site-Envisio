@@ -90,7 +90,7 @@ export default function Navbar() {
             {/* Mapeamento dos itens do menu */}
             {navItems.map((item, index) =>
               item.name === "Serviços" ? (
-                // Dropdown do menu Serviços
+                // Dropdown do menu Serviços (igual ao de Apoio)
                 <div
                   key="servicos"
                   className="relative h-full flex items-center"
@@ -126,10 +126,10 @@ export default function Navbar() {
                       />
                     )}
                   </span>
-                  {/* Novo Dropdown */}
+                  {/* Dropdown igual ao de Apoio */}
                   {servicosDropdownOpen && (
                     <div
-                      className="absolute w-64 bg-white border border-gray-200 shadow-lg z-50"
+                      className="absolute min-w-[240px] max-w-[300px] bg-white border border-gray-200 shadow-lg z-50"
                       style={{
                         fontFamily: "Segoe UI Regular",
                         top: "var(--dropdown-offset)",
@@ -137,35 +137,32 @@ export default function Navbar() {
                         transform: "translateX(-50%)",
                         marginTop: "2px",
                       }}>
-                      <Link
-                        to="/servicos/hardware"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos/hardware"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}
-                        onClick={() => setServicosDropdownOpen(false)}>
-                        Hardware
-                      </Link>
-                      <Link
-                        to="/servicos/software"
-                        className={`block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 ${
-                          location.pathname === "/servicos/software"
-                            ? "bg-red-50 text-red-600 font-medium"
-                            : "text-black"
-                        }`}
-                        onClick={() => setServicosDropdownOpen(false)}>
-                        Software
-                      </Link>
-                      <Link
-                        to="/servicos/renting"
-                        onClick={() => {
-                          setIsOpen(false);
-                          setServicosDropdownOpen(false);
-                        }}
-                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black">
-                        Produto Renting
-                      </Link>
+                      <div className="px-2 pt-2 pb-2">
+                        <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
+                          Menu de Serviços
+                        </div>
+                        <hr className="mb-2 border-gray-200" />
+                        <Link
+                          to="/servicos/hardware"
+                          className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                          onClick={() => setServicosDropdownOpen(false)}>
+                          Hardware
+                        </Link>
+                        <hr className="my-1 border-gray-200" />
+                        <Link
+                          to="/servicos/software"
+                          className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                          onClick={() => setServicosDropdownOpen(false)}>
+                          Software
+                        </Link>
+                        <hr className="my-1 border-gray-200" />
+                        <Link
+                          to="/servicos/renting"
+                          className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                          onClick={() => setServicosDropdownOpen(false)}>
+                          Aluguel de produtos
+                        </Link>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -209,7 +206,7 @@ export default function Navbar() {
                   {/* Menu dropdown Apoio */}
                   {dropdownOpen && (
                     <div
-                      className="absolute w-56 bg-white border border-gray-200 shadow-lg z-50"
+                      className="absolute min-w-[240px] max-w-[300px] bg-white border border-gray-200 shadow-lg z-50"
                       style={{
                         fontFamily: "Segoe UI Regular",
                         top: "var(--dropdown-offset)",
@@ -217,18 +214,25 @@ export default function Navbar() {
                         transform: "translateX(-50%)",
                         marginTop: "2px",
                       }}>
-                      <Link
-                        to="/pages/contato"
-                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
-                        onClick={() => setDropdownOpen(false)}>
-                        Contato
-                      </Link>
-                      <Link
-                        to="/pages/suporte-tecnico"
-                        className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
-                        onClick={() => setDropdownOpen(false)}>
-                        Suporte Técnico
-                      </Link>
+                      <div className="px-2 pt-2 pb-2">
+                        <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
+                          Menu de Apoio
+                        </div>
+                        <hr className="mb-2 border-gray-200" />
+                        <Link
+                          to="/pages/contato"
+                          className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                          onClick={() => setDropdownOpen(false)}>
+                          Contato
+                        </Link>
+                        <hr className="my-1 border-gray-200" />
+                        <Link
+                          to="/pages/suporte-tecnico"
+                          className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                          onClick={() => setDropdownOpen(false)}>
+                          Suporte Técnico
+                        </Link>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -317,23 +321,21 @@ export default function Navbar() {
             <div className="px-4 py-6 space-y-3">
               {navItems.map((item, index) =>
                 item.name === "Serviços" ? (
-                  // Serviços com dropdown no mobile
+                  // Serviços com dropdown no mobile (ajustado para os mesmos links do desktop)
                   <div key="servicos-mobile" className="relative">
-                    <Link
-                      to="/servicos"
-                      onClick={() => setIsOpen(false)}
-                      className={`block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-red-50 hover:text-red-600 ${
+                    <button
+                      type="button"
+                      onClick={() => setServicosDropdownOpen((v) => !v)}
+                      className={`block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-red-50 hover:text-red-600 focus:outline-none focus:bg-red-50 focus:text-red-600 ${
                         isServicosActive()
                           ? "bg-red-50 text-red-600"
                           : "text-gray-600"
-                      }`}>
+                      } flex items-center justify-between`}
+                      aria-expanded={servicosDropdownOpen ? "true" : "false"}
+                      aria-controls="servicos-mobile-dropdown">
                       Serviços
-                    </Link>
-                    <button
-                      onClick={() => setServicosDropdownOpen((v) => !v)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-red-600">
                       <svg
-                        className={`w-4 h-4 transition-transform ${
+                        className={`w-4 h-4 ml-2 transition-transform ${
                           servicosDropdownOpen ? "rotate-180" : ""
                         }`}
                         fill="none"
@@ -347,59 +349,71 @@ export default function Navbar() {
                         />
                       </svg>
                     </button>
-                    {servicosDropdownOpen && (
-                      <div className="mt-1 ml-4 w-36 bg-white border rounded-lg shadow-lg z-50">
-                        <Link
-                          to="/servicos/consultoria"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/servicos/consultoria"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          Consultoria
-                        </Link>
-                        <Link
-                          to="/servicos/desenvolvimento"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/servicos/desenvolvimento"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          Desenvolvimento
-                        </Link>
-                        <Link
-                          to="/servicos/suporte"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/servicos/suporte"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          Suporte Técnico
-                        </Link>
-                      </div>
-                    )}
+                    <AnimatePresence>
+                      {servicosDropdownOpen && (
+                        <motion.div
+                          id="servicos-mobile-dropdown"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden mt-1 ml-0 min-w-[240px] max-w-[300px] bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                          style={{ fontFamily: "Segoe UI Regular" }}>
+                          <div className="px-2 pt-2 pb-2">
+                            <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
+                              Menu de Serviços
+                            </div>
+                            <hr className="mb-2 border-gray-200" />
+                            <Link
+                              to="/servicos/hardware"
+                              className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                              onClick={() => {
+                                setIsOpen(false);
+                                setServicosDropdownOpen(false);
+                              }}>
+                              Hardware
+                            </Link>
+                            <hr className="my-1 border-gray-200" />
+                            <Link
+                              to="/servicos/software"
+                              className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                              onClick={() => {
+                                setIsOpen(false);
+                                setServicosDropdownOpen(false);
+                              }}>
+                              Software
+                            </Link>
+                            <hr className="my-1 border-gray-200" />
+                            <Link
+                              to="/servicos/renting"
+                              className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                              onClick={() => {
+                                setIsOpen(false);
+                                setServicosDropdownOpen(false);
+                              }}>
+                              Aluguel de produtos
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ) : item.name === "Contato" ? (
-                  // Apoio com dropdown no mobile
+                  // Apoio com dropdown no mobile (ajustado para os mesmos links do desktop)
                   <div key="apoio-mobile" className="relative">
-                    <Link
-                      to="/apoio"
-                      onClick={() => setIsOpen(false)}
-                      className={`block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-red-50 hover:text-red-600 ${
+                    <button
+                      type="button"
+                      onClick={() => setDropdownOpen((v) => !v)}
+                      className={`block w-full text-left px-4 py-3 rounded-lg text-base font-medium hover:bg-red-50 hover:text-red-600 focus:outline-none focus:bg-red-50 focus:text-red-600 ${
                         isApoioActive()
                           ? "bg-red-50 text-red-600"
                           : "text-gray-600"
-                      }`}>
+                      } flex items-center justify-between`}
+                      aria-expanded={dropdownOpen}
+                      aria-controls="apoio-mobile-dropdown">
                       Apoio
-                    </Link>
-                    <button
-                      onClick={() => setDropdownOpen((v) => !v)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-red-600">
                       <svg
-                        className={`w-4 h-4 transition-transform ${
+                        className={`w-4 h-4 ml-2 transition-transform ${
                           dropdownOpen ? "rotate-180" : ""
                         }`}
                         fill="none"
@@ -413,40 +427,44 @@ export default function Navbar() {
                         />
                       </svg>
                     </button>
-                    {dropdownOpen && (
-                      <div className="mt-1 ml-4 w-36 bg-white border rounded-lg shadow-lg z-50">
-                        <Link
-                          to="/apoio/faq"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/apoio/faq"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          FAQ
-                        </Link>
-                        <Link
-                          to="/apoio/documentos"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/apoio/documentos"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          Documentos
-                        </Link>
-                        <Link
-                          to="/apoio/contato"
-                          onClick={() => setIsOpen(false)}
-                          className={`block px-4 py-2 hover:bg-red-50 hover:text-red-600 ${
-                            location.pathname === "/apoio/contato"
-                              ? "bg-red-100 text-red-600 font-medium"
-                              : ""
-                          }`}>
-                          Contato Apoio
-                        </Link>
-                      </div>
-                    )}
+                    <AnimatePresence>
+                      {dropdownOpen && (
+                        <motion.div
+                          id="apoio-mobile-dropdown"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden mt-1 ml-0 min-w-[240px] max-w-[300px] bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                          style={{ fontFamily: "Segoe UI Regular" }}>
+                          <div className="px-2 pt-2 pb-2">
+                            <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
+                              Menu de Apoio
+                            </div>
+                            <hr className="mb-2 border-gray-200" />
+                            <Link
+                              to="/pages/contato"
+                              className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                              onClick={() => {
+                                setIsOpen(false);
+                                setDropdownOpen(false);
+                              }}>
+                              Contato
+                            </Link>
+                            <hr className="my-1 border-gray-200" />
+                            <Link
+                              to="/pages/suporte-tecnico"
+                              className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
+                              onClick={() => {
+                                setIsOpen(false);
+                                setDropdownOpen(false);
+                              }}>
+                              Suporte Técnico
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ) : (
                   <motion.div
