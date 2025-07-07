@@ -273,7 +273,7 @@ export default function Navbar() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}>
               <Link
-                to="/academy"
+                to="/page/Academia/academia"
                 className="ml-8 px-6 bg-white text-black border border-red-600 font-normal hover:bg-red-50 hover:text-red-700 transition-all duration-300 uppercase flex items-center"
                 style={{
                   fontFamily: "Segoe UI Regular",
@@ -492,7 +492,7 @@ export default function Navbar() {
                 transition={{ delay: 0.3 }}
                 className="pt-4">
                 <Link
-                  to="/academy"
+                  to="/page/Academia/academia"
                   className="w-full block text-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all uppercase"
                   onClick={() => setIsOpen(false)}>
                   Academia

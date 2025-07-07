@@ -16,15 +16,15 @@ interface LinkWithIcon extends BaseLink {
 export default function Footer() {
   const footerLinks: Record<string, LinkWithIcon[]> = {
     empresa: [
-      { nome: "Sobre Nós", url: "/sobre" },
-      { nome: "Nossa História", url: "/historia" },
-      { nome: "Equipe", url: "/equipe" },
+      { nome: "Sobre Nós", url: "/quem-somos" },
+      { nome: "Nossa História", url: "/quem-somos" },
+      { nome: "Equipe", url: "/quem-somos" },
     ],
     servicos: [
-      { nome: "Contabilidade", url: "/servicos/contabilidade" },
-      { nome: "Consultoria", url: "/servicos/consultoria" },
-      { nome: "Tecnologia", url: "/servicos/tecnologia" },
-      { nome: "Academia", url: "/academia" },
+      { nome: "Hardware", url: "/servicos/hardware" },
+      { nome: "Software", url: "/servicos/software" },
+      { nome: "Aluguel", url: "/servicos/renting" },
+      { nome: "Academia", url: "/page/Academia/academia" },
     ],
     contato: [
       { nome: "+244 947 137 676", url: "tel:+244947137676", icon: "📞" },

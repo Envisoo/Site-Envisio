@@ -33,22 +33,16 @@ interface Segment {
 // ======================
 const heroSlides = [
   {
-    src: "/images/hero-card1.jpg",
-    link: "/servicos/contabilidade",
-    label: "Contabilidade Digital",
+    src: "/images/imagem home/banner_hero1.png",
+    link: "/servicos/software",
+    label: "Consultoria",
   },
   {
-    src: "/images/hero-card2.jpg",
-    link: "/servicos/tecnicos",
+    src: "/images/imagem home/banner_hero2.png",
+    link: "/servicos/software",
     label: "Serviços Técnicos",
   },
-  {
-    src: "/images/hero-card3.jpg",
-    link: "/academia",
-    label: "Academia Profissional",
-  },
 ];
-
 // ======================
 // SEGMENTOS DE NEGÓCIO (usado no carrossel de depoimentos)
 // ======================
@@ -239,7 +233,7 @@ export default function HeroSection() {
       </section>
 
       {/* Nossa História Redesenhada */}
-      <section className="py-32 bg-white relative overflow-hidden">
+      <section className="py-5 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-50 to-transparent" />
 
         <div className="container mx-auto px-6">
@@ -255,7 +249,7 @@ export default function HeroSection() {
                 style={{
                   fontFamily: "Segoe UI Regular",
                 }}
-                className="text-sm uppercase tracking-wider text-gray-500 mb-4 block">
+                className="text-sm uppercase tracking-wider text-gray-600 mb-4 block">
                 Nossa Trajetória
               </motion.span>
               <h2
@@ -352,43 +346,58 @@ export default function HeroSection() {
                   className="relative z-10">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                     <img
-                      src="/images/about-team.jpg"
+                      src="/images/imagem home/banner_quem.png"
                       alt="Nossa Equipe"
                       className="w-full h-[600px] object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-                    {/* Destaques sobrepostos à imagem */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                      <div className="grid grid-cols-2 gap-8">
-                        {[
-                          "Equipe multidisciplinar experiente",
-                          "Atendimento personalizado ao cliente",
-                          "Soluções inovadoras e tecnológicas",
-                          "Compromisso com resultados",
-                        ].map((highlight, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="flex items-center gap-3">
-                            <span className="text-2xl">✓</span>
-                            <span className="font-medium">{highlight}</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
+                    <div className="absolute inset-0" />
                   </div>
                 </motion.div>
-
                 {/* Elemento decorativo */}
                 <div className="absolute -right-4 -bottom-4 w-full h-full border-2 border-black rounded-2xl -z-10" />
               </div>
             </div>
           </motion.div>
         </div>
+        <div className="flex flex-wrap items-center gap-8 my-16">
+          {" "}
+          {/* Container principal */}
+          {[
+            { text: "25 anos de mercado", icon: "✓" },
+            { text: "Equipe especializada", icon: "✓" },
+            { text: "Atendimento personalizado", icon: "✓" },
+            { text: "Compromisso com excelência", icon: "✓" },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 group" // Container de cada item
+            >
+              {/* Ícone personalizável */}
+              <span
+                className="text-black-200 text-3xl font-bold transition-all duration-300
+                   group-hover:scale-110 group-hover:text-red-600"
+                style={{
+                  lineHeight: "0", // Ajuste de alinhamento vertical
+                  marginRight: "-120px", // Espaçamento direito
+                  paddingLeft: "120px",
+                }}>
+                {item.icon}
+              </span>
 
+              {/* Texto personalizável */}
+              <span
+                className="text-1xl font-semibold text-gray-800
+                   group-hover:text-blue-600 transition-colors"
+                style={{
+                  letterSpacing: "0px", // Espaçamento entre letras
+                  paddingTop: "6px", // Ajuste fino de alinhamento
+                  paddingLeft: "120px",
+                }}>
+                {item.text}
+              </span>
+            </div>
+          ))}
+        </div>
         <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-50 to-transparent" />
       </section>
 
@@ -639,7 +648,7 @@ export default function HeroSection() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => navigate("/academia")}
+                    onClick={() => navigate("/page/Academia/academia")}
                     className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-lg flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all">
                     Inscreva-se Agora
                     <span className="ml-2 group-hover:translate-x-1 transition-transform">

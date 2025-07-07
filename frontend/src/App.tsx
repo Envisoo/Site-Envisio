@@ -10,6 +10,7 @@ import Contato from "./pages/Contato";
 import SuporteTecnico from "./pages/SuporteTecnico";
 import ServicosHardware from "./serviços/ServicosHardware";
 import ServicosSoftware from "./serviços/ServicosSoftware";
+import Academia from "./pages/Academia/academia";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/pages/suporte-tecnico" element={<SuporteTecnico />} />
         <Route path="/servicos/hardware" element={<ServicosHardware />} />
         <Route path="/servicos/software" element={<ServicosSoftware />} />
+        <Route path="/page/Academia/academia" element={<Academia />} />
       </Routes>
       <Footer />
     </Router>

@@ -13,13 +13,6 @@ import {
 const About = () => {
   const [activeTab, setActiveTab] = useState("historia");
 
-  const stats = [
-    { icon: <FaUsers />, value: "150+", label: "Clientes Satisfeitos" },
-    { icon: <FaLaptopCode />, value: "200+", label: "Projetos Entregues" },
-    { icon: <FaCheckCircle />, value: "99%", label: "Taxa de Satisfação" },
-    { icon: <FaAward />, value: "15+", label: "Anos de Experiência" },
-  ];
-
   const team = [
     {
       name: "Ana Silva",
@@ -167,26 +160,6 @@ const About = () => {
                   </div>
                 </div>
                 {/* Estatísticas */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-                  {stats.map((stat, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}>
-                      <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-md hover:-translate-y-2 transition-transform">
-                        <div className="text-3xl text-red-600 mb-2">
-                          {stat.icon}
-                        </div>
-                        <h4 className="text-xl font-bold text-gray-900 mb-1">
-                          {stat.value}
-                        </h4>
-                        <p className="text-gray-600 text-sm">{stat.label}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
               </motion.div>
             )}
 
@@ -229,35 +202,30 @@ const About = () => {
                   </h3>
                   <ul className="text-gray-700 space-y-3 pl-2">
                     <li className="flex items-start gap-2">
-                      <FaCheck color="#22c55e" size={20} />
                       <span>
                         Ética e Transparência – Atuamos com integridade,
                         garantindo total conformidade com normas e regulamentos.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <FaCheck color="#22c55e" size={20} />
                       <span>
                         Compromisso com o Cliente – Entendemos as necessidades
                         do cliente e oferecemos soluções personalizadas.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <FaCheck color="#22c55e" size={20} />
                       <span>
                         Excelência Profissional – Investimos na capacitação
                         contínua da nossa equipa para oferecer o melhor serviço.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <FaCheck color="#22c55e" size={20} />
                       <span>
                         Inovação e Tecnologia – Utilizamos ferramentas modernas
                         para otimizar processos e agregar valor aos negócios.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <FaCheck color="#22c55e" size={20} />
                       <span>
                         Sustentabilidade e Responsabilidade Social – Atuamos com
                         responsabilidade, contribuindo para um mercado mais
