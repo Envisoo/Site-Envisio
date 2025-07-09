@@ -304,7 +304,9 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
                 {React.cloneElement(feature.icon as React.ReactElement<any>, {
                   className: "w-5 h-5 text-red-600",
                 })}
-                <span className="text-sm font-medium text-gray-700">
+                <span
+                  className="text-sm text-gray-700"
+                  style={{ fontFamily: "Segoe UI Regular" }}>
                   {feature.text}
                 </span>
               </div>
@@ -316,10 +318,14 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           <div className="flex items-start gap-3">
             <Quote className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
             <div>
-              <p className="text-gray-700 italic mb-2">
+              <p
+                className="text-gray-700 italic mb-2"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 "{service.testimonial.text}"
               </p>
-              <p className="text-sm font-medium text-gray-600">
+              <p
+                className="text-sm font-medium text-gray-600"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 — {service.testimonial.author}
               </p>
             </div>
@@ -378,7 +384,8 @@ const ServicosHardware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6">
+            className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
             Soluções Integradas de <span className="text-black">Hardware</span>
           </motion.h3>
           <motion.p
@@ -386,7 +393,8 @@ const ServicosHardware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Segurança, conectividade e controle inteligente para empresas
             modernas. Da infraestrutura de redes Cisco à vigilância inteligente
             e controle de acessos biométrico, entregamos tecnologia de ponta
@@ -406,7 +414,9 @@ const ServicosHardware = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Reparos & Manutenção
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Diagnóstico e reparo de fontes, motherboards, discos rígidos e
                 componentes críticos, com garantia e peças originais.
               </p>
@@ -423,7 +433,9 @@ const ServicosHardware = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Consultoria Técnica Especializada
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Orientação na escolha de equipamentos, projetos personalizados e
                 suporte para expansão tecnológica do seu negócio.
               </p>
@@ -441,7 +453,8 @@ const ServicosHardware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+              className="text-4xl md:text-5xl text-gray-900 mb-5 tracking-tight"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Nossos <span className="text-red-600">Serviços</span>
             </motion.h2>
             <motion.p
@@ -449,7 +462,8 @@ const ServicosHardware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto">
+              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Soluções inovadoras, confiáveis e sob medida para elevar a
               infraestrutura da sua empresa ao próximo nível.
             </motion.p>
@@ -477,6 +491,7 @@ const ServicosHardware = () => {
                 scrollbarWidth: "none",
                 scrollPaddingLeft: "3rem",
                 scrollPaddingRight: "3rem",
+                fontFamily: "Segoe UI Regular",
               }}>
               {hardwareServices.map((service, idx) => (
                 <div
@@ -531,7 +546,8 @@ const ServicosHardware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold mb-4">
+              className="text-3xl md:text-4xl font-bold mb-4"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Por que escolher nossos{" "}
               <span className="text-red-400">serviços de hardware</span>?
             </motion.h2>
@@ -540,7 +556,8 @@ const ServicosHardware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-300 max-w-3xl mx-auto">
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Excelência técnica combinada com suporte especializado para sua
               tranquilidade.
             </motion.p>
@@ -577,8 +594,16 @@ const ServicosHardware = () => {
                 <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-gray-300">{item.description}</p>
+                <h3
+                  className="text-xl font-bold mb-3"
+                  style={{ fontFamily: "Segoe UI semibold" }}>
+                  {item.title}
+                </h3>
+                <p
+                  className="text-gray-300"
+                  style={{ fontFamily: "Segoe UI Regular" }}>
+                  {item.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -593,7 +618,8 @@ const ServicosHardware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-white mb-6">
+            className="text-3xl md:text-4xl text-white mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
             Pronto para transformar sua infraestrutura física?
           </motion.h2>
 
@@ -602,7 +628,8 @@ const ServicosHardware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Nossos especialistas estão prontos para projetar a solução perfeita
             para suas necessidades.
           </motion.p>
@@ -614,12 +641,14 @@ const ServicosHardware = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/pages/contato"
-              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center">
+              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-lg  shadow-lg transition-all flex items-center justify-center"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Agendar Consultoria
             </a>
             <a
               href="/pages/contato"
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center">
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg shadow-lg transition-all flex items-center justify-center"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Falar com Especialista
             </a>
           </motion.div>

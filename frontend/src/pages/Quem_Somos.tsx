@@ -70,7 +70,8 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl font-semibold text-gray-900 mb-4">
+              className="text-4xl font-semibold text-gray-900 mb-4"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Sobre Nós
             </motion.h2>
             <motion.p

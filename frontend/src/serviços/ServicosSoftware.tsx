@@ -125,15 +125,20 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         </div>
         <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
       </div>
-      <p className="text-gray-600 mb-4">
+      <p
+        className="text-gray-600 mb-4"
+        style={{ fontFamily: "Segoe UI Regular" }}>
         {service.description.substring(0, 100)}...
       </p>
-      <div className="flex justify-between items-center mb-4">
+      <div
+        className="flex justify-between items-center mb-4"
+        style={{ fontFamily: "Segoe UI Regular" }}>
         <div className="flex -space-x-2">
           {service.features.slice(0, 3).map((feature: Feature, i: number) => (
             <div
               key={i}
-              className="w-8 h-8 rounded-full bg-white border-2 border-white flex items-center justify-center shadow">
+              className="w-8 h-8 rounded-full bg-white border-2 border-white flex items-center justify-center shadow"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               {React.cloneElement(feature.icon as React.ReactElement<any>, {
                 className: "w-4 h-4 text-red-600",
               })}
@@ -170,7 +175,11 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
               <BadgeCheck className="text-yellow-400" />
               <span className="font-semibold">Solução Certificada</span>
             </div>
-            <h3 className="text-2xl font-bold">{service.title}</h3>
+            <h3
+              className="text-2xl"
+              style={{ fontFamily: "Segoe UI semibold" }}>
+              {service.title}
+            </h3>
           </div>
         </div>
       </div>
@@ -202,7 +211,9 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
                 {React.cloneElement(feature.icon as React.ReactElement<any>, {
                   className: "w-5 h-5 text-red-600",
                 })}
-                <span className="text-sm font-medium text-gray-700">
+                <span
+                  className="text-sm text-gray-700"
+                  style={{ fontFamily: "Segoe UI Regular" }}>
                   {feature.text}
                 </span>
               </div>
@@ -216,7 +227,9 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
               <p className="text-gray-700 italic mb-2">
                 "{service.testimonial.text}"
               </p>
-              <p className="text-sm font-medium text-gray-600">
+              <p
+                className="text-sm text-gray-600"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 — {service.testimonial.author}
               </p>
             </div>
@@ -277,14 +290,16 @@ const ServicosSoftware = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0 }}
-            className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6">
+            className="text-4xl md:text-5xl text-red-600 mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
             Soluções Integradas de <span className="text-black">Software</span>
           </motion.h3>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Digitalização, automação e inovação para empresas modernas. Da
             consultoria estratégica ao desenvolvimento sob medida, entregamos
             tecnologia de ponta para transformar seu negócio.
@@ -303,7 +318,9 @@ const ServicosSoftware = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Cloud, ERP & Integrações
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Implantação, integração e automação de sistemas de gestão, cloud
                 e APIs para eficiência total.
               </p>
@@ -320,7 +337,9 @@ const ServicosSoftware = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Consultoria & Suporte Especializado
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Diagnóstico, planejamento, treinamento e suporte para
                 digitalização e inovação do seu negócio.
               </p>
@@ -338,7 +357,8 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+              className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Nossas <span className="text-red-600">Soluções</span>
             </motion.h2>
             <motion.p
@@ -346,7 +366,8 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto">
+              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Soluções inovadoras, confiáveis e sob medida para digitalizar e
               automatizar sua empresa.
             </motion.p>
@@ -427,7 +448,8 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold mb-4">
+              className="text-3xl md:text-4xl  mb-4"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Por que escolher nossas{" "}
               <span className="text-red-400">soluções de software</span>?
             </motion.h2>
@@ -436,7 +458,8 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-300 max-w-3xl mx-auto">
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Inovação, segurança e suporte especializado para o crescimento do
               seu negócio.
             </motion.p>
@@ -480,8 +503,16 @@ const ServicosSoftware = () => {
                   <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center mb-6">
                     {item.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-gray-300">{item.description}</p>
+                  <h3
+                    className="text-xl mb-3"
+                    style={{ fontFamily: "Segoe UI semibold" }}>
+                    {item.title}
+                  </h3>
+                  <p
+                    className="text-gray-300"
+                    style={{ fontFamily: "Segoe UI Regular" }}>
+                    {item.description}
+                  </p>
                 </motion.div>
               )
             )}
@@ -496,7 +527,8 @@ const ServicosSoftware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-white mb-6">
+            className="text-3xl md:text-4xl text-white mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
             Pronto para transformar sua operação digital?
           </motion.h2>
           <motion.p
@@ -504,7 +536,8 @@ const ServicosSoftware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Nossos especialistas estão prontos para criar a solução perfeita
             para o seu negócio.
           </motion.p>
@@ -516,12 +549,12 @@ const ServicosSoftware = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/pages/contato"
-              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center">
+              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold shadow-lg transition-all flex items-center justify-center">
               Agendar Consultoria
             </a>
             <a
               href="/pages/contato"
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center">
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg font-semibold shadow-lg transition-all flex items-center justify-center">
               Falar com Especialista
             </a>
           </motion.div>

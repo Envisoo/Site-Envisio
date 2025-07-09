@@ -88,7 +88,7 @@ const RentingSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6">
+            className="text-4xl md:text-5xl font-semibold text-red-600 mb-6">
             Soluções Integradas de <span className="text-black">Renting</span>
           </motion.h3>
           <motion.p
@@ -96,7 +96,8 @@ const RentingSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Flexibilidade, economia e tecnologia de ponta para sua empresa.
             Alugue impressoras e computadores profissionais com manutenção,
             suporte e atualização inclusos.
@@ -121,7 +122,9 @@ const RentingSection: React.FC = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Impressoras Profissionais
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Renting de impressoras coloridas e multifuncionais com
                 manutenção e suporte total.
               </p>
@@ -143,7 +146,9 @@ const RentingSection: React.FC = () => {
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Computadores Profissionais
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p
+                className="text-gray-600 text-sm"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Aluguel de computadores de alto desempenho com assistência
                 técnica e upgrades inclusos.
               </p>
@@ -163,7 +168,7 @@ const RentingSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+              className="text-4xl md:text-5xl font-semibold text-gray-900 mb-5 tracking-tight">
               Nossos <span className="text-red-600">Serviços</span>
             </motion.h2>
             <motion.p
@@ -171,7 +176,8 @@ const RentingSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto">
+              className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Soluções inovadoras, confiáveis e sob medida para elevar a
               infraestrutura da sua empresa ao próximo nível.
             </motion.p>
@@ -188,17 +194,21 @@ const RentingSection: React.FC = () => {
       <section className="py-20 bg-gray-50 border-t border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+            <h2 className="text-3xl md:text-4xl font-semibold text-black mb-4">
               Por que escolher Renting?
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p
+              className="text-lg text-gray-700 max-w-2xl mx-auto"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Descubra as vantagens de ter equipamentos profissionais sem o
               investimento inicial
             </p>
           </div>
 
           {/* Lista de vantagens em cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             {[
               {
                 title: "Sem Investimento Inicial",
@@ -246,7 +256,11 @@ const RentingSection: React.FC = () => {
                 <h3 className="text-xl font-bold text-black mb-3">
                   {advantage.title}
                 </h3>
-                <p className="text-gray-700">{advantage.description}</p>
+                <p
+                  className="text-gray-700"
+                  style={{ fontFamily: "Segoe UI Regular" }}>
+                  {advantage.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -261,7 +275,9 @@ const RentingSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Pronto para começar?
           </h2>
-          <p className="text-xl text-red-100 mb-8">
+          <p
+            className="text-xl text-red-100 mb-8"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             Entre em contato conosco e descubra como o renting pode transformar
             sua empresa
           </p>
@@ -390,10 +406,12 @@ const ServiceCard: React.FC<{
       alt={service.title}
       className="w-32 h-32 object-cover rounded-xl mb-4"
     />
-    <h4 className="text-lg font-bold text-gray-900 mb-2 text-center">
+    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">
       {service.title}
     </h4>
-    <p className="text-gray-600 text-sm text-center line-clamp-3">
+    <p
+      className="text-gray-600 text-sm text-center line-clamp-3"
+      style={{ fontFamily: "Segoe UI Regular" }}>
       {service.description}
     </p>
   </div>
@@ -405,7 +423,7 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
 }) => (
   <div className="bg-white rounded-2xl shadow-xl p-0 flex flex-col md:flex-row overflow-hidden border border-blue-100 max-w-5xl mx-auto">
     {/* Imagem à esquerda - maior */}
-    <div className="md:w-[48%] w-full flex items-end justify-start bg-gradient-to-br from-blue-50 to-white p-0 relative min-h-[340px] md:min-h-[420px]">
+    <div className="md:w-[70%] w-full flex items-end justify-start bg-gradient-to-br from-blue-50 to-white p-0 relative min-h-[340px] md:min-h-[220px]">
       <div className="absolute left-0 bottom-0 w-full h-full rounded-2xl overflow-hidden">
         <img
           src={service.image}
@@ -437,7 +455,7 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
       </div>
     </div>
     {/* Conteúdo à direita - menor */}
-    <div className="md:w-[52%] w-full flex flex-col gap-5 p-6 md:p-10">
+    <div className="md:w-[50%] w-full flex flex-col gap-5 p-6 md:p-10">
       {/* Selo */}
       <div className="flex items-center gap-2 mb-1">
         <span className="inline-flex items-center text-xs font-semibold text-blue-700">
@@ -457,12 +475,12 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
         </span>
       </div>
       {/* Título */}
-      <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2 leading-tight">
+      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2 leading-tight">
         {service.title}
       </h3>
       {/* Benefícios */}
       <div>
-        <h4 className="text-lg font-bold text-gray-800 mb-2">
+        <h4 className="text-lg font-semibold text-gray-800 mb-2">
           Principais Benefícios
         </h4>
         <ul className="space-y-1">
@@ -476,7 +494,7 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
       </div>
       {/* Tecnologias Incluídas */}
       <div>
-        <h4 className="text-lg font-bold text-gray-800 mb-2 mt-4">
+        <h4 className="text-lg font-semibold text-gray-800 mb-2 mt-4">
           Tecnologias Incluídas
         </h4>
         <div className="grid grid-cols-2 gap-4 items-stretch">
@@ -496,7 +514,9 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </span>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+            <span
+              className="text-sm text-gray-700 whitespace-nowrap"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Nuvem e DevOps
             </span>
           </div>
@@ -515,26 +535,17 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
                 />
               </svg>
             </span>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+            <span
+              className="text-sm  text-gray-700 whitespace-nowrap"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Segurança
             </span>
           </div>
           <div className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm min-w-0 h-full">
-            <span className="inline-block w-5 h-7 text-red-500 flex-shrink-0">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 17v-2a4 4 0 014-4h10a4 4 0 014 4v2"
-                />
-              </svg>
-            </span>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+            <span className="inline-block w-5 h-7 text-red-500 flex-shrink-0"></span>
+            <span
+              className="text-sm  text-gray-700 whitespace-nowrap"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Infraestrutura
             </span>
           </div>
@@ -563,12 +574,16 @@ const ServiceHighlight: React.FC<{ service: RentingService }> = ({
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mt-4">
         <div className="flex items-start gap-2 mb-1">
           <span className="text-blue-400 text-2xl font-bold">“</span>
-          <span className="text-gray-700 italic text-base">
+          <span
+            className="text-gray-700 italic text-base"
+            style={{ fontFamily: "Segoe UI Regular" }}>
             A solução de renting da Envisio elevou nossa produtividade e
             eliminou preocupações com manutenção e atualização de equipamentos.
           </span>
         </div>
-        <span className="block text-sm text-gray-500 mt-1 ml-6">
+        <span
+          className="block text-sm text-gray-500 mt-1 ml-6"
+          style={{ fontFamily: "Segoe UI Regular" }}>
           — Paulo Silva, CEO - TechAngola
         </span>
       </div>

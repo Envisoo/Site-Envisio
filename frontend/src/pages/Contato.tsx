@@ -32,11 +32,13 @@ const Contato: React.FC = () => {
       <article aria-labelledby="contact-info-heading">
         <h1
           id="contact-info-heading"
-          className="text-4xl font-extrabold mb-6 text-red-700">
+          className="text-4xl font-semibold mb-6 text-red-700">
           Entre em Contato
         </h1>
 
-        <p className="mb-8 text-lg text-gray-700 leading-relaxed">
+        <p
+          className="mb-8 text-lg text-gray-700 leading-relaxed"
+          style={{ fontFamily: "Segoe UI Regular" }}>
           Tem alguma dúvida ou precisa de mais informações? Estamos aqui para
           ajudar!
         </p>
@@ -58,7 +60,9 @@ const Contato: React.FC = () => {
               </svg>
             </span>
             <div>
-              <span className="block text-sm text-gray-500 font-medium">
+              <span
+                className="block text-sm text-gray-500 "
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 WhatsApp
               </span>
               <span className="text-lg font-semibold text-gray-800 group-hover:text-green-700">
@@ -83,7 +87,9 @@ const Contato: React.FC = () => {
               </svg>
             </span>
             <div>
-              <span className="block text-sm text-gray-500 font-medium">
+              <span
+                className="block text-sm text-gray-500"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 E-mail
               </span>
               <span className="text-lg font-semibold text-gray-800 group-hover:text-blue-700">
@@ -114,10 +120,12 @@ const Contato: React.FC = () => {
               </svg>
             </span>
             <div>
-              <span className="block text-sm text-gray-500 font-medium">
+              <span
+                className="block text-sm text-gray-500"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Endereço
               </span>
-              <span className="text-lg font-semibold text-gray-800 group-hover:text-red-700">
+              <span className="text-l font-semibold text-gray-800 group-hover:text-red-700">
                 Condomínio Jardins do Talatona, Torre 5 - Nº 003
                 <br />
                 Distrito Urbano do Talatona, Luanda - Angola
@@ -138,7 +146,9 @@ const Contato: React.FC = () => {
             loading="lazy"
             aria-label="Mapa mostrando a localização da Envisio"></iframe>
           <div className="bg-white p-4 border-t border-gray-100">
-            <p className="text-sm text-gray-600">
+            <p
+              className="text-sm text-gray-600"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               <strong>Endereço físico:</strong> Condomínio Jardins do Talatona,
               Torre 5 - Nº 003
             </p>
@@ -152,13 +162,13 @@ const Contato: React.FC = () => {
             {[
               {
                 icon: "facebook",
-                color: "blue",
+                color: "Black",
                 url: "#",
                 path: "M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z",
               },
               {
                 icon: "linkedin",
-                color: "blue",
+                color: "Black",
                 url: "#",
                 path: "M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z",
               },
@@ -208,7 +218,9 @@ const Contato: React.FC = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-medium text-green-800 mb-2">
+            <h3
+              className="text-xl  text-green-800 mb-2"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Mensagem enviada com sucesso!
             </h3>
             <p className="text-green-600 mb-6">

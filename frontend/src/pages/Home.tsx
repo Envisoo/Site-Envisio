@@ -201,7 +201,7 @@ export default function HeroSection() {
   return (
     <div className="min-h-screen bg-white pt-16">
       {/* Carrossel de Imagens de Fundo (Hero) */}
-      <section className="relative min-h-[93vh] mt-[-20px] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[63vh] mt-[-20px] w-full flex items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={carouselIndex}
@@ -363,10 +363,22 @@ export default function HeroSection() {
           {" "}
           {/* Container principal */}
           {[
-            { text: "25 anos de mercado", icon: "✓" },
-            { text: "Equipe especializada", icon: "✓" },
-            { text: "Atendimento personalizado", icon: "✓" },
-            { text: "Compromisso com excelência", icon: "✓" },
+            {
+              text: "5 anos de mercado",
+              icon: "✓",
+            },
+            {
+              text: "Equipe especializada",
+              icon: "✓",
+            },
+            {
+              text: "Atendimento personalizado",
+              icon: "✓",
+            },
+            {
+              text: "Compromisso com excelência",
+              icon: "✓",
+            },
           ].map((item, index) => (
             <div
               key={index}
@@ -378,20 +390,21 @@ export default function HeroSection() {
                    group-hover:scale-110 group-hover:text-red-600"
                 style={{
                   lineHeight: "0", // Ajuste de alinhamento vertical
-                  marginRight: "-120px", // Espaçamento direito
-                  paddingLeft: "120px",
+                  marginRight: "-100px", // Espaçamento direito
+                  paddingLeft: "100px",
                 }}>
                 {item.icon}
               </span>
 
               {/* Texto personalizável */}
               <span
-                className="text-1xl font-semibold text-gray-800
+                className="text-1xl text-gray-800
                    group-hover:text-blue-600 transition-colors"
                 style={{
                   letterSpacing: "0px", // Espaçamento entre letras
                   paddingTop: "6px", // Ajuste fino de alinhamento
-                  paddingLeft: "120px",
+                  paddingLeft: "100px",
+                  fontFamily: "Segoe UI semibold",
                 }}>
                 {item.text}
               </span>
@@ -444,7 +457,8 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="grid lg:grid-cols-3 gap-8">
+            className="grid lg:grid-cols-3 gap-8"
+            style={{ fontFamily: "Segoe UI semibold" }}>
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -463,7 +477,8 @@ export default function HeroSection() {
                   duration: 0.5,
                   delay: index * 0.2,
                 }}
-                className="relative isolate transform-gpu group cursor-pointer">
+                className="relative isolate transform-gpu group cursor-pointer"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 <div className="relative bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 group-hover:border-red-500/50 group-hover:bg-red-800/20 transition-all duration-300 h-full">
                   <div className="w-16 h-16 rounded-full bg-red-600/30 flex items-center justify-center mb-6">
                     <span className="text-3xl">{service.icon}</span>
@@ -474,7 +489,7 @@ export default function HeroSection() {
                   <p className="text-gray-400 mb-6">{service.description}</p>
                   <div className="mt-auto flex justify-end">
                     <button
-                      className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-700 transition-all"
+                      className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all"
                       onClick={() => {
                         if (service.tipo === "software") {
                           navigate("/servicos/software");
@@ -483,7 +498,8 @@ export default function HeroSection() {
                         } else if (service.tipo === "aluguel") {
                           navigate("/servicos/renting");
                         }
-                      }}>
+                      }}
+                      style={{ fontFamily: "Segoe UI regular" }}>
                       Saiba mais
                     </button>
                   </div>
@@ -501,7 +517,8 @@ export default function HeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/pages/contato")}
-              className="px-12 py-5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-all inline-flex items-center group">
+              className="px-12 py-5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-all inline-flex items-center group"
+              style={{ fontFamily: "Segoe UI regular" }}>
               Solicite uma consultoria
               <span className="ml-2 group-hover:translate-x-1 transition-transform">
                 →
@@ -525,14 +542,20 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-sm uppercase tracking-wider text-red-600 font-semibold mb-4 block">
+            <span
+              className="text-sm uppercase tracking-wider text-red-600 font-semibold mb-4 block"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Formação Profissional de Elite
             </span>
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">
+            <h2
+              className="text-5xl font-bold text-gray-900 mb-6"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Desenvolva Seu Potencial
             </h2>
             <div className="w-24 h-1 bg-red-600 mx-auto mb-8" />
-            <p className="text-xl text-gray-600">
+            <p
+              className="text-xl text-gray-600"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Programas exclusivos desenvolvidos por especialistas para
               impulsionar sua carreira ao próximo nível
             </p>
@@ -584,7 +607,8 @@ export default function HeroSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
                 whileHover={{ y: -10 }}
-                className="group relative h-full">
+                className="group relative h-full"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
                   {/* Ícone e Título */}
                   <div className="flex items-center gap-4 mb-8">
@@ -592,10 +616,16 @@ export default function HeroSection() {
                       <span className="text-3xl">{curso.icon}</span>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors">
+                      <h3
+                        className="text-2xl font-bold text-gray-900 group-hover:text-red-600 transition-colors"
+                        style={{ fontFamily: "Segoe UI semibold" }}>
                         {curso.title}
                       </h3>
-                      <p className="text-gray-600">{curso.subtitle}</p>
+                      <p
+                        className="text-gray-600"
+                        style={{ fontFamily: "Segoe UI Regular" }}>
+                        {curso.subtitle}
+                      </p>
                     </div>
                   </div>
 
@@ -606,7 +636,11 @@ export default function HeroSection() {
                         <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center">
                           <span className="text-red-600 text-sm">✓</span>
                         </div>
-                        <span className="text-gray-700">{feature}</span>
+                        <span
+                          className="text-gray-700"
+                          style={{ fontFamily: "Segoe UI Regular" }}>
+                          {feature}
+                        </span>
                       </div>
                     ))}
 
@@ -615,7 +649,9 @@ export default function HeroSection() {
                       <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center">
                         <span className="text-blue-600 text-sm">ℹ️</span>
                       </div>
-                      <span className="text-gray-700">
+                      <span
+                        className="text-gray-700"
+                        style={{ fontFamily: "Segoe UI Regular" }}>
                         {curso.title === "Certificação Profissional"
                           ? "Inclui acesso a plataforma online"
                           : curso.title === "Mentoria Executiva"
@@ -628,17 +664,31 @@ export default function HeroSection() {
                   {/* Preço e Duração */}
                   <div className="flex items-center justify-between py-4 border-t border-gray-100">
                     <div>
-                      <span className="text-gray-500 text-sm">Duração</span>
-                      <p className="text-gray-900 font-semibold">
+                      <span
+                        className="text-gray-500 text-sm"
+                        style={{ fontFamily: "Segoe UI Regular" }}>
+                        Duração
+                      </span>
+                      <p
+                        className="text-gray-900"
+                        style={{ fontFamily: "Segoe UI semibold" }}>
                         {curso.duration}
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-gray-500 text-sm">
+                      <span
+                        className="text-gray-500 text-sm"
+                        style={{ fontFamily: "Segoe UI Regular" }}>
                         Investimento
                       </span>
-                      <p className="text-gray-900 font-semibold">A partir de</p>
-                      <p className="text-red-600 font-bold text-xl">
+                      <p
+                        className="text-gray-900"
+                        style={{ fontFamily: "Segoe UI semibold" }}>
+                        A partir de
+                      </p>
+                      <p
+                        className="text-red-600 text-xl"
+                        style={{ fontFamily: "Segoe UI semibold" }}>
                         {parseInt(curso.price).toLocaleString("pt-AO")} Kz/mês
                       </p>
                     </div>
@@ -649,7 +699,8 @@ export default function HeroSection() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => navigate("/page/Academia/academia")}
-                    className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-lg flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all">
+                    className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-lg flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all"
+                    style={{ fontFamily: "Segoe UI Regular" }}>
                     Inscreva-se Agora
                     <span className="ml-2 group-hover:translate-x-1 transition-transform">
                       →
@@ -672,14 +723,20 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-sm uppercase tracking-wider text-red-400 font-semibold mb-4 block">
+            <span
+              className="text-sm uppercase tracking-wider text-red-400 mb-4 block"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Depoimentos
             </span>
-            <h2 className="text-5xl font-bold text-white mb-6">
+            <h2
+              className="text-5xl text-white mb-6"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               O Que Nossos Clientes Dizem
             </h2>
             <div className="w-24 h-1 bg-red-600 mx-auto mb-8" />
-            <p className="text-xl text-gray-300">
+            <p
+              className="text-xl text-gray-300"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Histórias de sucesso e transformação
             </p>
           </motion.div>
@@ -730,7 +787,9 @@ export default function HeroSection() {
                   </div>
 
                   {/* Texto do Depoimento */}
-                  <p className="text-gray-100 text-2xl md:text-2xl italic font-medium mb-8 text-center drop-shadow">
+                  <p
+                    className="text-gray-100 text-2xl md:text-2xl italic mb-8 text-center drop-shadow"
+                    style={{ fontFamily: "Segoe UI Regular" }}>
                     {
                       Object.values(businessSegments)[currentSlide].testimonial
                         .text
@@ -747,13 +806,17 @@ export default function HeroSection() {
                         {Object.values(businessSegments)[currentSlide].icon}
                       </span>
                     </div>
-                    <h4 className="text-white font-bold text-lg">
+                    <h4
+                      className="text-white text-lg"
+                      style={{ fontFamily: "Segoe UI semibold" }}>
                       {
                         Object.values(businessSegments)[currentSlide]
                           .testimonial.author
                       }
                     </h4>
-                    <p className="text-red-400 text-sm">
+                    <p
+                      className="text-red-400 text-sm"
+                      style={{ fontFamily: "Segoe UI Regular" }}>
                       {
                         Object.values(businessSegments)[currentSlide]
                           .testimonial.role
@@ -796,7 +859,7 @@ export default function HeroSection() {
                   onClick={() => setCurrentSlide(index)}
                   className={`transition-all duration-300 focus:outline-none ${
                     currentSlide === index
-                      ? "w-8 h-3 bg-gradient-to-r from-red-600 via-white to-red-600 rounded-full shadow-lg ring-2 ring-red-400/70"
+                      ? "w-8 h-3 bg-gradient-to-r from-red-600 to-red-600 rounded-full shadow-lg ring-2 ring-red-400/70"
                       : "w-3 h-3 bg-white/20 rounded-full hover:bg-red-600/40"
                   }`}
                   aria-label={`Ir para o depoimento ${index + 1}`}
@@ -821,16 +884,22 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs uppercase tracking-[0.2em] text-red-600 font-semibold mb-3 block">
+            <span
+              className="text-xs uppercase tracking-[0.2em] text-red-600 mb-3 block"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Parcerias Estratégicas
             </span>
-            <h2 className="text-5xl font-extrabold mb-4 text-gray-900 drop-shadow-sm">
+            <h2
+              className="text-5xl font-extrabold mb-4 text-gray-900 drop-shadow-sm"
+              style={{ fontFamily: "Segoe UI semibold" }}>
               Nossos Parceiros
             </h2>
             <div className="flex justify-center mb-8">
               <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-red-600 via-black to-red-600 shadow-md" />
             </div>
-            <p className="text-lg text-gray-500 font-medium leading-relaxed">
+            <p
+              className="text-lg text-gray-500 leading-relaxed"
+              style={{ fontFamily: "Segoe UI Regular" }}>
               Colaboramos com as principais empresas do mercado
               <br />
               para oferecer as melhores soluções
@@ -853,7 +922,7 @@ export default function HeroSection() {
                   width: `${
                     partners.length * 2 * 180 + partners.length * 2 * 64
                   }px`, // largura total para loop
-                  animation: "logo-marquee 18s linear infinite",
+                  animation: "logo-marquee 15s linear infinite",
                 }}>
                 {[...partners, ...partners].map((partner, idx) => (
                   <div
@@ -880,10 +949,14 @@ export default function HeroSection() {
             style={{ marginBottom: "-240px" }} // ajuste se necessário
           >
             <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
-              <h3 className="text-2xl font-bold mb-4 text-center">
+              <h3
+                className="text-2xl mb-4 text-center"
+                style={{ fontFamily: "Segoe UI semibold" }}>
                 Quer se Tornar um Parceiro?
               </h3>
-              <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-center text-base">
+              <p
+                className="text-gray-300 mb-6 max-w-2xl mx-auto text-center text-base"
+                style={{ fontFamily: "Segoe UI Regular" }}>
                 Junte-se a nós e faça parte de uma rede de empresas
                 comprometidas com a excelência e inovação
               </p>
@@ -892,7 +965,8 @@ export default function HeroSection() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate("/pages/contato")}
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium inline-flex items-center group transition-all">
+                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg  inline-flex items-center group transition-all"
+                  style={{ fontFamily: "Segoe UI Regular" }}>
                   Entre em Contato
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">
                     →
