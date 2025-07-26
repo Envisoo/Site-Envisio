@@ -1,0 +1,70 @@
+Projeto: Plataforma de Cursos Online (Área da Academia)
+
+Tecnologias
+-----------
+- Frontend: React.js (projeto separado)
+- Backend: Node.js com Express.js
+- Banco de Dados: PostgreSQL
+- ORM/Query: SQL com 'pg'
+- Autenticação: JWT
+- Papéis de Usuário: admin, instrutor, aluno
+
+Funcionalidades Já Implementadas
+--------------------------------
+
+Autenticação e Autorização
+- Login com geração de token JWT
+- Middleware 'autenticar' para proteger rotas
+- Middleware 'autorizarPapel' para limitar acesso por tipo de usuário
+
+Gestão de Usuários
+- Cadastro de usuários (apenas admin pode criar)
+- Papéis definidos: admin, instrutor, aluno
+
+Cursos
+- Criação de cursos (apenas instrutor)
+- Listagem pública de cursos
+- Filtros aplicáveis:
+  - Por título (busca parcial)
+  - Por categoria
+  - Por instrutor (nome)
+
+Inscrição em Cursos
+- Aluno pode se inscrever em um curso
+  - Verifica se o curso existe
+  - Verifica se o aluno já está inscrito
+- Aluno pode ver seus cursos inscritos (rota: /inscricoes/meus)
+
+Próximos Passos
+---------------
+
+1. Upload de Vídeos/Aulas
+   - Instrutor adiciona aulas aos cursos
+   - Requisitos:
+     - Tabela 'aulas'
+     - Associação com 'curso_id'
+     - Upload com multer ou Firebase/S3
+
+2. Listagem e Acesso às Aulas
+   - Aluno vê lista de aulas de cursos inscritos
+   - Verificação de inscrição antes de acessar
+
+3. Progresso do Aluno (Opcional)
+   - Marcar aula como concluída
+   - Ver progresso por curso
+
+4. Avaliações e Comentários
+   - Alunos avaliam cursos
+   - Sistema de comentários
+
+5. Painel do Instrutor/Admin
+   - Listagem dos cursos criados
+   - Número de inscritos por curso
+   - Relatórios
+
+Resumo do Banco de Dados
+-------------------------
+- usuarios: id, nome, email, senha, papel
+- cursos: id, titulo, descricao, categoria, instrutor (nome)
+- inscricoes: id, curso_id, usuario_id
+- aulas (futuro): id, curso_id, titulo, url_video, descricao

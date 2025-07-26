@@ -33,12 +33,12 @@ interface Segment {
 // ======================
 const heroSlides = [
   {
-    src: "/images/imagem home/banner_hero1.png",
+    src: "/images/imagem home/banner_hero1.webp",
     link: "/servicos/software",
     label: "Consultoria",
   },
   {
-    src: "/images/imagem home/banner_hero2.png",
+    src: "/images/imagem home/banner_hero2.webp",
     link: "/servicos/software",
     label: "Serviços Técnicos",
   },
@@ -115,39 +115,39 @@ const services = [
     title: "ERP Eticadata/Primavera",
     description:
       "Implantação, customização e suporte de sistemas de gestão empresarial líderes de mercado.",
-    icon: "💻",
     tipo: "software",
+    image: "/images/imagem cads/Destaque2.webp",
   },
   {
     title: "Aluguel de Equipamentos",
     description:
       "Aluguel de impressoras, computadores e multifuncionais para empresas.",
-    icon: "🖨️",
     tipo: "aluguel",
+    image: "/images/imagem cads/Destaque3.webp",
   },
   {
     title: "Sistemas de Segurança",
     description: "CFTV, controle de acesso, biometria e monitoramento 24h.",
-    icon: "🔒",
     tipo: "hardware",
+    image: "/images/imagem cads/Destaque4.webp",
   },
   {
     title: "Desenvolvimento Web",
     description: "Criação de sites, sistemas web e aplicativos sob demanda.",
-    icon: "🌐",
     tipo: "software",
+    image: "/images/imagem cads/Destaque5.webp",
   },
   {
     title: "Consultoria em TI",
     description: "Planejamento, diagnóstico e transformação digital.",
-    icon: "💡",
     tipo: "software",
+    image: "/images/imagem cads/Destaque6.webp",
   },
   {
     title: "Consultoria Digital",
     description: "Soluções digitais para automação e crescimento.",
-    icon: "💡",
     tipo: "software",
+    image: "/images/imagem cads/Destaque7.webp",
   },
 ];
 
@@ -245,16 +245,16 @@ export default function HeroSection() {
             <div className="text-center mb-20">
               <motion.span
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                whileInView={{ opacity: 2 }}
                 style={{
                   fontFamily: "Segoe UI Regular",
                 }}
-                className="text-sm uppercase tracking-wider text-gray-600 mb-4 block">
+                className="text-sm uppercase tracking-wider text-gray-900 mb-4 block">
                 Nossa Trajetória
               </motion.span>
               <h2
                 style={{ fontFamily: "Segoe UI Semibold" }}
-                className="text-5xl font-bold mb-6">
+                className="text-5xl mb-6">
                 Transformando negócios desde 2018
               </h2>
               <div className="w-24 h-1 bg-black mx-auto" />
@@ -346,7 +346,7 @@ export default function HeroSection() {
                   className="relative z-10">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                     <img
-                      src="/images/imagem home/banner_quem.png"
+                      src="/images/imagem home/banner_quem.webp"
                       alt="Nossa Equipe"
                       className="w-full h-[600px] object-cover"
                     />
@@ -415,10 +415,10 @@ export default function HeroSection() {
       </section>
 
       {/* Seção de Serviços Redesenhada */}
-      <section className="py-32 bg-black relative overflow-hidden">
+      <section className="py-32 bg-white relative overflow-hidden">
         {/* Gradiente decorativo */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black via-gray-900 to-black" />
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-gray-50 to-transparent" />
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.1),_transparent_70%)]" />
         </div>
 
@@ -429,14 +429,12 @@ export default function HeroSection() {
             whileInView={{ opacity: 1 }}
             className="text-center mb-20">
             <span
-              className="text-sm uppercase tracking-wider text-gray-400"
+              className="text-sm uppercase tracking-wider text-black"
               style={{
                 fontFamily: "Segoe UI Regular",
-              }}>
-              Soluções Empresariais
-            </span>
+              }}></span>
             <h2
-              className="text-5xl font-bold text-white mt-4 mb-6"
+              className="text-5xl font-bold text-black mt-4 mb-6"
               style={{ fontFamily: "Segoe UI Semibold" }}>
               Nossos Serviços Especializados
             </h2>
@@ -446,7 +444,7 @@ export default function HeroSection() {
                 fontFamily: "Segoe UI Regular",
               }}
             />
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-black max-w-3xl mx-auto">
               Transformamos desafios em oportunidades com soluções tecnológicas
               integradas e consultoria especializada para impulsionar o
               crescimento do seu negócio.
@@ -479,14 +477,25 @@ export default function HeroSection() {
                 }}
                 className="relative isolate transform-gpu group cursor-pointer"
                 style={{ fontFamily: "Segoe UI Regular" }}>
-                <div className="relative bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 group-hover:border-red-500/50 group-hover:bg-red-800/20 transition-all duration-300 h-full">
-                  <div className="w-16 h-16 rounded-full bg-red-600/30 flex items-center justify-center mb-6">
-                    <span className="text-3xl">{service.icon}</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">
+                <div
+                  className="relative bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 group-hover:border-red-500/50 group-hover:bg-red-800/20 transition-all duration-300 h-full overflow-hidden"
+                  style={{
+                    backgroundImage: service.image
+                      ? `linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('${service.image}')`
+                      : undefined,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}>
+                  <h3
+                    className="text-2xl text-white mb-4 drop-shadow-lg"
+                    style={{ fontFamily: "Segoe UI Regular" }}>
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 mb-6">{service.description}</p>
+                  <p
+                    className="text-gray-100 mb-6 drop-shadow"
+                    style={{ fontFamily: "Segoe UI Regular" }}>
+                    {service.description}
+                  </p>
                   <div className="mt-auto flex justify-end">
                     <button
                       className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all"
@@ -503,6 +512,7 @@ export default function HeroSection() {
                       Saiba mais
                     </button>
                   </div>
+                  <div className="absolute inset-0 rounded-2xl pointer-events-none" />
                 </div>
               </motion.div>
             ))}
@@ -543,12 +553,12 @@ export default function HeroSection() {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto mb-20">
             <span
-              className="text-sm uppercase tracking-wider text-red-600 font-semibold mb-4 block"
+              className="text-sm uppercase tracking-wider text-red-600  mb-4 block"
               style={{ fontFamily: "Segoe UI Regular" }}>
               Formação Profissional de Elite
             </span>
             <h2
-              className="text-5xl font-bold text-gray-900 mb-6"
+              className="text-5xl text-gray-900 mb-6"
               style={{ fontFamily: "Segoe UI semibold" }}>
               Desenvolva Seu Potencial
             </h2>
@@ -725,7 +735,7 @@ export default function HeroSection() {
             className="text-center max-w-3xl mx-auto mb-20">
             <span
               className="text-sm uppercase tracking-wider text-red-400 mb-4 block"
-              style={{ fontFamily: "Segoe UI semibold" }}>
+              style={{ fontFamily: "Segoe UI regular" }}>
               Depoimentos
             </span>
             <h2
@@ -946,7 +956,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="relative z-30 max-w-3xl mx-auto"
-            style={{ marginBottom: "-240px" }} // ajuste se necessário
+            style={{ marginBottom: "-100px" }} // ajuste se necessário
           >
             <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
               <h3

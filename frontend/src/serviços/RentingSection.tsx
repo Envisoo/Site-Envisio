@@ -1,75 +1,287 @@
 /** @format */
 
-// ===============================
-// IMPORTS E TIPAGEM
-// ===============================
-import React, { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Mail, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from "react";
+import {
+  Printer,
+  Shield,
+  Zap,
+  Settings,
+  Calculator,
+  Quote,
+  Check,
+  BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
+  DollarSign,
+  RefreshCw,
+  FileText,
+  Image,
+  MonitorSmartphone,
+  Smartphone,
+  Headphones,
+} from "lucide-react";
 
-// Tipagem para os serviços de renting
-type RentingService = {
-  id: string;
-  title: string;
-  description: string;
-  features: string[];
-  image: string;
+// Dados dos serviços de renting
+const rentingServices = [
+  {
+    id: 1,
+    title: "Computadores",
+    description:
+      "Desktops de alta performance para escritório com configurações otimizadas e suporte completo.",
+    icon: <MonitorSmartphone className="w-8 h-8 text-red-600" />,
+    items: [
+      "Processadores Intel Core i5/i7 última geração",
+      "16GB/32GB RAM DDR4",
+      "SSD NVMe de alta velocidade",
+      "Monitor Full HD/4K",
+      "Windows 11 Pro licenciado",
+    ],
+    features: [
+      { icon: <Zap />, text: "Alto Desempenho" },
+      { icon: <Shield />, text: "Segurança Pro" },
+      { icon: <Settings />, text: "Suporte Técnico" },
+      { icon: <RefreshCw />, text: "Atualização Garantida" },
+    ],
+    image: "/images/pc1.webp",
+    testimonial: {
+      text: "Os computadores alugados mantêm nossa equipe sempre produtiva, com equipamentos atualizados e suporte rápido.",
+      author: "Paulo Silva - Gerente de TI",
+    },
+  },
+  {
+    id: 2,
+    title: "bizhub 301i",
+    description:
+      "Multifuncional monocromática ideal para grupos de trabalho médios com necessidade de alta produtividade.",
+    icon: <Printer className="w-8 h-8 text-gray-600" />,
+    items: [
+      "Velocidade A4: 22 ppm em preto e branco",
+      "Formatos de papel: A6-A3",
+      "Painel touch intuitivo de 7 polegadas",
+      "Digitalização em alta velocidade",
+      "Excelente qualidade de impressão",
+    ],
+    features: [
+      { icon: <Zap />, text: "22 PPM" },
+      { icon: <FileText />, text: "A3" },
+      { icon: <MonitorSmartphone />, text: "Scanner Duplex" },
+      { icon: <MonitorSmartphone />, text: "Touch 7'" },
+    ],
+    image: "/images/bizhub.webp",
+    testimonial: {
+      text: "A Bizhub 227 atende perfeitamente nossas necessidades de impressão em preto e branco com qualidade profissional.",
+      author: "Maria Santos - Coordenadora Administrativa",
+    },
+  },
+
+  {
+    id: 5,
+    title: "Bizhub 758",
+    description:
+      "Multifuncional monocromática de produção para altos volumes de impressão.",
+    icon: <Printer className="w-8 h-8 text-purple-600" />,
+    items: [
+      "Velocidade A4: 75 ppm em P&B",
+      "Formatos de papel: A6-SRA3",
+      "Painel touch de 10.1 polegadas",
+      "Scanner dual-scan de alta velocidade",
+      "Múltiplas opções de acabamento",
+    ],
+    features: [
+      { icon: <Zap />, text: "75 PPM" },
+      { icon: <FileText />, text: "SRA3" },
+      { icon: <MonitorSmartphone />, text: "Dual Scan" },
+      { icon: <Settings />, text: "Acabamento Pro" },
+    ],
+    image: "/images/bizhub-758.jpg",
+    testimonial: {
+      text: "A Bizhub 758 transformou nossa capacidade de produção com sua incrível velocidade e confiabilidade.",
+      author: "Roberto Souza - Diretor de Operações",
+    },
+  },
+];
+
+// Componente de Card de Serviço Premium
+type Feature = {
+  icon: React.ReactElement;
+  text: string;
 };
 
-// ===============================
-// COMPONENTE PRINCIPAL
-// ===============================
-// Seção principal da página de Renting
-const RentingSection: React.FC = () => {
-  // Lista de serviços disponíveis para o carrossel
-  const rentingServices: RentingService[] = [
-    {
-      id: "0",
-      title: "Impressoras Profissionais",
-      description:
-        "Soluções completas em renting de impressoras coloridas e multifuncionais para empresas de todos os portes.",
-      features: [
-        "bizhub C3351i - Impressora multifuncional colorida",
-        "bizhub C301i - Compacta e eficiente",
-        "bizhub C251i - Ideal para pequenos escritórios",
-        "Manutenção preventiva inclusa",
-        "Suporte técnico 24/7",
-        "Substituição imediata em caso de defeito",
-      ],
-      image: "/images/renting/pc2.jpg",
-    },
-    {
-      id: "1",
-      title: "Computadores Profissionais",
-      description:
-        "Aluguel de computadores de alto desempenho para escritórios e projetos específicos com configurações personalizadas.",
-      features: [
-        "Intel i7 de última geração",
-        "16GB RAM DDR4",
-        "SSD 512GB para máxima velocidade",
-        "Windows 11 Pro licenciado",
-        "Assistência técnica inclusa",
-        "Upgrade de hardware quando necessário",
-      ],
-      image: "/images/renting/pc1.jpg",
-    },
-  ];
+type Service = {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.ReactElement;
+  items: string[];
+  features: Feature[];
+  image: string;
+  testimonial: {
+    text: string;
+    author: string;
+  };
+};
 
-  // ===============================
-  // RENDERIZAÇÃO DA PÁGINA
-  // ===============================
+type ServiceCardProps = {
+  service: Service;
+  active: boolean;
+  onClick: () => void;
+};
+
+const ServiceCard: React.FC<ServiceCardProps> = ({
+  service,
+  active,
+  onClick,
+}) => (
+  <motion.div
+    onClick={onClick}
+    whileHover={{ scale: 1.03 }}
+    className={`cursor-pointer rounded-2xl p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
+      active
+        ? "border-red-500 bg-white shadow-2xl"
+        : "border-transparent bg-white/50 shadow-lg"
+    }`}>
+    <div>
+      <div className="flex items-center gap-4 mb-4">
+        <div className="p-3 rounded-full bg-gradient-to-br from-blue-50 to-white shadow">
+          {service.icon}
+        </div>
+        <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
+      </div>
+      <p className="text-gray-600 mb-4">
+        {service.description.substring(0, 100)}...
+      </p>
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex -space-x-2">
+          {service.features.slice(0, 3).map((feature, i) => (
+            <div
+              key={i}
+              className="w-8 h-8 rounded-full bg-white border-2 border-white flex items-center justify-center shadow">
+              {React.cloneElement(feature.icon as React.ReactElement<any>, {
+                className: "w-4 h-4 text-blue-600",
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <a
+      href="/pages/contato"
+      className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow transition-all w-full flex items-center justify-center">
+      Solicitar Orçamento
+    </a>
+  </motion.div>
+);
+
+// Componente de Destaque de Serviço
+const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}
+    className="bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-2xl overflow-hidden">
+    <div className="grid lg:grid-cols-2 gap-8">
+      <div className="relative h-96 lg:h-full">
+        <img
+          src={service.image}
+          alt={service.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+          <div className="text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <BadgeCheck className="text-yellow-400" />
+              <span className="text-sm font-semibold">Serviço Premium</span>
+            </div>
+            <h3 className="text-2xl font-bold">{service.title}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-8">
+        <div className="mb-6">
+          <h4 className="text-lg font-semibold text-gray-800 mb-3">
+            Principais Benefícios
+          </h4>
+          <ul className="space-y-3">
+            {service.items.map((item, i) => (
+              <li key={i} className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-500" />
+                <span className="text-gray-600">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold text-gray-800 mb-3">
+            Diferenciais
+          </h4>
+          <div className="grid grid-cols-2 gap-3">
+            {service.features.map((feature, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 bg-white/80 p-2 rounded-lg shadow-sm">
+                {React.cloneElement(feature.icon as React.ReactElement<any>, {
+                  className: "w-5 h-5 text-blue-500",
+                })}
+                <span className="text-gray-700 text-sm">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100">
+          <div className="flex items-start gap-3">
+            <Quote className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
+            <div>
+              <p className="text-gray-600 italic mb-2">
+                {service.testimonial.text}
+              </p>
+              <p className="text-sm text-gray-500 font-medium">
+                {service.testimonial.author}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
+
+const RentingSection = () => {
+  const [activeService, setActiveService] = useState(rentingServices[0]);
+
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Função para navegação do carrossel (circular)
+  const scrollToCard = (index: number) => {
+    let newIndex = index;
+    if (index < 0) newIndex = rentingServices.length - 1;
+    if (index >= rentingServices.length) newIndex = 0;
+    if (carouselRef.current) {
+      const card = carouselRef.current.children[newIndex] as HTMLElement;
+      if (card) {
+        card.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+    }
+    setActiveService(rentingServices[newIndex]);
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* ===============================
-          Banner principal
-        =============================== */}
+    <div className="bg-white">
+      {/* Banner estático apenas imagem */}
       <section
         className="w-full flex items-center justify-center overflow-hidden bg-white"
-        style={{ height: "clamp(100px, 35vw, 400px)" }}>
+        style={{ height: "clamp(100px, 35vw, 700px)" }}>
         <img
-          src="/images/renting/pc2.jpg"
-          alt="Banner Renting"
+          src="/images/renting.jpg"
+          alt="Banner Serviços de Renting"
           className="w-full h-full object-cover object-center"
           style={{ opacity: 1 }}
         />
@@ -78,9 +290,7 @@ const RentingSection: React.FC = () => {
       {/* Espaço entre o banner e o conteúdo */}
       <div className="h-10 md:h-16 lg:h-10" />
 
-      {/* ===============================
-          Seção institucional premium
-        =============================== */}
+      {/* Seção institucional descritiva antes do carrossel */}
       <section className="relative bg-gradient-to-b from-white via-blue-50 to-white py-20 px-6 md:px-20">
         <div className="max-w-6xl mx-auto text-center mb-16">
           <motion.h3
@@ -88,8 +298,9 @@ const RentingSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-semibold text-red-600 mb-6">
-            Soluções Integradas de <span className="text-black">Renting</span>
+            className="text-4xl md:text-5xl font-extrabold text-red-600 mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
+            Soluções de <span className="text-black">Renting</span>
           </motion.h3>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -98,68 +309,49 @@ const RentingSection: React.FC = () => {
             viewport={{ once: true }}
             className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto"
             style={{ fontFamily: "Segoe UI Regular" }}>
-            Flexibilidade, economia e tecnologia de ponta para sua empresa.
-            Alugue impressoras e computadores profissionais com manutenção,
-            suporte e atualização inclusos.
+            Transforme sua infraestrutura de TI com nossas soluções de aluguel
+            flexíveis. Equipamentos de última geração com suporte técnico
+            especializado e manutenção inclusa.
           </motion.p>
         </div>
 
-        {/* Cards institucionais */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Card Impressoras */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
             className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
-            <img
-              src="/images/renting/pc2.jpg"
-              alt="Impressoras"
-              className="w-20 h-20 object-cover rounded-xl flex-shrink-0"
-            />
+            <Calculator className="w-10 h-10 text-orange-500 flex-shrink-0" />
             <div>
-              <h5 className="text-lg font-semibold text-gray-800 mb-1">
-                Impressoras Profissionais
-              </h5>
-              <p
-                className="text-gray-600 text-sm"
-                style={{ fontFamily: "Segoe UI Regular" }}>
-                Renting de impressoras coloridas e multifuncionais com
-                manutenção e suporte total.
+              <h4 className="text-xl font-semibold mb-2">Custo-Benefício</h4>
+              <p className="text-gray-600">
+                Reduza custos de investimento inicial e mantenha seu parque
+                tecnológico sempre atualizado
               </p>
             </div>
           </motion.div>
-          {/* Card Computadores */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
             className="bg-gradient-to-br from-red-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
-            <img
-              src="/images/renting/pc1.jpg"
-              alt="Computadores"
-              className="w-20 h-20 object-cover rounded-xl flex-shrink-0"
-            />
+            <Headphones className="w-10 h-10 text-red-600 flex-shrink-0" />
             <div>
-              <h5 className="text-lg font-semibold text-gray-800 mb-1">
-                Computadores Profissionais
-              </h5>
-              <p
-                className="text-gray-600 text-sm"
-                style={{ fontFamily: "Segoe UI Regular" }}>
-                Aluguel de computadores de alto desempenho com assistência
-                técnica e upgrades inclusos.
+              <h4 className="text-xl font-semibold mb-2">
+                Suporte Especializado
+              </h4>
+              <p className="text-gray-600">
+                Equipe técnica dedicada e pronta para atender suas necessidades
+                24/7
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ===============================
-          Carrossel de Serviços
-        =============================== */}
+      {/* Seção de Serviços em Destaque - agora carrossel */}
       <section className="py-24 bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
@@ -168,8 +360,9 @@ const RentingSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-semibold text-gray-900 mb-5 tracking-tight">
-              Nossos <span className="text-red-600">Serviços</span>
+              className="text-4xl md:text-5xl text-gray-900 mb-5 tracking-tight"
+              style={{ fontFamily: "Segoe UI semibold" }}>
+              Nossos Serviços de Renting
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -178,123 +371,192 @@ const RentingSection: React.FC = () => {
               viewport={{ once: true }}
               className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto"
               style={{ fontFamily: "Segoe UI Regular" }}>
-              Soluções inovadoras, confiáveis e sob medida para elevar a
-              infraestrutura da sua empresa ao próximo nível.
+              Equipamentos de última geração com flexibilidade e economia para
+              sua empresa
             </motion.p>
           </div>
 
-          {/* Carrossel de cards de serviços */}
-          <RentingCarousel services={rentingServices} />
+          {/* Carrossel de cards */}
+          <div className="relative mb-16">
+            <button
+              onClick={() =>
+                scrollToCard(
+                  rentingServices.findIndex((s) => s.id === activeService.id) -
+                    1
+                )
+              }
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              aria-label="Anterior">
+              <ChevronLeft className="w-7 h-7 text-red-600" />
+            </button>
+            <div
+              ref={carouselRef}
+              className="flex gap-8 overflow-x-auto no-scrollbar py-4 px-12 snap-x snap-mandatory scroll-smooth justify-start"
+              style={{
+                scrollBehavior: "smooth",
+                scrollbarWidth: "none",
+                scrollPaddingLeft: "3rem",
+                scrollPaddingRight: "3rem",
+                fontFamily: "Segoe UI Regular",
+              }}>
+              {rentingServices.map((service) => (
+                <div
+                  key={service.id}
+                  className="min-w-[300px] sm:min-w-[350px] snap-start">
+                  <ServiceCard
+                    service={service}
+                    active={activeService.id === service.id}
+                    onClick={() => setActiveService(service)}
+                  />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() =>
+                scrollToCard(
+                  rentingServices.findIndex((s) => s.id === activeService.id) +
+                    1
+                )
+              }
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              aria-label="Próximo">
+              <ChevronRight className="w-7 h-7 text-red-600" />
+            </button>
+          </div>
+
+          {/* Destaque do serviço selecionado */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeService.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -24 }}
+              transition={{ duration: 0.35 }}>
+              <ServiceHighlight service={activeService} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* ===============================
-          Vantagens do Renting
-        =============================== */}
-      <section className="py-20 bg-gray-50 border-t border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Seção de Diferenciais */}
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-semibold text-black mb-4">
-              Por que escolher Renting?
-            </h2>
-            <p
-              className="text-lg text-gray-700 max-w-2xl mx-auto"
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-bold mb-4"
+              style={{ fontFamily: "Segoe UI semibold" }}>
+              Por que escolher nosso Renting?
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
               style={{ fontFamily: "Segoe UI Regular" }}>
-              Descubra as vantagens de ter equipamentos profissionais sem o
-              investimento inicial
-            </p>
+              Flexibilidade e tecnologia de ponta para impulsionar seu negócio
+            </motion.p>
           </div>
 
-          {/* Lista de vantagens em cards */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            style={{ fontFamily: "Segoe UI Regular" }}>
-            {[
-              {
-                title: "Sem Investimento Inicial",
-                description:
-                  "Tenha acesso aos melhores equipamentos sem desembolso inicial",
-                icon: "💰",
-              },
-              {
-                title: "Manutenção Inclusa",
-                description:
-                  "Manutenção preventiva e corretiva incluída no contrato",
-                icon: "🔧",
-              },
-              {
-                title: "Suporte 24/7",
-                description:
-                  "Assistência técnica disponível sempre que precisar",
-                icon: "📞",
-              },
-              {
-                title: "Equipamentos Atualizados",
-                description: "Sempre com a tecnologia mais recente do mercado",
-                icon: "⚡",
-              },
-              {
-                title: "Flexibilidade",
-                description:
-                  "Contratos flexíveis que se adaptam às suas necessidades",
-                icon: "🔄",
-              },
-              {
-                title: "Economia Garantida",
-                description:
-                  "Reduza custos operacionais e tenha previsibilidade financeira",
-                icon: "📊",
-              },
-            ].map((advantage, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl border border-gray-100 shadow hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-4">{advantage.icon}</div>
-                <h3 className="text-xl font-bold text-black mb-3">
-                  {advantage.title}
-                </h3>
-                <p
-                  className="text-gray-700"
-                  style={{ fontFamily: "Segoe UI Regular" }}>
-                  {advantage.description}
-                </p>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-gray-800 p-6 rounded-xl">
+              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
+                <DollarSign className="w-6 h-6 text-blue-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">
+                Economia Inteligente
+              </h3>
+              <p className="text-gray-400">
+                Sem grandes investimentos iniciais. Pague apenas pelo que usar,
+                com custos previsíveis e dedutíveis.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-gray-800 p-6 rounded-xl">
+              <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
+                <RefreshCw className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Sempre Atualizado</h3>
+              <p className="text-gray-400">
+                Mantenha seu parque tecnológico sempre atual com as últimas
+                inovações do mercado.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="bg-gray-800 p-6 rounded-xl">
+              <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6 text-red-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Suporte Completo</h3>
+              <p className="text-gray-400">
+                Manutenção preventiva e corretiva inclusa, com atendimento
+                prioritário e equipe especializada.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ===============================
-          CTA Final
-        =============================== */}
-      <section className="py-20 bg-red-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Pronto para começar?
-          </h2>
-          <p
-            className="text-xl text-red-100 mb-8"
+      {/* CTA Final */}
+      <section className="py-20 bg-red-700">
+        <div className="container mx-auto px-6 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl text-white mb-6"
+            style={{ fontFamily: "Segoe UI semibold" }}>
+            Modernize sua infraestrutura sem compromisso
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
             style={{ fontFamily: "Segoe UI Regular" }}>
-            Entre em contato conosco e descubra como o renting pode transformar
+            Converse com nossos especialistas e descubra a melhor solução para
             sua empresa
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/pages/contato"
-              className="inline-flex items-center justify-center bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-100 hover:text-red-700 transition-colors border-2 border-white">
-              <Mail className="w-5 h-5 mr-2" />
-              Solicitar Contato
-            </Link>
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+244947137676"
-              className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-700 transition-colors">
-              <Phone className="w-5 h-5 mr-2" />
-              Ligar Agora
+              href="/pages/contato"
+              className="inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all">
+              Solicitar Proposta
             </a>
-          </div>
+            <a
+              href="/pages/sobre"
+              className="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all">
+              Conhecer Mais
+            </a>
+          </motion.div>
         </div>
       </section>
     </div>
@@ -302,299 +564,3 @@ const RentingSection: React.FC = () => {
 };
 
 export default RentingSection;
-
-// Tipagem para o carrossel
-// (Removido tipo duplicado RentingService)
-
-const RentingCarousel: React.FC<{ services: RentingService[] }> = ({
-  services,
-}) => {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const scrollToCard = (idx: number) => {
-    let newIdx = idx;
-    if (newIdx < 0) newIdx = services.length - 1;
-    if (newIdx >= services.length) newIdx = 0;
-    setActiveIdx(newIdx);
-    const carousel = carouselRef.current;
-    if (carousel) {
-      const card = carousel.children[newIdx] as HTMLElement;
-      if (card)
-        card.scrollIntoView({
-          behavior: "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-    }
-  };
-
-  const activeService = services[activeIdx];
-
-  return (
-    <>
-      <div className="relative mb-16">
-        {/* Setas de navegação */}
-        <button
-          onClick={() => scrollToCard(activeIdx - 1)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
-          aria-label="Anterior">
-          <ChevronLeft className="w-7 h-7 text-red-600" />
-        </button>
-        <div
-          ref={carouselRef}
-          className="flex gap-8 overflow-x-auto no-scrollbar py-4 px-12 snap-x snap-mandatory scroll-smooth justify-start"
-          style={{
-            scrollBehavior: "smooth",
-            scrollbarWidth: "none",
-            scrollPaddingLeft: "3rem",
-            scrollPaddingRight: "3rem",
-          }}>
-          {services.map((service, idx) => (
-            <div
-              key={service.id}
-              className={`snap-center min-w-[340px] max-w-[320px] flex-shrink-0 transition-all duration-200 ${
-                activeService.id === service.id
-                  ? "border-red-500 shadow-2xl z-10 scale-105"
-                  : "opacity-70"
-              }`}
-              onClick={() => scrollToCard(idx)}>
-              <ServiceCard
-                service={service}
-                active={activeService.id === service.id}
-                onClick={() => scrollToCard(idx)}
-              />
-            </div>
-          ))}
-        </div>
-        <button
-          onClick={() => scrollToCard(activeIdx + 1)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
-          aria-label="Próximo">
-          <ChevronRight className="w-7 h-7 text-red-600" />
-        </button>
-      </div>
-
-      {/* Destaque do serviço selecionado */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeService.id}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -24 }}
-          transition={{ duration: 0.35 }}>
-          <ServiceHighlight service={activeService} />
-        </motion.div>
-      </AnimatePresence>
-    </>
-  );
-};
-
-// Card individual do carrossel
-const ServiceCard: React.FC<{
-  service: RentingService;
-  active: boolean;
-  onClick: () => void;
-}> = ({ service, active, onClick }) => (
-  <div
-    className={`bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center border-2 ${
-      active ? "border-red-500" : "border-transparent"
-    } cursor-pointer transition-all`}
-    onClick={onClick}>
-    <img
-      src={service.image}
-      alt={service.title}
-      className="w-32 h-32 object-cover rounded-xl mb-4"
-    />
-    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">
-      {service.title}
-    </h4>
-    <p
-      className="text-gray-600 text-sm text-center line-clamp-3"
-      style={{ fontFamily: "Segoe UI Regular" }}>
-      {service.description}
-    </p>
-  </div>
-);
-
-// Destaque detalhado do serviço selecionado (modelo premium consultoria TI)
-const ServiceHighlight: React.FC<{ service: RentingService }> = ({
-  service,
-}) => (
-  <div className="bg-white rounded-2xl shadow-xl p-0 flex flex-col md:flex-row overflow-hidden border border-blue-100 max-w-5xl mx-auto">
-    {/* Imagem à esquerda - maior */}
-    <div className="md:w-[70%] w-full flex items-end justify-start bg-gradient-to-br from-blue-50 to-white p-0 relative min-h-[340px] md:min-h-[220px]">
-      <div className="absolute left-0 bottom-0 w-full h-full rounded-2xl overflow-hidden">
-        <img
-          src={service.image}
-          alt={service.title}
-          className="w-full h-full object-cover rounded-2xl"
-          style={{ objectPosition: "left center" }}
-        />
-      </div>
-      {/* Selo e título sobrepostos na imagem, igual ao exemplo */}
-      <div className="relative z-10 p-6 md:p-8 flex flex-col items-start">
-        <span className="inline-flex items-center text-xs font-semibold text-white bg-yellow-500/90 rounded px-2 py-1 mb-2 shadow">
-          <svg
-            className="w-4 h-4 mr-1"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 17l-5 3 1.9-5.6L4 9.5l5.7-.5L12 4l2.3 5 5.7.5-4.9 4.9L17 20z"
-            />
-          </svg>
-          Solução Certificada
-        </span>
-        <span className="text-xl md:text-2xl font-bold text-white drop-shadow mt-1">
-          {service.title}
-        </span>
-      </div>
-    </div>
-    {/* Conteúdo à direita - menor */}
-    <div className="md:w-[50%] w-full flex flex-col gap-5 p-6 md:p-10">
-      {/* Selo */}
-      <div className="flex items-center gap-2 mb-1">
-        <span className="inline-flex items-center text-xs font-semibold text-blue-700">
-          <svg
-            className="w-5 h-5 text-yellow-500 mr-1"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 17l-5 3 1.9-5.6L4 9.5l5.7-.5L12 4l2.3 5 5.7.5-4.9 4.9L17 20z"
-            />
-          </svg>
-          Solução Certificada
-        </span>
-      </div>
-      {/* Título */}
-      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2 leading-tight">
-        {service.title}
-      </h3>
-      {/* Benefícios */}
-      <div>
-        <h4 className="text-lg font-semibold text-gray-800 mb-2">
-          Principais Benefícios
-        </h4>
-        <ul className="space-y-1">
-          {service.features.slice(0, 3).map((feature, idx) => (
-            <li key={idx} className="flex items-center text-gray-700 text-base">
-              <span className="inline-block w-2 h-2 bg-red-400 rounded-full mr-2" />
-              {feature}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {/* Tecnologias Incluídas */}
-      <div>
-        <h4 className="text-lg font-semibold text-gray-800 mb-2 mt-4">
-          Tecnologias Incluídas
-        </h4>
-        <div className="grid grid-cols-2 gap-4 items-stretch">
-          <div className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm min-w-0 h-full">
-            <span className="inline-block w-5 h-5 text-red-500 flex-shrink-0">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 18v-1a4 4 0 00-8 0v1"
-                />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </span>
-            <span
-              className="text-sm text-gray-700 whitespace-nowrap"
-              style={{ fontFamily: "Segoe UI Regular" }}>
-              Nuvem e DevOps
-            </span>
-          </div>
-          <div className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm min-w-0 h-full">
-            <span className="inline-block w-5 h-5 text-red-500 flex-shrink-0">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 11c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm-6 8v-1a4 4 0 018 0v1"
-                />
-              </svg>
-            </span>
-            <span
-              className="text-sm  text-gray-700 whitespace-nowrap"
-              style={{ fontFamily: "Segoe UI Regular" }}>
-              Segurança
-            </span>
-          </div>
-          <div className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm min-w-0 h-full">
-            <span className="inline-block w-5 h-7 text-red-500 flex-shrink-0"></span>
-            <span
-              className="text-sm  text-gray-700 whitespace-nowrap"
-              style={{ fontFamily: "Segoe UI Regular" }}>
-              Infraestrutura
-            </span>
-          </div>
-          <div className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm min-w-0 h-full">
-            <span className="inline-block w-5 h-5 text-red-500 flex-shrink-0">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M18 8a6 6 0 00-12 0v4a6 6 0 0012 0V8z"
-                />
-              </svg>
-            </span>
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-              Suporte 24/7
-            </span>
-          </div>
-        </div>
-      </div>
-      {/* Depoimento */}
-      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mt-4">
-        <div className="flex items-start gap-2 mb-1">
-          <span className="text-blue-400 text-2xl font-bold">“</span>
-          <span
-            className="text-gray-700 italic text-base"
-            style={{ fontFamily: "Segoe UI Regular" }}>
-            A solução de renting da Envisio elevou nossa produtividade e
-            eliminou preocupações com manutenção e atualização de equipamentos.
-          </span>
-        </div>
-        <span
-          className="block text-sm text-gray-500 mt-1 ml-6"
-          style={{ fontFamily: "Segoe UI Regular" }}>
-          — Paulo Silva, CEO - TechAngola
-        </span>
-      </div>
-      {/* CTA */}
-      <div className="flex justify-end mt-4">
-        <Link
-          to="/pages/contato"
-          className="inline-flex items-center px-7 py-3 bg-red-600 text-white rounded-lg font-semibold shadow hover:bg-red-700 transition-colors">
-          Solicitar Orçamento
-        </Link>
-      </div>
-    </div>
-  </div>
-);

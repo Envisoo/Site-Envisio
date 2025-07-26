@@ -9,6 +9,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [servicosDropdownOpen, setServicosDropdownOpen] = useState(false);
+  const [servicosDropdownTimeout, setServicosDropdownTimeout] =
+    useState<NodeJS.Timeout | null>(null);
+  const [apoioDropdownTimeout, setApoioDropdownTimeout] =
+    useState<NodeJS.Timeout | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -70,7 +74,9 @@ export default function Navbar() {
       className="fixed top-0 w-full z-50 transition-all duration-300 bg-white shadow-lg">
       {/* Container principal do menu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-12">
+        <div className="flex justify-between h-18 items-center">
+          {" "}
+          {/* <-- aumente a altura aqui */}
           <Link to="/" className="flex items-center">
             {/* Logo e nome da empresa */}
             <motion.div
@@ -78,9 +84,9 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               className="flex items-center">
               <img
-                src="/images/Logo.jpg"
+                src="/images/Logos/logo.svg"
                 alt="Envisio"
-                className="h-7 w-auto"
+                className="h-14 w-auto"
               />
               <span className="text-xl font-bold ml-2 text-gray-900"></span>
             </motion.div>
@@ -94,8 +100,19 @@ export default function Navbar() {
                 <div
                   key="servicos"
                   className="relative h-full flex items-center"
-                  onMouseEnter={() => setServicosDropdownOpen(true)}
-                  onMouseLeave={() => setServicosDropdownOpen(false)}>
+                  onMouseEnter={() => {
+                    if (servicosDropdownTimeout) {
+                      clearTimeout(servicosDropdownTimeout);
+                      setServicosDropdownTimeout(null);
+                    }
+                    setServicosDropdownOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    const timeout = setTimeout(() => {
+                      setServicosDropdownOpen(false);
+                    }, 200);
+                    setServicosDropdownTimeout(timeout);
+                  }}>
                   <span
                     className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative cursor-pointer ${
                       isServicosActive() || servicosDropdownOpen
@@ -122,7 +139,7 @@ export default function Navbar() {
                     {(servicosDropdownOpen || isServicosActive()) && (
                       <div
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600"
-                        style={{ bottom: "-1px" }}
+                        style={{ bottom: "-17px" }}
                       />
                     )}
                   </span>
@@ -135,7 +152,20 @@ export default function Navbar() {
                         top: "var(--dropdown-offset)",
                         left: "50%",
                         transform: "translateX(-50%)",
-                        marginTop: "2px",
+                        marginTop: "-6px",
+                      }}
+                      onMouseEnter={() => {
+                        if (servicosDropdownTimeout) {
+                          clearTimeout(servicosDropdownTimeout);
+                          setServicosDropdownTimeout(null);
+                        }
+                        setServicosDropdownOpen(true);
+                      }}
+                      onMouseLeave={() => {
+                        const timeout = setTimeout(() => {
+                          setServicosDropdownOpen(false);
+                        }, 200);
+                        setServicosDropdownTimeout(timeout);
                       }}>
                       <div className="px-2 pt-2 pb-2">
                         <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
@@ -171,8 +201,19 @@ export default function Navbar() {
                 <div
                   key="apoio"
                   className="relative h-full flex items-center"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}>
+                  onMouseEnter={() => {
+                    if (apoioDropdownTimeout) {
+                      clearTimeout(apoioDropdownTimeout);
+                      setApoioDropdownTimeout(null);
+                    }
+                    setDropdownOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    const timeout = setTimeout(() => {
+                      setDropdownOpen(false);
+                    }, 200);
+                    setApoioDropdownTimeout(timeout);
+                  }}>
                   <span
                     className={`h-full px-4 text-base font-normal bg-transparent flex items-center transition-all relative cursor-pointer ${
                       isApoioActive() || dropdownOpen
@@ -195,11 +236,11 @@ export default function Navbar() {
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
-                    {/* Barra indicadora */}
+                    {/* Barra indicadora menu apoio*/}
                     {(dropdownOpen || isApoioActive()) && (
                       <div
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600"
-                        style={{ bottom: "-1px" }}
+                        style={{ bottom: "-17px" }}
                       />
                     )}
                   </span>
@@ -212,7 +253,20 @@ export default function Navbar() {
                         top: "var(--dropdown-offset)",
                         left: "50%",
                         transform: "translateX(-50%)",
-                        marginTop: "2px",
+                        marginTop: "-6px",
+                      }}
+                      onMouseEnter={() => {
+                        if (apoioDropdownTimeout) {
+                          clearTimeout(apoioDropdownTimeout);
+                          setApoioDropdownTimeout(null);
+                        }
+                        setDropdownOpen(true);
+                      }}
+                      onMouseLeave={() => {
+                        const timeout = setTimeout(() => {
+                          setDropdownOpen(false);
+                        }, 200);
+                        setApoioDropdownTimeout(timeout);
                       }}>
                       <div className="px-2 pt-2 pb-2">
                         <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
@@ -258,8 +312,9 @@ export default function Navbar() {
                     {/* Barra indicadora */}
                     {location.pathname === item.path && (
                       <div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600"
-                        style={{ bottom: "-1px" }}
+                        className="absolute left-0 right-0 h-0.5 bg-red-600"
+                        // Remova o style={{ bottom: "-17px" }}
+                        style={{ bottom: "-17px" }}
                       />
                     )}
                   </Link>

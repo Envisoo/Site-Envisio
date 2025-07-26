@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 const Contato: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [tipoCliente, setTipoCliente] = useState("singular");
 
   // Função para enviar mensagem para o WhatsApp
   function handleWhatsAppSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -64,9 +65,6 @@ const Contato: React.FC = () => {
                 className="block text-sm text-gray-500 "
                 style={{ fontFamily: "Segoe UI Regular" }}>
                 WhatsApp
-              </span>
-              <span className="text-lg font-semibold text-gray-800 group-hover:text-green-700">
-                +244 947 137 676
               </span>
             </div>
           </a>
@@ -243,19 +241,100 @@ const Contato: React.FC = () => {
             <form className="space-y-6" onSubmit={handleWhatsAppSubmit}>
               <div className="space-y-2">
                 <label
-                  htmlFor="name"
+                  htmlFor="tipoCliente"
                   className="block text-sm font-medium text-gray-700">
-                  Nome completo <span className="text-red-600">*</span>
+                  Tipo de Cliente <span className="text-red-600">*</span>
                 </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
-                  placeholder="Digite seu nome"
-                />
+                <select
+                  id="tipoCliente"
+                  value={tipoCliente}
+                  onChange={(e) => setTipoCliente(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition">
+                  <option value="singular">Pessoa Singular</option>
+                  <option value="empresa">Empresa</option>
+                </select>
               </div>
+
+              {tipoCliente === "singular" ? (
+                <div className="space-y-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700">
+                    Nome completo <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                    placeholder="Digite seu nome"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="nome"
+                      className="block text-sm font-medium text-gray-700">
+                      Nome <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="nome"
+                      name="nome"
+                      type="text"
+                      required
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      placeholder="Digite o nome"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="apelido"
+                      className="block text-sm font-medium text-gray-700">
+                      Apelido <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="apelido"
+                      name="apelido"
+                      type="text"
+                      required
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      placeholder="Digite o apelido"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="empresa"
+                      className="block text-sm font-medium text-gray-700">
+                      Empresa <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="empresa"
+                      name="empresa"
+                      type="text"
+                      required
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      placeholder="Digite o nome da empresa"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="nif"
+                      className="block text-sm font-medium text-gray-700">
+                      NIF <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="nif"
+                      name="nif"
+                      type="text"
+                      required
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      placeholder="Digite o NIF da empresa"
+                    />
+                  </div>
+                </>
+              )}
 
               <div className="space-y-2">
                 <label

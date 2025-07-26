@@ -29,7 +29,8 @@ const SuporteTecnico: React.FC = () => {
             </div>
             <div className="mt-6 md:mt-0 flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/244947137676"
+                href="https://wa.me/244959849434?text=Olá, preciso de suporte técnico.
+                "
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-white text-red-600 hover:bg-gray-100 px-5 py-3 rounded-lg font-semibold shadow-md transition-all duration-300">
@@ -216,7 +217,7 @@ const SuporteTecnico: React.FC = () => {
                       Formulário de Solicitação
                     </h2>
                     <form
-                      onSubmit={e => e.preventDefault()}
+                      onSubmit={(e) => e.preventDefault()}
                       className="space-y-4">
                       <div>
                         <label
@@ -351,17 +352,28 @@ const SuporteTecnico: React.FC = () => {
                               `Telefone: ${formData.phone}\n` +
                               `Prioridade: ${formData.urgency}\n` +
                               `Problema: ${formData.issue}`;
-                            if (!formData.name || !formData.email || !formData.urgency || !formData.issue) {
-                              alert("Por favor, preencha todos os campos obrigatórios.");
+                            if (
+                              !formData.name ||
+                              !formData.email ||
+                              !formData.urgency ||
+                              !formData.issue
+                            ) {
+                              alert(
+                                "Por favor, preencha todos os campos obrigatórios."
+                              );
                               return;
                             }
                             if (formData.urgency === "Alta") {
                               // Envia para WhatsApp prioritário
-                              const url = `https://wa.me/244959849434?text=${encodeURIComponent(msg)}`;
+                              const url = `https://wa.me/244959849434?text=${encodeURIComponent(
+                                msg
+                              )}`;
                               window.open(url, "_blank");
                             } else {
                               // Envia por e-mail
-                              const subject = encodeURIComponent("Solicitação de Suporte Técnico");
+                              const subject = encodeURIComponent(
+                                "Solicitação de Suporte Técnico"
+                              );
                               const body = encodeURIComponent(
                                 `Nome: ${formData.name}\nE-mail: ${formData.email}\nTelefone: ${formData.phone}\nPrioridade: ${formData.urgency}\nProblema: ${formData.issue}`
                               );
@@ -371,8 +383,7 @@ const SuporteTecnico: React.FC = () => {
                               );
                             }
                             setFormSubmitted(true);
-                          }}
-                        >
+                          }}>
                           <svg
                             className="w-5 h-5"
                             fill="none"
@@ -471,11 +482,11 @@ const SuporteTecnico: React.FC = () => {
             Para emergências críticas fora do horário comercial, contate nosso
             WhatsApp prioritário:{" "}
             <a
-              href="https://wa.me/244947137676"
+              href="https://wa.me/244959849434"
               target="_blank"
               rel="noopener noreferrer"
               className="text-red-600 hover:underline font-medium">
-              +244 947 137 676
+              +244 959 849 434
             </a>
           </p>
         </div>

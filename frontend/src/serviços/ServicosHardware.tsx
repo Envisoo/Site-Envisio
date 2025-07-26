@@ -22,6 +22,8 @@ import {
   Database,
   Network,
   HardDrive,
+  Settings,
+  RefreshCw,
 } from "lucide-react";
 
 // Dados dos serviços de hardware
@@ -101,80 +103,29 @@ const hardwareServices = [
       author: "Miguel Costa, Diretor de Segurança - Hospital Central",
     },
   },
-  // Novos serviços para carrossel mais longo
   {
     id: 4,
-    title: "Data Center Modular",
+    title: "Serviços de Manutenção e Suporte",
     description:
-      "Projetos de data center sob medida, com racks inteligentes, climatização, redundância energética e monitoramento ambiental.",
-    icon: <Database className="w-8 h-8 text-purple-600" />,
-    items: [
-      "Racks inteligentes",
-      "Climatização de precisão",
-      "Energia redundante",
-      "Monitoramento ambiental",
-      "Expansão escalável",
-    ],
-    features: [
-      { icon: <Server />, text: "Alta disponibilidade" },
-      { icon: <Shield />, text: "Segurança física" },
-      { icon: <Clock />, text: "Operação 24/7" },
-      { icon: <Zap />, text: "Eficiência energética" },
-    ],
-    image: "/images/datacenter.jpg",
-    testimonial: {
-      text: "Nosso novo data center reduziu custos e aumentou a confiabilidade dos nossos sistemas.",
-      author: "Patrícia Gomes, CIO - Seguradora Nacional",
-    },
-  },
-  {
-    id: 5,
-    title: "Controle de Inventário IoT",
-    description:
-      "Soluções de rastreamento e inventário com sensores IoT, dashboards em tempo real e alertas automáticos.",
+      "Suporte técnico especializado para manutenção de hardware, reparos e upgrades com garantia de peças originais e atendimento ágil.",
     icon: <HardDrive className="w-8 h-8 text-orange-500" />,
     items: [
-      "Etiquetas RFID",
-      "Sensores de temperatura",
-      "Dashboard web",
-      "Alertas automáticos",
-      "Relatórios inteligentes",
+      "Reparo de fontes, motherboards e discos rígidos",
+      "Manutenção preventiva programada",
+      "Suporte remoto e presencial",
+      "Garantia de 3 anos em peças",
+      "Atendimento prioritário para clientes corporativos",
     ],
     features: [
-      { icon: <Network />, text: "Conectividade total" },
-      { icon: <Zap />, text: "Alertas instantâneos" },
-      { icon: <BadgeCheck />, text: "Certificação ANATEL" },
-      { icon: <Database />, text: "Dados em nuvem" },
+      { icon: <Settings />, text: "Diagnóstico preciso" },
+      { icon: <RefreshCw />, text: "Atualizações regulares" },
+      { icon: <ShieldCheck />, text: "Peças originais" },
+      { icon: <Clock />, text: "Atendimento rápido" },
     ],
-    image: "/images/iot.jpg",
+    image: "/images/pc1.webp",
     testimonial: {
-      text: "O controle de inventário ficou 100% automatizado e sem erros.",
-      author: "João Paulo, Logística - Indústria Alfa",
-    },
-  },
-  {
-    id: 6,
-    title: "Serviços de Backup Corporativo",
-    description:
-      "Backup automatizado, criptografado e com restauração rápida para garantir a continuidade do seu negócio.",
-    icon: <Shield className="w-8 h-8 text-blue-700" />,
-    items: [
-      "Backup em nuvem",
-      "Criptografia ponta a ponta",
-      "Restauração instantânea",
-      "Monitoramento de integridade",
-      "Suporte 24/7",
-    ],
-    features: [
-      { icon: <Lock />, text: "Criptografia avançada" },
-      { icon: <Database />, text: "Armazenamento seguro" },
-      { icon: <Clock />, text: "Backup agendado" },
-      { icon: <Headphones />, text: "Suporte dedicado" },
-    ],
-    image: "/images/backup.jpg",
-    testimonial: {
-      text: "Nunca mais perdemos dados importantes. O backup é automático e confiável.",
-      author: "Fernanda Lima, TI - Grupo Beta",
+      text: "Os computadores alugados mantêm nossa equipe sempre produtiva, com equipamentos atualizados e suporte rápido.",
+      author: "Equipe Envisio",
     },
   },
 ];
