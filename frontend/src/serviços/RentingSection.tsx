@@ -22,12 +22,14 @@ import {
   Smartphone,
   Headphones,
 } from "lucide-react";
+import RentingFeaturesPanel from "../components/RentingFeaturesPanel";
 
 // Dados dos serviços de renting
 const rentingServices = [
   {
     id: 1,
     title: "Computadores",
+    slug: "computadores",
     description:
       "Desktops de alta performance para escritório com configurações otimizadas e suporte completo.",
     icon: <MonitorSmartphone className="w-8 h-8 text-red-600" />,
@@ -53,6 +55,7 @@ const rentingServices = [
   {
     id: 2,
     title: "bizhub 301i",
+    slug: "impressoras",
     description:
       "Multifuncional monocromática ideal para grupos de trabalho médios com necessidade de alta produtividade.",
     icon: <Printer className="w-8 h-8 text-gray-600" />,
@@ -79,6 +82,7 @@ const rentingServices = [
   {
     id: 5,
     title: "Bizhub 758",
+    slug: "impressoras",
     description:
       "Multifuncional monocromática de produção para altos volumes de impressão.",
     icon: <Printer className="w-8 h-8 text-purple-600" />,
@@ -433,6 +437,7 @@ const RentingSection = () => {
               exit={{ opacity: 0, y: -24 }}
               transition={{ duration: 0.35 }}>
               <ServiceHighlight service={activeService} />
+              <RentingFeaturesPanel slug={activeService.slug} />
             </motion.div>
           </AnimatePresence>
         </div>
