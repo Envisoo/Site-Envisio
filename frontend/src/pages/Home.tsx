@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { partners } from "../types/partners";
+import { DesktopCarousel, MobileCarousel } from "../components/Carousel";
+import { useWindowSize } from "../hooks/useWindowSize";
+import { HomeMobile } from "./mobile/HomeMobile"; // Certifique-se que o caminho está correto
 
 // ======================
 // TIPOS E INTERFACES
@@ -34,12 +37,26 @@ interface Segment {
 const heroSlides = [
   {
     src: "/images/imagem home/banner_hero1.webp",
+    srcMobile: "/images/imagem home/mobile/banner_mobile0.webp", // Adicione a versão mobile
     link: "/servicos/software",
     label: "Consultoria",
   },
   {
     src: "/images/imagem home/banner_hero2.webp",
+    srcMobile: "/images/imagem home/mobile/banner_mobile1.webp", // Adicione a versão mobile
     link: "/servicos/software",
+    label: "Serviços Técnicos",
+  },
+  {
+    src: "/images/imagem home/cabeamento.webp",
+    srcMobile: "/images/imagem home/mobile/banner_mobile2.webp", // Adicione a versão mobile
+    link: "/servicos/hardware",
+    label: "Serviços Técnicos",
+  },
+  {
+    src: "/images/imagem home/renting.webp",
+    srcMobile: "/images/imagem home/mobile/renting_mobile.webp", // Adicione a versão mobile
+    link: "/servicos/renting",
     label: "Serviços Técnicos",
   },
 ];
@@ -62,8 +79,8 @@ const businessSegments: Record<SegmentKey, Segment> = {
     icon: "📊",
     testimonial: {
       text: "A parceria com a empresa revolucionou nossa gestão financeira",
-      author: "Maria Silva",
-      role: "CEO - Tech Solutions",
+      role: " Tech Solutions",
+      author: "",
     },
   },
   tecnicos: {
@@ -81,8 +98,8 @@ const businessSegments: Record<SegmentKey, Segment> = {
     icon: "🔧",
     testimonial: {
       text: "Eficiência e profissionalismo em cada projeto executado",
-      author: "João Santos",
-      role: "Diretor de TI - Global Corp",
+      author: "",
+      role: "Global Corp",
     },
   },
   academia: {
@@ -99,8 +116,8 @@ const businessSegments: Record<SegmentKey, Segment> = {
     icon: "🎓",
     testimonial: {
       text: "Os cursos abriram portas para oportunidades internacionais",
-      author: "Ana Oliveira",
-      role: "Analista Sênior - Multinacional",
+      author: "",
+      role: "Multinacional",
     },
   },
 };
@@ -112,22 +129,22 @@ const businessSegments: Record<SegmentKey, Segment> = {
 // Serviços oferecidos (mock para exibição na seção de serviços)
 const services = [
   {
-    title: "ERP Eticadata/Primavera",
+    title: "Soluções de ERP",
     description:
-      "Implantação, customização e suporte de sistemas de gestão empresarial líderes de mercado.",
+      "Implementação, customização e suporte de sistemas de gestão empresarial.",
     tipo: "software",
     image: "/images/imagem cads/Destaque2.webp",
   },
   {
-    title: "Aluguel de Equipamentos",
+    title: "Renting de Equipamentos",
     description:
-      "Aluguel de impressoras, computadores e multifuncionais para empresas.",
+      "Renting de impressoras multifuncionais, computadores e servidores para empresas.",
     tipo: "aluguel",
     image: "/images/imagem cads/Destaque3.webp",
   },
   {
     title: "Sistemas de Segurança",
-    description: "CFTV, controle de acesso, biometria e monitoramento 24h.",
+    description: "CCTV, controle de acesso, biometria e monitoramento 24h.",
     tipo: "hardware",
     image: "/images/imagem cads/Destaque4.webp",
   },
@@ -151,7 +168,7 @@ const services = [
   },
 ];
 
-export default function HeroSection() {
+export function HeroSection() {
   // Navegação do React Router
   const navigate = useNavigate();
 
@@ -161,6 +178,9 @@ export default function HeroSection() {
 
   // Estado do carrossel de depoimentos
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Estado para verificar se está em um dispositivo móvel
+  const [isMobile, setIsMobile] = useState(false);
 
   // Efeito para alternar slides do topo automaticamente
   useEffect(() => {
@@ -199,42 +219,19 @@ export default function HeroSection() {
   // RENDERIZAÇÃO DA HOME
   // ======================
   return (
-    <div className="min-h-screen bg-white pt-16">
-      {/* Carrossel de Imagens de Fundo (Hero) */}
-      <section className="relative min-h-[63vh] mt-[-20px] w-full flex items-center justify-center overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={carouselIndex}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full z-0">
-            <img
-              src={heroSlides[carouselIndex].src}
-              alt=""
-              className="w-full h-full object-cover object-center"
-              style={{ filter: "brightness(1)" }}
-            />
+    <div className="min-h-screen pb-10 bg-white pt-16">
+      {/* Carrossel Desktop */}
+      <div className="hidden md:block">
+        <DesktopCarousel slides={heroSlides} />
+      </div>
 
-            {/* <div className="absolute inset-0 bg-black/5" /> */}
-            <div className="absolute bottom-10 left-10 z-20">
-              <Link to={heroSlides[carouselIndex].link}>
-                <button
-                  className="px-8 py-4 bg-red-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:bg-red-700 transition-all"
-                  onMouseEnter={() => setIsPaused(true)}
-                  onMouseLeave={() => setIsPaused(false)}>
-                  Saiba mais
-                </button>
-              </Link>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </section>
+      {/* Carrossel Mobile */}
+
+      <MobileCarousel slides={heroSlides} />
 
       {/* Nossa História Redesenhada */}
-      <section className="py-5 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-50 to-transparent" />
+      <section className="py-20 bg-white  relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-20 to-transparent" />
 
         <div className="container mx-auto px-6">
           <motion.div
@@ -249,9 +246,7 @@ export default function HeroSection() {
                 style={{
                   fontFamily: "Segoe UI Regular",
                 }}
-                className="text-sm uppercase tracking-wider text-gray-900 mb-4 block">
-                Nossa Trajetória
-              </motion.span>
+                className="text-sm uppercase tracking-wider text-gray-900 mb-4 block"></motion.span>
               <h2
                 style={{ fontFamily: "Segoe UI Semibold" }}
                 className="text-5xl mb-6">
@@ -309,15 +304,10 @@ export default function HeroSection() {
                       </div>
                       <div>
                         <h4
-                          className="font-semibold mb-1"
+                          className="font-semibold mb-1 mt-3"
                           style={{ fontFamily: "Segoe UI Semibold" }}>
                           Fundação da Empresa
                         </h4>
-                        <p
-                          className="text-gray-600"
-                          style={{ fontFamily: "Segoe UI Regular" }}>
-                          Prestar serviços de consultoria e contabilidade
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -326,7 +316,7 @@ export default function HeroSection() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => navigate("/quem-somos")}
-                    className="mt-8 w-full bg-red-600 text-white py-4 px-8 rounded-lg flex items-center justify-center group hover:bg-red-700 transition-all"
+                    className="mt-8 w-full bg-red-600 text-white py-4 px-8 rounded-[5px] flex items-center justify-center group hover:bg-red-700 transition-all"
                     style={{
                       fontFamily: "Segoe UI Regular",
                     }}>
@@ -344,7 +334,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   className="relative z-10">
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative rounded-[8px] overflow-hidden shadow-2xl">
                     <img
                       src="/images/imagem home/banner_quem.webp"
                       alt="Nossa Equipe"
@@ -359,187 +349,81 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </div>
-        <div className="flex flex-wrap items-center gap-8 my-16">
-          {" "}
-          {/* Container principal */}
-          {[
-            {
-              text: "5 anos de mercado",
-              icon: "✓",
-            },
-            {
-              text: "Equipe especializada",
-              icon: "✓",
-            },
-            {
-              text: "Atendimento personalizado",
-              icon: "✓",
-            },
-            {
-              text: "Compromisso com excelência",
-              icon: "✓",
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 group" // Container de cada item
-            >
-              {/* Ícone personalizável */}
-              <span
-                className="text-black-200 text-3xl font-bold transition-all duration-300
-                   group-hover:scale-110 group-hover:text-red-600"
-                style={{
-                  lineHeight: "0", // Ajuste de alinhamento vertical
-                  marginRight: "-100px", // Espaçamento direito
-                  paddingLeft: "100px",
-                }}>
-                {item.icon}
-              </span>
-
-              {/* Texto personalizável */}
-              <span
-                className="text-1xl text-gray-800
-                   group-hover:text-blue-600 transition-colors"
-                style={{
-                  letterSpacing: "0px", // Espaçamento entre letras
-                  paddingTop: "6px", // Ajuste fino de alinhamento
-                  paddingLeft: "100px",
-                  fontFamily: "Segoe UI semibold",
-                }}>
-                {item.text}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-50 to-transparent" />
       </section>
 
       {/* Seção de Serviços Redesenhada */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        {/* Gradiente decorativo */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-gray-50 to-transparent" />
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.1),_transparent_70%)]" />
-        </div>
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-15 px-4 bg-white mb-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.9 }}
+          className="text-center mb-20">
+          <h2
+            className="text-4xl font-bold text-black mt-4 mb-6"
+            style={{ fontFamily: "Segoe UI Semibold" }}>
+            Nossos Serviços Especializados
+          </h2>
+          <div className="w-24 h-1 bg-red-600 mx-auto mb-8" />
+          <p className="text-xl text-black max-w-3xl mx-auto">
+            Transformamos desafios em oportunidades com soluções tecnológicas
+            integradas e consultoria especializada para impulsionar o
+            crescimento do seu negócio.
+          </p>
+        </motion.div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Cabeçalho */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-center mb-20">
-            <span
-              className="text-sm uppercase tracking-wider text-black"
-              style={{
-                fontFamily: "Segoe UI Regular",
-              }}></span>
-            <h2
-              className="text-5xl font-bold text-black mt-4 mb-6"
-              style={{ fontFamily: "Segoe UI Semibold" }}>
-              Nossos Serviços Especializados
-            </h2>
-            <div
-              className="w-24 h-1 bg-red-600 mx-auto mb-8"
-              style={{
-                fontFamily: "Segoe UI Regular",
-              }}
-            />
-            <p className="text-xl text-black max-w-3xl mx-auto">
-              Transformamos desafios em oportunidades com soluções tecnológicas
-              integradas e consultoria especializada para impulsionar o
-              crescimento do seu negócio.
-            </p>
-          </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="rounded-[5px] shadow-lg overflow-hidden border border-gray-300 w-[390px] h-[450px] mx-auto flex flex-col bg-white">
+              {/* Imagem no topo */}
+              <div className="w-full h-60 bg-gray-100">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-          {/* Grade de Serviços */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="grid lg:grid-cols-3 gap-8"
-            style={{ fontFamily: "Segoe UI semibold" }}>
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50, scale: 0.8 }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 0.8,
-                }}
-                whileHover={{
-                  scale: 1,
-                  y: -10,
-                  transition: { duration: 0.2 },
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.2,
-                }}
-                className="relative isolate transform-gpu group cursor-pointer"
-                style={{ fontFamily: "Segoe UI Regular" }}>
-                <div
-                  className="relative bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 group-hover:border-red-500/50 group-hover:bg-red-800/20 transition-all duration-300 h-full overflow-hidden"
-                  style={{
-                    backgroundImage: service.image
-                      ? `linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('${service.image}')`
-                      : undefined,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+              {/* Conteúdo */}
+              <div className="p-6 flex flex-col flex-1 relative text-gray-800">
+                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                <p className="text-base opacity-90 mb-14">
+                  {service.description}
+                </p>
+
+                {/* Botão maior no canto inferior direito */}
+                <button
+                  className="absolute bottom-6 right-6 bg-red-600 hover:bg-red-700 transition text-white font-semibold px-6 py-2 rounded-[5px] text-sm"
+                  onClick={() => {
+                    if (service.tipo === "software") {
+                      navigate("/servicos/software");
+                    } else if (service.tipo === "hardware") {
+                      navigate("/servicos/hardware");
+                    } else if (service.tipo === "aluguel") {
+                      navigate("/servicos/renting");
+                    }
                   }}>
-                  <h3
-                    className="text-2xl text-white mb-4 drop-shadow-lg"
-                    style={{ fontFamily: "Segoe UI Regular" }}>
-                    {service.title}
-                  </h3>
-                  <p
-                    className="text-gray-100 mb-6 drop-shadow"
-                    style={{ fontFamily: "Segoe UI Regular" }}>
-                    {service.description}
-                  </p>
-                  <div className="mt-auto flex justify-end">
-                    <button
-                      className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all"
-                      onClick={() => {
-                        if (service.tipo === "software") {
-                          navigate("/servicos/software");
-                        } else if (service.tipo === "hardware") {
-                          navigate("/servicos/hardware");
-                        } else if (service.tipo === "aluguel") {
-                          navigate("/servicos/renting");
-                        }
-                      }}
-                      style={{ fontFamily: "Segoe UI regular" }}>
-                      Saiba mais
-                    </button>
-                  </div>
-                  <div className="absolute inset-0 rounded-2xl pointer-events-none" />
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* CTA Final */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-center mt-20">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/pages/contato")}
-              className="px-12 py-5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-all inline-flex items-center group"
-              style={{ fontFamily: "Segoe UI regular" }}>
-              Solicite uma consultoria
-              <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </motion.button>
-          </motion.div>
+                  Saiba mais
+                </button>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* Academia Profissional - Versão Clara e Elegante */}
-      <section className="py-32 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
         {/* Background com padrão sutil */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#00000005_1px,transparent_1px)] bg-[size:20px_20px]" />
@@ -583,8 +467,6 @@ export default function HeroSection() {
                   "Professores Especializados",
                   "Material Exclusivo",
                 ],
-                duration: "3 meses",
-                price: "49.700",
               },
               {
                 title: "Mentoria Executiva",
@@ -595,8 +477,6 @@ export default function HeroSection() {
                   "Projetos Práticos",
                   "Networking Estratégico",
                 ],
-                duration: "4 meses",
-                price: "69.700",
               },
               {
                 title: "Programa Avançado",
@@ -607,8 +487,6 @@ export default function HeroSection() {
                   "Suporte Contínuo",
                   "Cases Reais",
                 ],
-                duration: "5 meses",
-                price: "89.700",
               },
             ].map((curso, index) => (
               <motion.div
@@ -619,7 +497,7 @@ export default function HeroSection() {
                 whileHover={{ y: -10 }}
                 className="group relative h-full"
                 style={{ fontFamily: "Segoe UI Regular" }}>
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                <div className="bg-white rounded-[5px] p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
                   {/* Ícone e Título */}
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -672,46 +550,16 @@ export default function HeroSection() {
                   </div>
 
                   {/* Preço e Duração */}
-                  <div className="flex items-center justify-between py-4 border-t border-gray-100">
-                    <div>
-                      <span
-                        className="text-gray-500 text-sm"
-                        style={{ fontFamily: "Segoe UI Regular" }}>
-                        Duração
-                      </span>
-                      <p
-                        className="text-gray-900"
-                        style={{ fontFamily: "Segoe UI semibold" }}>
-                        {curso.duration}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <span
-                        className="text-gray-500 text-sm"
-                        style={{ fontFamily: "Segoe UI Regular" }}>
-                        Investimento
-                      </span>
-                      <p
-                        className="text-gray-900"
-                        style={{ fontFamily: "Segoe UI semibold" }}>
-                        A partir de
-                      </p>
-                      <p
-                        className="text-red-600 text-xl"
-                        style={{ fontFamily: "Segoe UI semibold" }}>
-                        {parseInt(curso.price).toLocaleString("pt-AO")} Kz/mês
-                      </p>
-                    </div>
-                  </div>
+                  <div className="flex items-center justify-between py-4 border-t border-gray-100"></div>
 
                   {/* CTA */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => navigate("/page/Academia/academia")}
-                    className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-lg flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all"
+                    onClick={() => navigate("/Academia")}
+                    className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-[5px] flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all"
                     style={{ fontFamily: "Segoe UI Regular" }}>
-                    Inscreva-se Agora
+                    Visita-nos
                     <span className="ml-2 group-hover:translate-x-1 transition-transform">
                       →
                     </span>
@@ -724,7 +572,7 @@ export default function HeroSection() {
       </section>
 
       {/* Seção 7: Depoimentos */}
-      <section className="py-32 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
         <div className="absolute inset-0 w-full h-full bg-black/50" />
 
         <div className="container mx-auto px-6 relative z-10">
@@ -787,7 +635,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96, y: -30 }}
                   transition={{ duration: 0.5, type: "spring" }}
-                  className="relative bg-gradient-to-br from-white/10 via-black/40 to-gray-900/30 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/10 px-8 py-12 flex flex-col items-center w-full">
+                  className="relative bg-gradient-to-br from-white/10 via-black/40 to-gray-900/30 backdrop-blur-lg rounded-[5px] shadow-2xl border border-white/10 px-8 py-12 flex flex-col items-center w-full">
                   {/* Aspas decorativas */}
                   <div className="absolute -top-8 left-8 text-7xl text-red-600/20 select-none pointer-events-none">
                     “
@@ -881,7 +729,7 @@ export default function HeroSection() {
       </section>
 
       {/* Seção de Parceiros Redesenhada */}
-      <section className="py-32 relative overflow-visible bg-gradient-to-b from-white to-gray-50 pt-32">
+      <section className="py-20 relative overflow-visible bg-gradient-to-b from-white to-gray-50 pt-32">
         {/* Elementos decorativos */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-gray-50 to-transparent" />
@@ -902,7 +750,7 @@ export default function HeroSection() {
             <h2
               className="text-5xl font-extrabold mb-4 text-gray-900 drop-shadow-sm"
               style={{ fontFamily: "Segoe UI semibold" }}>
-              Nossos Parceiros
+              Nossos Clientes e Parceiros
             </h2>
             <div className="flex justify-center mb-8">
               <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-red-600 via-black to-red-600 shadow-md" />
@@ -932,7 +780,7 @@ export default function HeroSection() {
                   width: `${
                     partners.length * 2 * 180 + partners.length * 2 * 64
                   }px`, // largura total para loop
-                  animation: "logo-marquee 15s linear infinite",
+                  animation: "logo-marquee 22s linear infinite",
                 }}>
                 {[...partners, ...partners].map((partner, idx) => (
                   <div
@@ -955,12 +803,13 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="relative z-30 max-w-3xl mx-auto"
-            style={{ marginBottom: "-100px" }} // ajuste se necessário
-          >
-            <div className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+            className="relative z-30 max-w-3xl mx-auto" // Adicionado mx-auto para centralizar
+            style={{ marginBottom: "-100px" }}>
+            <div
+              className="bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-[5px] shadow-2xl border border-gray-200 mx-auto" // Adicionado mx-auto aqui também
+            >
               <h3
-                className="text-2xl mb-4 text-center"
+                className="text-2xl mb-4 text-white text-center"
                 style={{ fontFamily: "Segoe UI semibold" }}>
                 Quer se Tornar um Parceiro?
               </h3>
@@ -974,8 +823,8 @@ export default function HeroSection() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate("/pages/contato")}
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg  inline-flex items-center group transition-all"
+                  onClick={() => navigate("/contato")}
+                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-[5px] inline-flex items-center group transition-all"
                   style={{ fontFamily: "Segoe UI Regular" }}>
                   Entre em Contato
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">
@@ -996,9 +845,10 @@ export default function HeroSection() {
 // ======================
 // Este componente é exportado e usado na rota principal do site
 export function Home() {
-  return (
-    <div className="min-h-screen">
-      <HeroSection />
-    </div>
-  );
+  const { width } = useWindowSize(); // Pegamos diretamente a largura
+  const isMobile = width < 768; // Define quando é mobile
+
+  console.log("Width:", width, "Is Mobile:", isMobile); // Para debug
+
+  return <>{isMobile ? <HomeMobile /> : <HeroSection />}</>;
 }

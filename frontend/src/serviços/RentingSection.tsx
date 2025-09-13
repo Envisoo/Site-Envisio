@@ -21,6 +21,13 @@ import {
   MonitorSmartphone,
   Smartphone,
   Headphones,
+  Laptop,
+  Cpu,
+  HardDrive,
+  Monitor,
+  Server,
+  Database,
+  Network,
 } from "lucide-react";
 import RentingFeaturesPanel from "../components/RentingFeaturesPanel";
 
@@ -31,79 +38,51 @@ const rentingServices = [
     title: "Computadores",
     slug: "computadores",
     description:
-      "Desktops de alta performance para escritório com configurações otimizadas e suporte completo.",
-    icon: <MonitorSmartphone className="w-8 h-8 text-red-600" />,
+      "Equipamentos de alto desempenho para atender às demandas do seu negócio, com manutenção e suporte inclusos.",
+    icon: <Laptop className="w-8 h-8 text-red-600" />,
     items: [
-      "Processadores Intel Core i5/i7 última geração",
-      "16GB/32GB RAM DDR4",
-      "SSD NVMe de alta velocidade",
-      "Monitor Full HD/4K",
-      "Windows 11 Pro licenciado",
+      "Equipamentos de última geração",
+      "Alto desempenho para todas as tarefas",
+      "Suporte e manutenção incluídos",
+      "Segurança de dados avançada",
+      "Soluções personalizadas",
     ],
-    features: [
-      { icon: <Zap />, text: "Alto Desempenho" },
-      { icon: <Shield />, text: "Segurança Pro" },
-      { icon: <Settings />, text: "Suporte Técnico" },
-      { icon: <RefreshCw />, text: "Atualização Garantida" },
-    ],
-    image: "/images/pc1.webp",
-    testimonial: {
-      text: "Os computadores alugados mantêm nossa equipe sempre produtiva, com equipamentos atualizados e suporte rápido.",
-      author: "Paulo Silva - Gerente de TI",
-    },
+    features: [],
+    image: "/images/renting/Computador.webp",
   },
   {
     id: 2,
-    title: "bizhub 301i",
+    title: "Impressoras",
     slug: "impressoras",
     description:
-      "Multifuncional monocromática ideal para grupos de trabalho médios com necessidade de alta produtividade.",
-    icon: <Printer className="w-8 h-8 text-gray-600" />,
+      "Soluções completas de impressão com manutenção preventiva e suporte técnico especializado.",
+    icon: <Printer className="w-8 h-8 text-red-600" />,
     items: [
-      "Velocidade A4: 22 ppm em preto e branco",
-      "Formatos de papel: A6-A3",
-      "Painel touch intuitivo de 7 polegadas",
-      "Digitalização em alta velocidade",
-      "Excelente qualidade de impressão",
+      "Impressão rápida e de qualidade",
+      "Manutenção preventiva incluída",
+      "Redução de custos operacionais",
+      "Conectividade em rede",
+      "Controle de impressão",
     ],
-    features: [
-      { icon: <Zap />, text: "22 PPM" },
-      { icon: <FileText />, text: "A3" },
-      { icon: <MonitorSmartphone />, text: "Scanner Duplex" },
-      { icon: <MonitorSmartphone />, text: "Touch 7'" },
-    ],
-    image: "/images/bizhub.webp",
-    testimonial: {
-      text: "A Bizhub 227 atende perfeitamente nossas necessidades de impressão em preto e branco com qualidade profissional.",
-      author: "Maria Santos - Coordenadora Administrativa",
-    },
+    features: [],
+    image: "/images/renting/Impressora.webp",
   },
-
   {
-    id: 5,
-    title: "Bizhub 758",
-    slug: "impressoras",
+    id: 3,
+    title: "Servidores",
+    slug: "servidores",
     description:
-      "Multifuncional monocromática de produção para altos volumes de impressão.",
-    icon: <Printer className="w-8 h-8 text-purple-600" />,
+      "Infraestrutura de TI robusta e segura para garantir a disponibilidade e desempenho dos seus sistemas.",
+    icon: <Server className="w-8 h-8 text-red-600" />,
     items: [
-      "Velocidade A4: 75 ppm em P&B",
-      "Formatos de papel: A6-SRA3",
-      "Painel touch de 10.1 polegadas",
-      "Scanner dual-scan de alta velocidade",
-      "Múltiplas opções de acabamento",
+      "Processamento robusto",
+      "Armazenamento seguro e escalável",
+      "Acesso centralizado",
+      "Alta disponibilidade",
+      "Backup e recuperação",
     ],
-    features: [
-      { icon: <Zap />, text: "75 PPM" },
-      { icon: <FileText />, text: "SRA3" },
-      { icon: <MonitorSmartphone />, text: "Dual Scan" },
-      { icon: <Settings />, text: "Acabamento Pro" },
-    ],
-    image: "/images/bizhub-758.jpg",
-    testimonial: {
-      text: "A Bizhub 758 transformou nossa capacidade de produção com sua incrível velocidade e confiabilidade.",
-      author: "Roberto Souza - Diretor de Operações",
-    },
+    features: [],
+    image: "/images/renting/Servidor.webp",
   },
 ];
 
@@ -121,10 +100,6 @@ type Service = {
   items: string[];
   features: Feature[];
   image: string;
-  testimonial: {
-    text: string;
-    author: string;
-  };
 };
 
 type ServiceCardProps = {
@@ -137,46 +112,67 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   service,
   active,
   onClick,
-}) => (
-  <motion.div
-    onClick={onClick}
-    whileHover={{ scale: 1.03 }}
-    className={`cursor-pointer rounded-2xl p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
-      active
-        ? "border-red-500 bg-white shadow-2xl"
-        : "border-transparent bg-white/50 shadow-lg"
-    }`}>
-    <div>
-      <div className="flex items-center gap-4 mb-4">
-        <div className="p-3 rounded-full bg-gradient-to-br from-blue-50 to-white shadow">
-          {service.icon}
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const maxLength = 100;
+  const shouldTruncate = service.description.length > maxLength;
+  const displayText = isExpanded
+    ? service.description
+    : `${service.description.substring(0, maxLength)}${
+        shouldTruncate ? "..." : ""
+      }`;
+
+  return (
+    <motion.div
+      onClick={onClick}
+      whileHover={{ scale: 1.03 }}
+      className={`cursor-pointer rounded-[5px] p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
+        active
+          ? "border-red-500 bg-white shadow-2xl"
+          : "border-transparent bg-white/50 shadow-lg"
+      }`}>
+      <div>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-[5px] bg-gradient-to-br from-blue-50 to-white shadow">
+            {service.icon}
+          </div>
+          <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
         </div>
-        <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
-      </div>
-      <p className="text-gray-600 mb-4">
-        {service.description.substring(0, 100)}...
-      </p>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex -space-x-2">
-          {service.features.slice(0, 3).map((feature, i) => (
-            <div
-              key={i}
-              className="w-8 h-8 rounded-full bg-white border-2 border-white flex items-center justify-center shadow">
-              {React.cloneElement(feature.icon as React.ReactElement<any>, {
-                className: "w-4 h-4 text-blue-600",
-              })}
-            </div>
-          ))}
+        <div className="mb-4">
+          <p className="text-gray-600">{displayText}</p>
+          {shouldTruncate && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
+              className="text-red-600 hover:text-red-800 text-sm font-medium mt-1 focus:outline-none">
+              {isExpanded ? "Mostrar menos" : "Ler mais"}
+            </button>
+          )}
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="flex -space-x-2">
+            {service.features.slice(0, 3).map((feature, i) => (
+              <div
+                key={i}
+                className="w-7 h-8 rounded-[5px] bg-white border-2 border-white flex items-center justify-center shadow">
+                {React.cloneElement(feature.icon as React.ReactElement<any>, {
+                  className: "w-4 h-4 text-red-600",
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <a
-      href="/pages/contato"
-      className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow transition-all w-full flex items-center justify-center">
-      Solicitar Orçamento
-    </a>
-  </motion.div>
-);
+      <a
+        href="/contato"
+        className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all w-full flex items-center justify-center">
+        Solicitar Orçamento
+      </a>
+    </motion.div>
+  );
+};
 
 // Componente de Destaque de Serviço
 const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
@@ -184,7 +180,7 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5 }}
-    className="bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-2xl overflow-hidden">
+    className="bg-gradient-to-br from-white to-red-50 rounded-[5px] shadow-2xl overflow-hidden">
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="relative h-96 lg:h-full">
         <img
@@ -192,15 +188,6 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           alt={service.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-          <div className="text-white">
-            <div className="flex items-center gap-2 mb-2">
-              <BadgeCheck className="text-yellow-400" />
-              <span className="text-sm font-semibold">Serviço Premium</span>
-            </div>
-            <h3 className="text-2xl font-bold">{service.title}</h3>
-          </div>
-        </div>
       </div>
 
       <div className="p-8">
@@ -219,34 +206,21 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
         </div>
 
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3">
-            Diferenciais
-          </h4>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {service.features.map((feature, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2 bg-white/80 p-2 rounded-lg shadow-sm">
-                {React.cloneElement(feature.icon as React.ReactElement<any>, {
-                  className: "w-5 h-5 text-blue-500",
-                })}
-                <span className="text-gray-700 text-sm">{feature.text}</span>
+                className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+                  {React.cloneElement(feature.icon as React.ReactElement<any>, {
+                    className: "w-5 h-5",
+                  })}
+                </div>
+                <span className="text-gray-700 font-medium">
+                  {feature.text}
+                </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100">
-          <div className="flex items-start gap-3">
-            <Quote className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
-            <div>
-              <p className="text-gray-600 italic mb-2">
-                {service.testimonial.text}
-              </p>
-              <p className="text-sm text-gray-500 font-medium">
-                {service.testimonial.author}
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -279,15 +253,28 @@ const RentingSection = () => {
 
   return (
     <div className="bg-white">
-      {/* Banner estático apenas imagem */}
+      {/* Banner com texto sobreposto */}
       <section
-        className="w-full flex items-center justify-center overflow-hidden bg-white"
-        style={{ height: "clamp(100px, 35vw, 700px)" }}>
+        className="relative w-full flex items-center justify-start overflow-hidden bg-white"
+        style={{ height: "clamp(100px, 30vw, 500px)" }}>
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="text-white pl-8 md:pl-16 lg:pl-24 w-full max-w-7xl mx-auto">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-[30px] sm:text-3xl md:text-5xl lg:text-5xl font-bold mb-4 md:mb-6"
+              style={{
+                fontFamily: "Segoe UI semibold",
+              }}>
+              <span className="text-white">Aluguel de produtos </span>
+            </motion.h1>
+          </div>
+        </div>
         <img
-          src="/images/renting.jpg"
+          src="/images/renting/Banner2.webp"
           alt="Banner Serviços de Renting"
           className="w-full h-full object-cover object-center"
-          style={{ opacity: 1 }}
         />
       </section>
 
@@ -325,7 +312,7 @@ const RentingSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
+            className="bg-gradient-to-br from-blue-50 to-white rounded-[5px] shadow-lg p-8 flex items-center gap-6">
             <Calculator className="w-10 h-10 text-orange-500 flex-shrink-0" />
             <div>
               <h4 className="text-xl font-semibold mb-2">Custo-Benefício</h4>
@@ -340,7 +327,7 @@ const RentingSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-red-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
+            className="bg-gradient-to-br from-red-50 to-white rounded-[5px] shadow-lg p-8 flex items-center gap-6">
             <Headphones className="w-10 h-10 text-red-600 flex-shrink-0" />
             <div>
               <h4 className="text-xl font-semibold mb-2">
@@ -348,7 +335,6 @@ const RentingSection = () => {
               </h4>
               <p className="text-gray-600">
                 Equipe técnica dedicada e pronta para atender suas necessidades
-                24/7
               </p>
             </div>
           </motion.div>
@@ -437,7 +423,7 @@ const RentingSection = () => {
               exit={{ opacity: 0, y: -24 }}
               transition={{ duration: 0.35 }}>
               <ServiceHighlight service={activeService} />
-              <RentingFeaturesPanel slug={activeService.slug} />
+              <RentingFeaturesPanel tipo={activeService.slug} />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -452,7 +438,7 @@ const RentingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold mb-4"
+              className="text-3xl text-white md:text-4xl font-bold mb-4"
               style={{ fontFamily: "Segoe UI semibold" }}>
               Por que escolher nosso Renting?
             </motion.h2>
@@ -473,11 +459,11 @@ const RentingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-gray-800 p-6 rounded-xl">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
+              className="bg-gray-800 p-6 rounded-[5px]">
+              <div className="w-12 h-12 bg-blue-500/10 rounded-[5px] flex items-center justify-center mb-4">
                 <DollarSign className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl text-white font-semibold mb-2">
                 Economia Inteligente
               </h3>
               <p className="text-gray-400">
@@ -491,11 +477,13 @@ const RentingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="bg-gray-800 p-6 rounded-xl">
-              <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
+              className="bg-gray-800 p-6 rounded-[5px]">
+              <div className="w-12 h-12 bg-green-500/10 rounded-[5px] flex items-center justify-center mb-4">
                 <RefreshCw className="w-6 h-6 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Sempre Atualizado</h3>
+              <h3 className="text-xl text-white font-semibold mb-2">
+                Sempre Atualizado
+              </h3>
               <p className="text-gray-400">
                 Mantenha seu parque tecnológico sempre atual com as últimas
                 inovações do mercado.
@@ -507,11 +495,13 @@ const RentingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
-              className="bg-gray-800 p-6 rounded-xl">
-              <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-4">
+              className="bg-gray-800 p-6 rounded-[5px]">
+              <div className="w-12 h-12 bg-red-500/10 flex rounded-[5px] items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-red-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Suporte Completo</h3>
+              <h3 className="text-xl text-white font-semibold mb-2">
+                Suporte Completo
+              </h3>
               <p className="text-gray-400">
                 Manutenção preventiva e corretiva inclusa, com atendimento
                 prioritário e equipe especializada.
@@ -550,16 +540,11 @@ const RentingSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row gap-4 justify-center">
+            className="flex justify-center">
             <a
-              href="/pages/contato"
-              className="inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all">
+              href="/contato"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-[5px] hover:bg-gray-100 transition-all shadow-lg">
               Solicitar Proposta
-            </a>
-            <a
-              href="/pages/sobre"
-              className="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all">
-              Conhecer Mais
             </a>
           </motion.div>
         </div>

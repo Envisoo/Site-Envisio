@@ -20,7 +20,7 @@ export default function Navbar() {
     { name: "Home", path: "/" },
     { name: "Quem Somos", path: "/quem-somos" },
     { name: "Serviços", path: "/servicos" },
-    { name: "Contato", path: "/contact" },
+    { name: "Contato", path: "/contato" }, // Atualizado
   ];
 
   // Função para verificar se está em uma página de serviços
@@ -168,10 +168,6 @@ export default function Navbar() {
                         setServicosDropdownTimeout(timeout);
                       }}>
                       <div className="px-2 pt-2 pb-2">
-                        <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
-                          Menu de Serviços
-                        </div>
-                        <hr className="mb-2 border-gray-200" />
                         <Link
                           to="/servicos/hardware"
                           className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
@@ -190,7 +186,7 @@ export default function Navbar() {
                           to="/servicos/renting"
                           className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
                           onClick={() => setServicosDropdownOpen(false)}>
-                          Aluguel de produtos
+                          Renting
                         </Link>
                       </div>
                     </div>
@@ -269,19 +265,15 @@ export default function Navbar() {
                         setApoioDropdownTimeout(timeout);
                       }}>
                       <div className="px-2 pt-2 pb-2">
-                        <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
-                          Menu de Apoio
-                        </div>
-                        <hr className="mb-2 border-gray-200" />
                         <Link
-                          to="/pages/contato"
+                          to="/contato" // Atualizado
                           className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
                           onClick={() => setDropdownOpen(false)}>
-                          Contato
+                          Contactos
                         </Link>
                         <hr className="my-1 border-gray-200" />
                         <Link
-                          to="/pages/suporte-tecnico"
+                          to="/suporte-tecnico" // Atualizado
                           className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
                           onClick={() => setDropdownOpen(false)}>
                           Suporte Técnico
@@ -328,7 +320,7 @@ export default function Navbar() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}>
               <Link
-                to="/page/Academia/academia"
+                to="/Academia"
                 className="ml-8 px-6 bg-white text-black border border-red-600 font-normal hover:bg-red-50 hover:text-red-700 transition-all duration-300 uppercase flex items-center"
                 style={{
                   fontFamily: "Segoe UI Regular",
@@ -415,10 +407,6 @@ export default function Navbar() {
                           className="overflow-hidden mt-1 ml-0 min-w-[240px] max-w-[300px] bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                           style={{ fontFamily: "Segoe UI Regular" }}>
                           <div className="px-2 pt-2 pb-2">
-                            <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
-                              Menu de Serviços
-                            </div>
-                            <hr className="mb-2 border-gray-200" />
                             <Link
                               to="/servicos/hardware"
                               className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
@@ -493,12 +481,8 @@ export default function Navbar() {
                           className="overflow-hidden mt-1 ml-0 min-w-[240px] max-w-[300px] bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                           style={{ fontFamily: "Segoe UI Regular" }}>
                           <div className="px-2 pt-2 pb-2">
-                            <div className="text-xs font-semibold text-gray-500 px-4 pb-1 pt-1">
-                              Menu de Apoio
-                            </div>
-                            <hr className="mb-2 border-gray-200" />
                             <Link
-                              to="/pages/contato"
+                              to="/contato" // Atualizado
                               className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
                               onClick={() => {
                                 setIsOpen(false);
@@ -508,7 +492,7 @@ export default function Navbar() {
                             </Link>
                             <hr className="my-1 border-gray-200" />
                             <Link
-                              to="/pages/suporte-tecnico"
+                              to="/suporte-tecnico" // Atualizado
                               className="block px-6 py-3 text-base hover:bg-red-50 hover:text-red-600 text-black"
                               onClick={() => {
                                 setIsOpen(false);
@@ -547,7 +531,7 @@ export default function Navbar() {
                 transition={{ delay: 0.3 }}
                 className="pt-4">
                 <Link
-                  to="/page/Academia/academia"
+                  to="/Academia"
                   className="w-full block text-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all uppercase"
                   onClick={() => setIsOpen(false)}>
                   Academia

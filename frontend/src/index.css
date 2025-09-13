@@ -1,9 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Importações de fontes */
+
+@import './styles/typography.css';
+@import './styles/globals.css';
+
+/* Configurações base */
+
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
     body {
-        font-family: "Segoe UI Regular", sans-serif;
+        @apply bg-white font-regular text-gray-700;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold text-gray-900;
+    }
+}
+
+
+/* Componentes customizados */
+
+@layer components {
+    .container-custom {
+        @apply max-w-7xl mx-auto px-4 sm: px-6 lg: px-8;
+    }
+    .btn-primary {
+        @apply bg-red-600 text-white px-6 py-2 rounded-[5px] hover: bg-red-700 transition-colors duration-300;
+    }
+    .section-title {
+        @apply text-2xl md: text-3xl lg: text-4xl font-semibold text-center mb-8;
+    }
+    .card {
+        @apply bg-white rounded-[5px] shadow-md p-6;
     }
 }
 
@@ -21,4 +58,31 @@
 
 .animate-logo-marquee {
     animation: logo-marquee 18s linear infinite;
+}
+
+
+/* Estilo base */
+
+body {
+    font-family: 'Segoe UI Regular', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Segoe UI Semibold', sans-serif;
+}
+
+
+/* Classes para pesos de fonte */
+
+.font-regular {
+    font-family: 'Segoe UI Regular', sans-serif;
+}
+
+.font-semibold {
+    font-family: 'Segoe UI Semibold', sans-serif;
 }

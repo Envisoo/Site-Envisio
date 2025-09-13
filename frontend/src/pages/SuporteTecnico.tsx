@@ -1,23 +1,105 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { enviarEmail } from "../services/email";
+import "./Contato.css";
 
 const SuporteTecnico: React.FC = () => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
+  // Ref para controlar se o componente está montado
+  const isMountedRef = useRef(true);
+
+  const initialFormState = {
     name: "",
     email: "",
     phone: "",
     urgency: "",
     issue: "",
-  });
+    area: "suporte",
+    message: "",
+    empresa: "",
+    apelido: "",
+    nif: "",
+  };
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState(initialFormState);
   const [activeTab, setActiveTab] = useState<"form" | "faq">("form");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // useEffect para cleanup
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  // Função para limpar o formulário
+  const resetForm = () => {
+    if (!isMountedRef.current) return;
+    setFormData(initialFormState);
+  };
+
+  // Função para lidar com mudanças nos campos
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Função para enviar por email
+  async function handleEmailSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (isSubmitting || !isMountedRef.current) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setIsLoading(true);
+
+    try {
+      // Mapear dados do suporte para formato do email
+      const emailData = {
+        ...formData,
+        message: `SOLICITAÇÃO DE SUPORTE TÉCNICO\n\nPrioridade: ${formData.urgency}\n\nDescrição do Problema:\n${formData.issue}`,
+        area: "suporte",
+      };
+
+      const response = await enviarEmail(emailData, "singular");
+
+      if (isMountedRef.current) {
+        if (response.success) {
+          setFormSubmitted(true);
+          resetForm();
+        } else {
+          throw new Error("Falha ao enviar email");
+        }
+      }
+    } catch (error) {
+      if (isMountedRef.current) {
+        alert("Erro ao enviar solicitação. Tente novamente.");
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsLoading(false);
+        setIsSubmitting(false);
+      }
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header com gradiente */}
-        <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-t-2xl px-8 py-6 shadow-lg">
+        <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-[5px] px-8 py-6 shadow-lg">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
@@ -29,25 +111,8 @@ const SuporteTecnico: React.FC = () => {
             </div>
             <div className="mt-6 md:mt-0 flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/244959849434?text=Olá, preciso de suporte técnico.
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-white text-red-600 hover:bg-gray-100 px-5 py-3 rounded-lg font-semibold shadow-md transition-all duration-300">
-                <span className="inline-flex items-center justify-center w-6 h-6">
-                  <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
-                    <circle cx="16" cy="16" r="16" fill="#25D366" />
-                    <path
-                      d="M22.5 17.8c-.3-.2-1.7-.8-2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a7.7 7.7 0 01-2.3-2.2c-.2-.3 0-.4.1-.6.1-.1.2-.3.3-.4.1-.2.1-.3 0-.5s-.7-1.7-1-2.3c-.2-.5-.4-.4-.7-.4h-.6c-.2 0-.5.1-.7.3a2.8 2.8 0 00-.9 2.1c0 1.2.8 2.4 1.1 2.8.3.4 2.1 3.3 5.1 4.2.7.2 1.2.3 1.6.2.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2z"
-                      fill="#fff"
-                    />
-                  </svg>
-                </span>
-                WhatsApp Prioritário
-              </a>
-              <a
-                href="mailto:suporte@envisio.co.ao"
-                className="flex items-center justify-center gap-2 bg-red-900 hover:bg-red-950 text-white px-5 py-3 rounded-lg font-medium shadow-md transition-all duration-300">
+                href="mailto:geral@envisio.co.ao"
+                className="flex items-center justify-center gap-2 bg-red-900 hover:bg-red-950 text-white px-5 py-3 rounded-[5px] font-medium shadow-md transition-all duration-300">
                 <span className="inline-flex items-center justify-center w-6 h-6">
                   <svg
                     fill="none"
@@ -59,14 +124,14 @@ const SuporteTecnico: React.FC = () => {
                     <path d="M22 6l-10 7L2 6" />
                   </svg>
                 </span>
-                suporte@envisio.co.ao
+                geral@envisio.co.ao
               </a>
             </div>
           </div>
         </div>
 
         {/* Container principal */}
-        <div className="bg-white rounded-b-2xl shadow-xl overflow-hidden">
+        <div className="bg-white rounded-[5px] shadow-xl overflow-hidden">
           {/* Abas de navegação */}
           <div className="border-b border-gray-200">
             <nav className="flex -mb-px">
@@ -95,34 +160,39 @@ const SuporteTecnico: React.FC = () => {
           <div className="p-6 md:p-8">
             {activeTab === "form" ? (
               formSubmitted ? (
-                <div className="text-center py-12">
-                  <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
-                    <svg
-                      className="h-8 w-8 text-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
+                <div
+                  className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+                  onClick={() => setFormSubmitted(false)}>
+                  <div
+                    className="success-modal-content bg-red-50 border-2 border-red-300 rounded-lg p-8 text-center max-w-md mx-4 shadow-2xl transform"
+                    onClick={(e) => e.stopPropagation()}>
+                    <div className="success-icon mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-100 mb-6">
+                      <svg
+                        className="h-10 w-10 text-red-600"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="success-title text-2xl font-bold text-red-800 mb-4">
+                      🎉 Solicitação Enviada!
+                    </h3>
+                    <p className="text-red-700 mb-6 text-lg font-medium">
+                      Nossa equipe de suporte recebeu sua solicitação e entrará
+                      em contato em breve.
+                    </p>
+                    <button
+                      onClick={() => setFormSubmitted(false)}
+                      className="success-button bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                      Nova Solicitação
+                    </button>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Solicitação Registrada!
-                  </h3>
-                  <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                    Nossa equipe já recebeu sua solicitação e entrará em contato
-                    em breve. Caso necessário, utilize nossos canais
-                    prioritários para atendimento imediato.
-                  </p>
-                  <button
-                    onClick={() => setFormSubmitted(false)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow transition">
-                    Nova Solicitação
-                  </button>
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-8">
@@ -132,7 +202,7 @@ const SuporteTecnico: React.FC = () => {
                     </h2>
                     <div className="space-y-6">
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-lg">
+                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-[5px]">
                           <svg
                             className="h-6 w-6 text-red-600"
                             fill="none"
@@ -158,7 +228,7 @@ const SuporteTecnico: React.FC = () => {
                       </div>
 
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-lg">
+                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-[5px]">
                           <svg
                             className="h-6 w-6 text-red-600"
                             fill="none"
@@ -184,7 +254,7 @@ const SuporteTecnico: React.FC = () => {
                       </div>
 
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-lg">
+                        <div className="flex-shrink-0 bg-red-100 p-2 rounded-[5px]">
                           <svg
                             className="h-6 w-6 text-red-600"
                             fill="none"
@@ -216,9 +286,7 @@ const SuporteTecnico: React.FC = () => {
                     <h2 className="text-xl font-bold text-gray-900 mb-4">
                       Formulário de Solicitação
                     </h2>
-                    <form
-                      onSubmit={(e) => e.preventDefault()}
-                      className="space-y-4">
+                    <form onSubmit={handleEmailSubmit} className="space-y-4">
                       <div>
                         <label
                           htmlFor="name"
@@ -230,12 +298,10 @@ const SuporteTecnico: React.FC = () => {
                           name="name"
                           type="text"
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-[5px] focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                           placeholder="Seu nome completo"
                           value={formData.name}
-                          onChange={(e) =>
-                            setFormData((f) => ({ ...f, name: e.target.value }))
-                          }
+                          onChange={handleInputChange}
                         />
                       </div>
 
@@ -251,15 +317,10 @@ const SuporteTecnico: React.FC = () => {
                             name="email"
                             type="email"
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-[5px] focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                             placeholder="seu@email.com"
                             value={formData.email}
-                            onChange={(e) =>
-                              setFormData((f) => ({
-                                ...f,
-                                email: e.target.value,
-                              }))
-                            }
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div>
@@ -272,15 +333,10 @@ const SuporteTecnico: React.FC = () => {
                             id="phone"
                             name="phone"
                             type="tel"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-[5px] focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                             placeholder="+244 XXX XXX XXX"
                             value={formData.phone}
-                            onChange={(e) =>
-                              setFormData((f) => ({
-                                ...f,
-                                phone: e.target.value,
-                              }))
-                            }
+                            onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -295,14 +351,9 @@ const SuporteTecnico: React.FC = () => {
                           id="urgency"
                           name="urgency"
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-[5px] focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                           value={formData.urgency}
-                          onChange={(e) =>
-                            setFormData((f) => ({
-                              ...f,
-                              urgency: e.target.value,
-                            }))
-                          }>
+                          onChange={handleInputChange}>
                           <option value="">Selecione a urgência</option>
                           <option value="Baixa">
                             Baixa (Atendimento normal)
@@ -328,75 +379,52 @@ const SuporteTecnico: React.FC = () => {
                           name="issue"
                           rows={4}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-[5px] focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
                           placeholder="Descreva detalhadamente o problema encontrado..."
                           value={formData.issue}
-                          onChange={(e) =>
-                            setFormData((f) => ({
-                              ...f,
-                              issue: e.target.value,
-                            }))
-                          }></textarea>
+                          onChange={handleInputChange}></textarea>
                       </div>
 
                       <div className="pt-2">
                         <button
-                          type="button"
-                          className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-                          onClick={() => {
-                            // Monta mensagem para o WhatsApp e para o e-mail
-                            const msg =
-                              `*Solicitação de Suporte Técnico*\n` +
-                              `Nome: ${formData.name}\n` +
-                              `E-mail: ${formData.email}\n` +
-                              `Telefone: ${formData.phone}\n` +
-                              `Prioridade: ${formData.urgency}\n` +
-                              `Problema: ${formData.issue}`;
-                            if (
-                              !formData.name ||
-                              !formData.email ||
-                              !formData.urgency ||
-                              !formData.issue
-                            ) {
-                              alert(
-                                "Por favor, preencha todos os campos obrigatórios."
-                              );
-                              return;
-                            }
-                            if (formData.urgency === "Alta") {
-                              // Envia para WhatsApp prioritário
-                              const url = `https://wa.me/244959849434?text=${encodeURIComponent(
-                                msg
-                              )}`;
-                              window.open(url, "_blank");
-                            } else {
-                              // Envia por e-mail
-                              const subject = encodeURIComponent(
-                                "Solicitação de Suporte Técnico"
-                              );
-                              const body = encodeURIComponent(
-                                `Nome: ${formData.name}\nE-mail: ${formData.email}\nTelefone: ${formData.phone}\nPrioridade: ${formData.urgency}\nProblema: ${formData.issue}`
-                              );
-                              window.open(
-                                `mailto:suporte@envisio.co.ao?subject=${subject}&body=${body}`,
-                                "_blank"
-                              );
-                            }
-                            setFormSubmitted(true);
-                          }}>
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                            />
-                          </svg>
-                          Enviar Solicitação
+                          type="submit"
+                          disabled={isLoading}
+                          className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 px-6 rounded-[5px] shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                          {isLoading ? (
+                            <svg
+                              className="animate-spin h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24">
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : (
+                            <>
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                />
+                              </svg>
+                              Enviar via E-mail
+                            </>
+                          )}
                         </button>
                       </div>
                     </form>
@@ -474,21 +502,6 @@ const SuporteTecnico: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Rodapé informativo */}
-        <div className="mt-8 text-center text-sm text-gray-500">
-          <p>
-            Para emergências críticas fora do horário comercial, contate nosso
-            WhatsApp prioritário:{" "}
-            <a
-              href="https://wa.me/244959849434"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-red-600 hover:underline font-medium">
-              +244 959 849 434
-            </a>
-          </p>
         </div>
       </div>
     </div>

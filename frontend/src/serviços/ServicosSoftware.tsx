@@ -16,6 +16,9 @@ import {
   Shield,
   Database,
   Network,
+  DollarSign,
+  TrendingUp,
+  GitBranch,
 } from "lucide-react";
 
 // Dados dos serviços de software
@@ -24,72 +27,46 @@ const softwareServices = [
     id: 1,
     title: "Consultoria em TI",
     description:
-      "Soluções personalizadas para digitalizar, automatizar e potencializar o seu negócio. Diagnóstico, planejamento e execução sob medida.",
+      "Soluções estratégicas em tecnologia para impulsionar a eficiência e inovação do seu negócio, com foco em resultados mensuráveis e crescimento sustentável.",
     icon: <BadgeCheck className="w-8 h-8 text-red-600" />,
     items: [
-      "Mapeamento de processos",
-      "Transformação digital",
-      "Treinamento de equipes",
+      "Redução de custos através da eliminação de desperdícios",
+      "Acesso a conhecimento técnico especializado sob pedido",
+      "Proteção de dados e conformidade regulamentar",
+      "Soluções dimensionáveis que crescem com o seu negócio",
+      "Foco no negócio principal com equipas mais produtivas",
     ],
-    features: [
-      { icon: <Cloud />, text: "Cloud & DevOps" },
-      { icon: <Shield />, text: "Segurança" },
-      { icon: <Cpu />, text: "Infraestrutura" },
-      { icon: <Headphones />, text: "Suporte 24/7" },
-    ],
-    image: "/images/software1.webp",
-    testimonial: {
-      text: "A consultoria de TI da Envisio acelerou nossa transformação digital e aumentou a produtividade.",
-      author: "Paulo Silva, CEO - TechAngola",
-    },
+    image: "/images/imagem soft/Consultoria.webp",
   },
   {
     id: 2,
-    title: "ERP Eticadata / Primavera",
+    title: "Soluções de ERP",
     description:
-      "Implantação, customização e suporte de sistemas de gestão empresarial líderes de mercado. Controle total e integração de todos os setores.",
+      "Sistemas de gestão empresarial completos que integram todos os departamentos numa única plataforma, proporcionando eficiência operacional e visão estratégica do negócio.",
     icon: <Cpu className="w-8 h-8 text-red-500" />,
     items: [
-      "Gestão Comercial",
-      "Contabilidade",
-      "Recursos Humanos",
-      "AutoGest",
+      "Integração total de dados entre departamentos",
+      "Automação de processos manuais e repetitivos",
+      "Visão em tempo real do negócio com painéis de controlo",
+      "Otimização de custos operacionais",
+      "Controlo e segurança de dados avançados",
     ],
-    features: [
-      { icon: <Database />, text: "Banco de Dados" },
-      { icon: <Shield />, text: "Compliance Fiscal" },
-      { icon: <Network />, text: "Integração Total" },
-      { icon: <Clock />, text: "Suporte dedicado" },
-    ],
-    image: "/images/software2.jpg",
-    testimonial: {
-      text: "O ERP implantado pela Envisio trouxe controle e automação para todos os setores da empresa.",
-      author: "Maria João, Diretora Financeira - Grupo Beta",
-    },
+    image: "/images/imagem soft/Primavera.webp",
   },
   {
     id: 3,
     title: "Desenvolvimento de Software",
     description:
-      "Criação de sistemas web, aplicativos e integrações sob demanda, com foco em performance, segurança e experiência do usuário.",
+      "Soluções de software personalizadas que impulsionam a inovação e a eficiência do seu negócio, com foco em desempenho, segurança e experiência do utilizador.",
     icon: <Code2 className="w-8 h-8 text-red-400" />,
     items: [
-      "Sistemas Web",
-      "APIs e Integrações",
-      "Aplicativos Mobile",
-      "UX/UI Design",
+      "Aceleração do tempo de colocação no mercado com metodologias ágeis",
+      "Alto desempenho e escalabilidade para crescimento",
+      "Qualidade garantida com testes automatizados",
+      "Experiência do utilizador intuitiva e acessível",
+      "Manutenção e apoio contínuos",
     ],
-    features: [
-      { icon: <Zap />, text: "Performance" },
-      { icon: <Shield />, text: "Segurança" },
-      { icon: <BadgeCheck />, text: "Qualidade" },
-      { icon: <Cloud />, text: "Escalabilidade" },
-    ],
-    image: "/images/software3.jpg",
-    testimonial: {
-      text: "O sistema desenvolvido superou nossas expectativas em usabilidade e integração.",
-      author: "Helena Cruz, COO - FinTech Luanda",
-    },
+    image: "/images/imagem soft/Desenvol.webp",
   },
 ];
 
@@ -109,51 +86,59 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   service,
   active,
   onClick,
-}) => (
-  <motion.div
-    onClick={onClick}
-    whileHover={{ scale: 1.03 }}
-    className={`cursor-pointer rounded-2xl p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
-      active
-        ? "border-red-500 bg-white shadow-2xl"
-        : "border-transparent bg-white/50 shadow-lg"
-    }`}>
-    <div>
-      <div className="flex items-center gap-4 mb-4">
-        <div className="p-3 rounded-full bg-gradient-to-br from-red-50 to-white shadow">
-          {service.icon}
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const maxLength = 100;
+  const shouldTruncate = service.description.length > maxLength;
+  const displayText = isExpanded
+    ? service.description
+    : `${service.description.substring(0, maxLength)}${
+        shouldTruncate ? "..." : ""
+      }`;
+
+  return (
+    <motion.div
+      onClick={onClick}
+      whileHover={{ scale: 1.03 }}
+      className={`cursor-pointer rounded-[5px] p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
+        active
+          ? "border-red-500 bg-white shadow-2xl"
+          : "border-transparent bg-white/50 shadow-lg"
+      }`}>
+      <div>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-[5px] bg-gradient-to-br from-red-50 to-white shadow">
+            {service.icon}
+          </div>
+          <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
         </div>
-        <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
-      </div>
-      <p
-        className="text-gray-600 mb-4"
-        style={{ fontFamily: "Segoe UI Regular" }}>
-        {service.description.substring(0, 100)}...
-      </p>
-      <div
-        className="flex justify-between items-center mb-4"
-        style={{ fontFamily: "Segoe UI Regular" }}>
-        <div className="flex -space-x-2">
-          {service.features.slice(0, 3).map((feature: Feature, i: number) => (
-            <div
-              key={i}
-              className="w-8 h-8 rounded-full bg-white border-2 border-white flex items-center justify-center shadow"
+        <div className="mb-4">
+          <p
+            className="text-gray-600"
+            style={{ fontFamily: "Segoe UI Regular" }}>
+            {displayText}
+          </p>
+          {shouldTruncate && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
+              className="text-red-600 hover:text-red-800 text-sm font-medium mt-1 focus:outline-none"
               style={{ fontFamily: "Segoe UI Regular" }}>
-              {React.cloneElement(feature.icon as React.ReactElement<any>, {
-                className: "w-4 h-4 text-red-600",
-              })}
-            </div>
-          ))}
+              {isExpanded ? "Mostrar menos" : "Ler mais"}
+            </button>
+          )}
         </div>
       </div>
-    </div>
-    <a
-      href="/pages/contato"
-      className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow transition-all w-full flex items-center justify-center">
-      Solicitar Orçamento
-    </a>
-  </motion.div>
-);
+      <a
+        href="/contato"
+        className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all w-full flex items-center justify-center">
+        Solicitar Orçamento
+      </a>
+    </motion.div>
+  );
+};
 
 // Componente de Destaque de Serviço
 const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
@@ -161,7 +146,7 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5 }}
-    className="bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-2xl overflow-hidden">
+    className="bg-gradient-to-br from-white to-blue-50 rounded-[5px] shadow-2xl overflow-hidden">
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="relative h-96 lg:h-full">
         <img
@@ -169,19 +154,6 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           alt={service.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-          <div className="text-white">
-            <div className="flex items-center gap-2 mb-2">
-              <BadgeCheck className="text-yellow-400" />
-              <span className="font-semibold">Solução Certificada</span>
-            </div>
-            <h3
-              className="text-2xl"
-              style={{ fontFamily: "Segoe UI semibold" }}>
-              {service.title}
-            </h3>
-          </div>
-        </div>
       </div>
       <div className="p-8">
         <div className="mb-6">
@@ -191,7 +163,7 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           <ul className="space-y-3">
             {service.items.map((item: string, i: number) => (
               <li key={i} className="flex items-start gap-3">
-                <div className="mt-1 w-5 h-5 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                <div className="mt-1 w-5 h-5 rounded-[5px] bg-red-100 flex items-center justify-center flex-shrink-0">
                   <ChevronRight className="w-3 h-3 text-red-600" />
                 </div>
                 <span className="text-gray-700">{item}</span>
@@ -200,40 +172,8 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           </ul>
         </div>
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3">
-            Tecnologias Incluídas
-          </h4>
-          <div className="grid grid-cols-2 gap-3">
-            {service.features.map((feature: Feature, i: number) => (
-              <div
-                key={i}
-                className="flex items-center gap-2 bg-white p-3 rounded-lg shadow-sm">
-                {React.cloneElement(feature.icon as React.ReactElement<any>, {
-                  className: "w-5 h-5 text-red-600",
-                })}
-                <span
-                  className="text-sm text-gray-700"
-                  style={{ fontFamily: "Segoe UI Regular" }}>
-                  {feature.text}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100">
-          <div className="flex items-start gap-3">
-            <Quote className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
-            <div>
-              <p className="text-gray-700 italic mb-2">
-                "{service.testimonial.text}"
-              </p>
-              <p
-                className="text-sm text-gray-600"
-                style={{ fontFamily: "Segoe UI Regular" }}>
-                — {service.testimonial.author}
-              </p>
-            </div>
-          </div>
+          <h4 className="text-lg font-semibold text-gray-800 mb-3"></h4>
+          <div className="grid grid-cols-2 gap-3 p-3"></div>
         </div>
       </div>
     </div>
@@ -268,15 +208,28 @@ const ServicosSoftware = () => {
 
   return (
     <div className="bg-white">
-      {/* Banner estático apenas imagem */}
+      {/* Banner com texto sobreposto */}
       <section
-        className="w-full flex items-center justify-center overflow-hidden bg-white"
-        style={{ height: "clamp(100px, 35vw, 400px)" }}>
+        className="relative w-full flex items-center justify-start overflow-hidden bg-white"
+        style={{ height: "clamp(100px, 30vw, 500px)" }}>
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="text-white pl-8 md:pl-16 lg:pl-24 w-full max-w-7xl mx-auto">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-[30px] sm:text-3xl md:text-5xl lg:text-5xl  mb-4 md:mb-6"
+              style={{
+                fontFamily: "Segoe UI semibold",
+              }}>
+              <span className="text-white">Software</span>
+            </motion.h1>
+          </div>
+        </div>
         <img
-          src="/images/softwar.jpg"
+          src="/images/imagem soft/Banner2.webp"
           alt="Banner Serviços de Software"
           className="w-full h-full object-cover object-center"
-          style={{ opacity: 1 }}
         />
       </section>
 
@@ -301,8 +254,8 @@ const ServicosSoftware = () => {
             className="text-lg md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto"
             style={{ fontFamily: "Segoe UI Regular" }}>
             Digitalização, automação e inovação para empresas modernas. Da
-            consultoria estratégica ao desenvolvimento sob medida, entregamos
-            tecnologia de ponta para transformar seu negócio.
+            consultoria estratégica ao desenvolvimento à medida, entregamos
+            tecnologia de ponta para transformar o seu negócio.
           </motion.p>
         </div>
 
@@ -312,8 +265,8 @@ const ServicosSoftware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
-            <Cloud className="w-10 h-10 text-blue-500 flex-shrink-0" />
+            className="bg-gradient-to-br from-blue-50 to-white rounded-[5px] shadow-lg p-8 flex items-center gap-6">
+            <Cloud className="w-10 h-10 text-red-500 flex-shrink-0" />
             <div>
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
                 Cloud, ERP & Integrações
@@ -321,8 +274,8 @@ const ServicosSoftware = () => {
               <p
                 className="text-gray-600 text-sm"
                 style={{ fontFamily: "Segoe UI Regular" }}>
-                Implantação, integração e automação de sistemas de gestão, cloud
-                e APIs para eficiência total.
+                Implementação, integração e automação de sistemas de gestão,
+                cloud e APIs para eficiência total.
               </p>
             </div>
           </motion.div>
@@ -331,17 +284,17 @@ const ServicosSoftware = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-red-50 to-white rounded-2xl shadow-lg p-8 flex items-center gap-6">
+            className="bg-gradient-to-br from-red-50 to-white rounded-[5px] shadow-lg p-8 flex items-center gap-6">
             <Headphones className="w-10 h-10 text-red-600 flex-shrink-0" />
             <div>
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
-                Consultoria & Suporte Especializado
+                Consultoria & Apoio Especializado
               </h5>
               <p
                 className="text-gray-600 text-sm"
                 style={{ fontFamily: "Segoe UI Regular" }}>
-                Diagnóstico, planejamento, treinamento e suporte para
-                digitalização e inovação do seu negócio.
+                Diagnóstico, planeamento, formação e apoio para digitalização e
+                inovação do seu negócio.
               </p>
             </div>
           </motion.div>
@@ -369,7 +322,7 @@ const ServicosSoftware = () => {
               className="text-lg md:text-2xl text-gray-600 max-w-2xl mx-auto"
               style={{ fontFamily: "Segoe UI Regular" }}>
               Soluções inovadoras, confiáveis e sob medida para digitalizar e
-              automatizar sua empresa.
+              automatizar a sua empresa.
             </motion.p>
           </div>
 
@@ -383,7 +336,7 @@ const ServicosSoftware = () => {
                     1
                 )
               }
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
               aria-label="Anterior">
               <ChevronLeft className="w-7 h-7 text-red-600" />
             </button>
@@ -420,7 +373,7 @@ const ServicosSoftware = () => {
                     1
                 )
               }
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
               aria-label="Próximo">
               <ChevronRight className="w-7 h-7 text-red-600" />
             </button>
@@ -448,9 +401,9 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl  mb-4"
+              className="text-3xl text-red-400 md:text-4xl  mb-4"
               style={{ fontFamily: "Segoe UI semibold" }}>
-              Por que escolher nossas{" "}
+              Por que escolher as nossas{" "}
               <span className="text-red-400">soluções de software</span>?
             </motion.h2>
             <motion.p
@@ -458,9 +411,9 @@ const ServicosSoftware = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-300 max-w-3xl mx-auto"
+              className="text-xl text-white/90 mb-8 max-w-3xl mx-auto"
               style={{ fontFamily: "Segoe UI Regular" }}>
-              Inovação, segurança e suporte especializado para o crescimento do
+              Inovação, segurança e apoio especializado para o crescimento do
               seu negócio.
             </motion.p>
           </div>
@@ -470,13 +423,13 @@ const ServicosSoftware = () => {
                 icon: <Shield className="w-8 h-8 text-red-400" />,
                 title: "Segurança Avançada",
                 description:
-                  "Soluções desenvolvidas com foco em proteção de dados e compliance.",
+                  "Soluções desenvolvidas com foco em proteção de dados e conformidade.",
               },
               {
                 icon: <Clock className="w-8 h-8 text-red-400" />,
-                title: "Suporte Ágil",
+                title: "Apoio Ágil",
                 description:
-                  "Equipe técnica disponível para garantir a continuidade do seu negócio.",
+                  "Equipa técnica disponível para garantir a continuidade do seu negócio.",
               },
               {
                 icon: <BadgeCheck className="w-8 h-8 text-red-400" />,
@@ -499,12 +452,12 @@ const ServicosSoftware = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gray-800 rounded-2xl p-8 hover:bg-gray-700 transition-all">
-                  <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center mb-6">
+                  className="bg-gray-800 rounded-[5px] p-8 hover:bg-gray-700 transition-all">
+                  <div className="w-14 h-14 rounded-[5px] bg-gray-700 flex items-center justify-center mb-6">
                     {item.icon}
                   </div>
                   <h3
-                    className="text-xl mb-3"
+                    className="text-xl text-white mb-3"
                     style={{ fontFamily: "Segoe UI semibold" }}>
                     {item.title}
                   </h3>
@@ -529,7 +482,7 @@ const ServicosSoftware = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl text-white mb-6"
             style={{ fontFamily: "Segoe UI semibold" }}>
-            Pronto para transformar sua operação digital?
+            Pronto para transformar a sua operação digital?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -538,24 +491,18 @@ const ServicosSoftware = () => {
             viewport={{ once: true }}
             className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
             style={{ fontFamily: "Segoe UI Regular" }}>
-            Nossos especialistas estão prontos para criar a solução perfeita
+            Os nossos especialistas estão prontos para criar a solução perfeita
             para o seu negócio.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row gap-4 justify-center">
+            viewport={{ once: true }}>
             <a
-              href="/pages/contato"
-              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold shadow-lg transition-all flex items-center justify-center">
+              href="/contato"
+              className="bg-white text-red-600 hover:bg-gray-100 px-8 py-4 rounded-[5px] font-semibold shadow-lg transition-all inline-flex items-center justify-center">
               Agendar Consultoria
-            </a>
-            <a
-              href="/pages/contato"
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg font-semibold shadow-lg transition-all flex items-center justify-center">
-              Falar com Especialista
             </a>
           </motion.div>
         </div>

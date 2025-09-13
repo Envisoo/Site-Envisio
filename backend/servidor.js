@@ -1,96 +1,77 @@
 /** @format */
 
-// Importação dos módulos necessários
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
-// Inicializa variáveis de ambiente
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 dotenv.config();
 
-// Cria a aplicação Express
-const app = express(); // Padronizando para 'app' (convenção comum)
+const app = express();
 
-// Middlewares essenciais
-app.use(cors()); // Permite CORS (deve vir primeiro)
-app.use(express.json()); // Para parsear JSON nas requisições
-app.use(express.urlencoded({ extended: true })); // Para forms HTML
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Importação das rotas
-const cursosRouter = require("./rotas/cursos");
-const usuariosRouter = require("./rotas/usuarios");
-const loginRouter = require("./rotas/login");
-const inscricoesRota = require("./rotas/inscricoes");
-const rotasInstrutor = require("./rotas/instrutor");
-const rotasAvaliacoes = require("./rotas/avaliacoes");
-const rotasFavoritos = require("./rotas/favoritos");
-const rotasAdmin = require("./rotas/admin");
-const rotasCertificados = require("./rotas/certificados");
-const rotasUpload = require("./rotas/upload");
-const recuperarSenhaRotas = require("./rotas/recuperarSenha");
-const perfilAlunoRotas = require("./rotas/perfilAluno");
-const pagamentosRouter = require("./rotas/pagamentos");
-const webhookRouter = require("./rotas/webhook");
-const modulosRouter = require("./rotas/modulos");
-const licoesRouter = require("./rotas/licoes");
+// Lista de rotas para importar
+const routeFiles = [
+  { path: "./rotas/cursos.js", route: "/cursos" },
+  { path: "./rotas/usuarios.js", route: "/usuarios" },
+  { path: "./rotas/login.js", route: "/login" },
+  { path: "./rotas/inscricoes.js", route: "/inscricoes" },
+  { path: "./rotas/instrutor.js", route: "/instrutor" },
+  { path: "./rotas/avaliacoes.js", route: "/avaliacoes" },
+  { path: "./rotas/favoritos.js", route: "/favoritos" },
+  { path: "./rotas/admin.js", route: "/admin" },
+  { path: "./rotas/certificados.js", route: "/certificados" },
+  { path: "./rotas/upload.js", route: "/upload" },
+  { path: "./rotas/recuperarSenha.js", route: "/recuperar-senha" },
+  { path: "./rotas/perfilAluno.js", route: "/perfil-aluno" },
+  { path: "./rotas/pagamentos.js", route: "/pagamentos" },
+  { path: "./rotas/webhook.js", route: "/webhook" },
+  { path: "./rotas/modulos.js", route: "/modulos" },
+  { path: "./rotas/licoes.js", route: "/licoes" },
+  { path: "./rotas/emailRoutes.js", route: "/api" },
+];
 
-// Configuração das rotas
-app.use("/cursos", cursosRouter);
-app.use("/usuarios", usuariosRouter);
-app.use("/login", loginRouter);
-app.use("/inscricoes", inscricoesRota);
-app.use("/instrutor", rotasInstrutor);
-app.use("/avaliacoes", rotasAvaliacoes);
-app.use("/favoritos", rotasFavoritos);
-app.use("/admin", rotasAdmin);
-app.use("/certificados", rotasCertificados);
-app.use("/upload", rotasUpload);
-app.use("/uploads", express.static("uploads"));
-app.use("/recuperar-senha", recuperarSenhaRotas);
-app.use("/perfil-aluno", perfilAlunoRotas);
-app.use("/pagamentos", pagamentosRouter);
-app.use("/webhook", webhookRouter);
-app.use("/modulos", modulosRouter);
-app.use("/licoes", licoesRouter);
+// Função para carregar rotas
+const setupRoutes = async () => {
+  try {
+    for (const { path, route } of routeFiles) {
+      try {
+        console.log(`📂 Carregando rota: ${path}`);
+        const module = await import(path);
+        app.use(route, module.default);
+        console.log(`✅ Rota carregada: ${route}`);
+      } catch (error) {
+        console.error(`❌ Erro ao carregar ${path}:`, error);
+        throw error;
+      }
+    }
 
-const instalarAdmin = require("./rotas/instalarAdmin");
-app.use("/", instalarAdmin);
+    console.log("✅ Todas as rotas carregadas com sucesso");
+  } catch (error) {
+    console.error("❌ Erro ao carregar rotas:", error);
+    process.exit(1);
+  }
+};
 
-// Rota raiz para verificação do servidor
-app.get("/", (req, res) => {
-  res.status(200).json({
-    status: "online",
-    mensagem: "API funcionando corretamente",
-    versao: "1.0.0",
-  });
-});
+// Inicializa as rotas
+await setupRoutes();
 
-// Middleware para rotas não encontradas (404)
-app.use((req, res, next) => {
-  res.status(404).json({
-    sucesso: false,
-    mensagem: "Rota não encontrada",
-  });
-});
+// Configuração de arquivos estáticos
+app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-// Middleware de tratamento de erros (deve ser o último)
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    sucesso: false,
-    mensagem: "Erro interno no servidor",
-    detalhes: process.env.NODE_ENV === "development" ? err.message : undefined,
-  });
-});
+const PORT = process.env.PORT || 3001;
 
-// Configuração da porta
-const PORT = process.env.PORT || 3000;
-
-// Inicia o servidor
 app.listen(PORT, () => {
   console.log(`🟢 Servidor rodando na porta ${PORT}`);
   console.log(`🔗 Acesse: http://localhost:${PORT}`);
 });
 
-// Exporta o app para testes (opcional)
-module.exports = app;
+export default app;

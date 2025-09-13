@@ -1,0 +1,109 @@
+/* Fontes */
+
+@font-face {
+    font-family: 'Segoe UI Regular';
+    src: local('Segoe UI');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Segoe UI Semibold';
+    src: local('Segoe UI Semibold');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* Classes para tipografia consistente */
+
+.text-regular {
+    font-family: 'Segoe UI Regular', sans-serif !important;
+}
+
+.text-semibold {
+    font-family: 'Segoe UI Semibold', sans-serif !important;
+}
+
+
+/* Tamanhos responsivos mantendo a fonte */
+
+.text-responsive {
+    font-size: clamp(16px, 2vw, 18px);
+    line-height: 1.5;
+}
+
+.heading-responsive {
+    font-size: clamp(24px, 4vw, 48px);
+    line-height: 1.2;
+}
+
+
+/* Responsive typography */
+
+@media (max-width: 768px) {
+    .text-responsive {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    .heading-responsive {
+        font-size: clamp(20px, 6vw, 24px);
+    }
+}
+
+
+/* Classes de texto responsivas */
+
+.text-heading {
+    font-size: 1.5rem;
+    /* 2xl */
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .text-heading {
+        font-size: 1.875rem;
+        /* 3xl */
+    }
+}
+
+@media (min-width: 1024px) {
+    .text-heading {
+        font-size: 2.25rem;
+        /* 4xl */
+    }
+}
+
+.text-subheading {
+    font-size: 1.25rem;
+    /* xl */
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .text-subheading {
+        font-size: 1.5rem;
+        /* 2xl */
+    }
+}
+
+@media (min-width: 1024px) {
+    .text-subheading {
+        font-size: 1.875rem;
+        /* 3xl */
+    }
+}
+
+.text-body {
+    font-size: 1rem;
+    /* base */
+    font-family: 'Segoe UI Regular', sans-serif;
+}
+
+@media (min-width: 768px) {
+    .text-body {
+        font-size: 1.125rem;
+        /* lg */
+    }
+}

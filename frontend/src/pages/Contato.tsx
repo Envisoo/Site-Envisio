@@ -1,31 +1,148 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { enviarEmail } from "../services/email";
+import "./Contato.css";
 
 const Contato: React.FC = () => {
+  // Ref para controlar se o componente está montado
+  const isMountedRef = useRef(true);
+
+  // Estados existentes
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [tipoCliente, setTipoCliente] = useState("singular");
+  const [metodoComunicacao, setMetodoComunicacao] = useState("whatsapp");
+
+  // Novo estado para controlar os campos do formulário
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    area: "",
+    empresa: "",
+    apelido: "",
+    nif: "",
+  });
+
+  // Adicione estado de loading
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Função para limpar o formulário
+  const resetForm = () => {
+    if (!isMountedRef.current) return;
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      area: "",
+      empresa: "",
+      apelido: "",
+      nif: "",
+    });
+    setTipoCliente("singular");
+    setMetodoComunicacao("whatsapp");
+  };
+
+  // Função para lidar com mudanças nos campos
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   // Função para enviar mensagem para o WhatsApp
   function handleWhatsAppSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const name = (form.elements.namedItem("name") as HTMLInputElement)?.value;
-    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
-    const phone = (form.elements.namedItem("phone") as HTMLInputElement)?.value;
-    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)
-      ?.value;
+
+    if (!isMountedRef.current) return;
+
     // Monta a mensagem
     const text =
-      `Olá, meu nome é ${name}%0A` +
-      `E-mail: ${email}%0A` +
-      (phone ? `Telefone: ${phone}%0A` : "") +
-      `Mensagem: ${encodeURIComponent(message)}`;
-    // Número do WhatsApp da empresa (com DDI)
-    const whatsappNumber = "244959849434";
+      `Olá, meu nome é ${formData.name}%0A` +
+      `E-mail: ${formData.email}%0A` +
+      (formData.phone ? `Telefone: ${formData.phone}%0A` : "") +
+      `Área de Interesse: ${formData.area}%0A` +
+      `Mensagem: ${encodeURIComponent(formData.message)}`;
+
+    // Número do WhatsApp da empresa
+    const whatsappNumber = "244947137676";
+
     // Redireciona para o WhatsApp
     window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
+
+    // Limpa o formulário
+    setTimeout(() => {
+      if (isMountedRef.current) {
+        resetForm();
+      }
+    }, 100);
   }
+
+  // useEffect para cleanup
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  // Função para enviar por email
+  async function handleEmailSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (isSubmitting || !isMountedRef.current) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setIsLoading(true);
+
+    try {
+      const response = await enviarEmail(formData, tipoCliente);
+
+      if (isMountedRef.current) {
+        if (response.success) {
+          setFormSubmitted(true);
+          resetForm();
+        } else {
+          throw new Error("Falha ao enviar email");
+        }
+      }
+    } catch (error) {
+      if (isMountedRef.current) {
+        alert("Erro ao enviar mensagem. Tente novamente.");
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsLoading(false);
+        setIsSubmitting(false);
+      }
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("📋 handleSubmit chamado");
+    console.log("📞 Método de comunicação:", metodoComunicacao);
+
+    if (metodoComunicacao === "whatsapp") {
+      console.log("📱 Enviando via WhatsApp");
+      handleWhatsAppSubmit(e);
+    } else {
+      console.log("📧 Enviando via Email");
+      handleEmailSubmit(e);
+    }
+  };
 
   return (
     <main className="max-w-5xl mx-auto py-16 px-4 grid md:grid-cols-2 gap-12">
@@ -50,8 +167,8 @@ const Contato: React.FC = () => {
             href="https://wa.me/244947137676"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 group hover:bg-green-50 rounded-xl px-4 py-3 transition-all duration-300 hover:shadow-md">
-            <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 shadow-lg group-hover:bg-green-200 transition-colors">
+            className="flex items-center gap-4 group hover:bg-green-50 rounded-[5px] px-4 py-3 transition-all duration-300 hover:shadow-md">
+            <span className="inline-flex items-center justify-center w-12 h-12 rounded-[5px] bg-green-100 shadow-lg group-hover:bg-green-200 transition-colors">
               <svg className="w-7 h-7" viewBox="0 0 32 32" fill="none">
                 <circle cx="16" cy="16" r="16" fill="#25D366" />
                 <path
@@ -72,7 +189,7 @@ const Contato: React.FC = () => {
           {/* Email */}
           <a
             href="mailto:geral@envisio.co.ao"
-            className="flex items-center gap-4 group hover:bg-blue-50 rounded-xl px-4 py-3 transition-all duration-300 hover:shadow-md">
+            className="flex items-center gap-4 group hover:bg-blue-50 rounded-[5px] px-4 py-3 transition-all duration-300 hover:shadow-md">
             <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600 shadow-lg group-hover:bg-blue-200">
               <svg
                 className="w-6 h-6"
@@ -101,8 +218,8 @@ const Contato: React.FC = () => {
             href="https://www.google.com/maps?q=Condom%C3%ADnio%20Jardins%20do%20Talatona%2C%20Torre%205%20-%20N%C2%BA%20003%2C%20Luanda%2C%20Angola"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-start gap-4 group hover:bg-red-50 rounded-xl px-4 py-3 transition-all duration-300 hover:shadow-md">
-            <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-100 text-red-600 shadow-lg group-hover:bg-red-200 mt-1">
+            className="flex items-start gap-4 group hover:bg-red-50 rounded-[5px] px-4 py-3 transition-all duration-300 hover:shadow-md">
+            <span className="inline-flex items-center justify-center w-12 h-12 rounded-[5px] bg-red-100 text-red-600 shadow-lg group-hover:bg-red-200 mt-1">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -133,7 +250,7 @@ const Contato: React.FC = () => {
         </div>
 
         {/* Mapa */}
-        <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+        <div className="rounded-[5px] overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
           <iframe
             title="Localização da Envisio"
             src="https://www.google.com/maps?q=Condom%C3%ADnio%20Jardins%20do%20Talatona%2C%20Torre%205%20-%20N%C2%BA%20003%2C%20Luanda%2C%20Angola&output=embed"
@@ -199,37 +316,41 @@ const Contato: React.FC = () => {
       {/* Seção do Formulário */}
       <aside
         aria-labelledby="contact-form-heading"
-        className="bg-white rounded-xl shadow-xl p-8 border border-gray-100">
+        className="bg-white rounded-[5px] shadow-xl p-8 border border-gray-100">
         {formSubmitted ? (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
-              <svg
-                className="h-8 w-8 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+            onClick={() => setFormSubmitted(false)}>
+            <div
+              className="success-modal-content bg-red-50 border-2 border-red-300 rounded-lg p-8 text-center max-w-md mx-4 shadow-2xl transform"
+              onClick={(e) => e.stopPropagation()}>
+              <div className="success-icon mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-100 mb-6">
+                <svg
+                  className="h-10 w-10 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <h3 className="success-title text-2xl font-bold text-red-800 mb-4">
+                🎉 Mensagem Enviada!
+              </h3>
+              <p className="text-red-700 mb-6 text-lg font-medium">
+                Obrigado pelo seu contato. Nossa equipe entrará em contato em
+                breve.
+              </p>
+              <button
+                onClick={() => setFormSubmitted(false)}
+                className="success-button bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Enviar Nova Mensagem
+              </button>
             </div>
-            <h3
-              className="text-xl  text-green-800 mb-2"
-              style={{ fontFamily: "Segoe UI Regular" }}>
-              Mensagem enviada com sucesso!
-            </h3>
-            <p className="text-green-600 mb-6">
-              Obrigado pelo seu contato. Nossa equipe entrará em contato em
-              breve.
-            </p>
-            <button
-              onClick={() => setFormSubmitted(false)}
-              className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
-              Enviar nova mensagem
-            </button>
           </div>
         ) : (
           <>
@@ -238,7 +359,7 @@ const Contato: React.FC = () => {
               className="text-2xl font-bold mb-6 text-gray-800">
               Envie sua mensagem
             </h2>
-            <form className="space-y-6" onSubmit={handleWhatsAppSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-2">
                 <label
                   htmlFor="tipoCliente"
@@ -249,7 +370,7 @@ const Contato: React.FC = () => {
                   id="tipoCliente"
                   value={tipoCliente}
                   onChange={(e) => setTipoCliente(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition">
+                  className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition">
                   <option value="singular">Pessoa Singular</option>
                   <option value="empresa">Empresa</option>
                 </select>
@@ -267,7 +388,9 @@ const Contato: React.FC = () => {
                     name="name"
                     type="text"
                     required
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                     placeholder="Digite seu nome"
                   />
                 </div>
@@ -275,16 +398,18 @@ const Contato: React.FC = () => {
                 <>
                   <div className="space-y-2">
                     <label
-                      htmlFor="nome"
+                      htmlFor="name"
                       className="block text-sm font-medium text-gray-700">
                       Nome <span className="text-red-600">*</span>
                     </label>
                     <input
-                      id="nome"
-                      name="nome"
+                      id="name"
+                      name="name"
                       type="text"
                       required
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                       placeholder="Digite o nome"
                     />
                   </div>
@@ -299,7 +424,9 @@ const Contato: React.FC = () => {
                       name="apelido"
                       type="text"
                       required
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      value={formData.apelido}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                       placeholder="Digite o apelido"
                     />
                   </div>
@@ -314,7 +441,9 @@ const Contato: React.FC = () => {
                       name="empresa"
                       type="text"
                       required
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      value={formData.empresa}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                       placeholder="Digite o nome da empresa"
                     />
                   </div>
@@ -329,7 +458,9 @@ const Contato: React.FC = () => {
                       name="nif"
                       type="text"
                       required
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                      value={formData.nif}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                       placeholder="Digite o NIF da empresa"
                     />
                   </div>
@@ -347,7 +478,9 @@ const Contato: React.FC = () => {
                   name="email"
                   type="email"
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                   placeholder="seu@email.com"
                 />
               </div>
@@ -362,7 +495,9 @@ const Contato: React.FC = () => {
                   id="phone"
                   name="phone"
                   type="tel"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                   placeholder="+244 XXX XXX XXX"
                 />
               </div>
@@ -378,26 +513,106 @@ const Contato: React.FC = () => {
                   name="message"
                   rows={5}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
                   placeholder="Como podemos ajudar?"></textarea>
               </div>
 
+              {/* Adiciona seleção de área */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="area"
+                  className="block text-sm font-medium text-gray-700">
+                  Área de Interesse <span className="text-red-600">*</span>
+                </label>
+                <select
+                  id="area"
+                  name="area"
+                  required
+                  value={formData.area}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-[5px] px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition">
+                  <option value="">Selecione uma área</option>
+                  <option value="hardware">Hardware</option>
+                  <option value="software">Software</option>
+                  <option value="aluguel">Aluguel de Equipamentos</option>
+                </select>
+              </div>
+
+              {/* Método de comunicação */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Método de Contato <span className="text-red-600">*</span>
+                </label>
+                <div className="flex gap-4">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="metodoComunicacao"
+                      value="whatsapp"
+                      checked={metodoComunicacao === "whatsapp"}
+                      onChange={(e) => setMetodoComunicacao(e.target.value)}
+                      className="form-radio text-red-600"
+                    />
+                    <span className="ml-2">WhatsApp</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="metodoComunicacao"
+                      value="email"
+                      checked={metodoComunicacao === "email"}
+                      onChange={(e) => setMetodoComunicacao(e.target.value)}
+                      className="form-radio text-red-600"
+                    />
+                    <span className="ml-2">E-mail</span>
+                  </label>
+                </div>
+              </div>
+
               <button
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg shadow hover:shadow-lg transition-all duration-300 font-medium flex items-center justify-center gap-2 hover:from-red-700 hover:to-red-800"
-                type="submit">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
-                </svg>
-                Enviar Mensagem
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-[5px] shadow hover:shadow-lg transition-all duration-300 font-medium flex items-center justify-center gap-2 hover:from-red-700 hover:to-red-800"
+                type="submit"
+                disabled={isLoading}>
+                {isLoading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  <>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      />
+                    </svg>
+                    Enviar{" "}
+                    {metodoComunicacao === "whatsapp"
+                      ? "via WhatsApp"
+                      : "via E-mail"}
+                  </>
+                )}
               </button>
             </form>
           </>

@@ -1,10 +1,11 @@
 /** @format */
 
-const express = require("express");
-const router = express.Router();
-const db = require("../configuracoes/baseDados");
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
+import express, { Router } from "express";
+import { db } from "../db/conexao.js";
+import { autenticar } from "../middlewares/autenticar.js";
+import { autorizarPapel } from "../middlewares/autorizarPapel.js";
+
+const router = Router();
 
 // Adicionar curso aos favoritos
 router.post(
@@ -78,4 +79,4 @@ router.delete(
   }
 );
 
-module.exports = router;
+export default router;

@@ -1,10 +1,12 @@
 /** @format */
 
-const express = require("express");
-const router = express.Router();
-const db = require("../configuracoes/baseDados");
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
+import express from "express";
+import { Router } from "express";
+import { db } from "../db/conexao.js";
+import { autenticar } from "../middlewares/autenticar.js";
+import { autorizarPapel } from "../middlewares/autorizarPapel.js";
+
+const router = Router();
 
 // 🔒 Rota protegida: Painel completo do aluno
 router.get("/", autenticar, autorizarPapel("aluno"), async (req, res) => {
@@ -120,4 +122,4 @@ router.put("/editar", autenticar, autorizarPapel("aluno"), async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

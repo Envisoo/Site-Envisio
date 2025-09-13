@@ -1,12 +1,14 @@
 /** @format */
 
-const express = require("express");
-const router = express.Router();
-const db = require("../configuracoes/baseDados");
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
-const PDFDocument = require("pdfkit");
-const { format } = require("date-fns");
+import express from "express";
+import { Router } from "express";
+import { db } from "../db/conexao.js";
+import { autenticar } from "../middlewares/autenticar.js";
+import { autorizarPapel } from "../middlewares/autorizarPapel.js";
+import PDFDocument from "pdfkit";
+import { format } from "date-fns";
+
+const router = Router();
 
 // ✅ Marcar curso como concluído
 router.patch(
@@ -91,4 +93,4 @@ router.get(
   }
 );
 
-module.exports = router;
+export default router;

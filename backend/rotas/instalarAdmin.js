@@ -2,11 +2,12 @@
 
 // Rota para cadastrar o primeiro administrador (acesso público, apenas 1 vez)
 
-const express = require("express");
-const bcrypt = require("bcrypt");
-const baseDados = require("../configuracoes/baseDados");
+import express from "express";
+import { Router } from "express";
+import bcrypt from "bcrypt";
+import { db } from "../db/conexao.js";
 
-const router = express.Router();
+const router = Router();
 
 router.post("/instalar-admin", async (req, res) => {
   const { nome, email, senha } = req.body;
@@ -21,7 +22,7 @@ router.post("/instalar-admin", async (req, res) => {
 
   try {
     // Verifica se já existe um admin
-    const resultado = await baseDados.query(
+    const resultado = await db.query(
       "SELECT * FROM usuarios WHERE papel = 'admin'"
     );
 
@@ -35,7 +36,7 @@ router.post("/instalar-admin", async (req, res) => {
 
     const senhaHash = await bcrypt.hash(senha, 10);
 
-    const novoAdmin = await baseDados.query(
+    const novoAdmin = await db.query(
       `INSERT INTO usuarios (nome, email, senha, papel)
        VALUES ($1, $2, $3, 'admin')
        RETURNING id, nome, email, papel`,
@@ -57,4 +58,4 @@ router.post("/instalar-admin", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

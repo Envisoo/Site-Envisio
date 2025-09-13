@@ -1,23 +1,34 @@
 /** @format */
 
 // Importação dos módulos necessários
-const express = require("express");
-const bcrypt = require("bcrypt");
-const baseDados = require("../configuracoes/baseDados"); // Verifique se este caminho está correto
+import express from "express";
+import { Router } from "express";
+import { db } from "../db/conexao.js";
+import bcrypt from "bcrypt";
+import { autenticar } from "../middlewares/autenticar.js";
+import multer from "multer";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
-// Importa os middlewares de autenticação e autorização
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Cria um roteador do Express para organizar as rotas
-const router = express.Router();
+const router = Router();
 
-/**
- * Rota POST para cadastrar um novo usuário
- * Endpoint: /usuarios
- * Acesso: Somente administradores (com autenticação)
- */
-router.post("/", autenticar, autorizarPapel("admin"), async (req, res) => {
+// Configuração do Multer para upload de arquivos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, join(__dirname, "../uploads/"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Rotas públicas
+router.post("/registro", async (req, res) => {
   // Extrai os dados do corpo da requisição
   const { nome, email, senha, papel } = req.body;
 
@@ -35,7 +46,7 @@ router.post("/", autenticar, autorizarPapel("admin"), async (req, res) => {
     const senhaHash = await bcrypt.hash(senha, 10);
 
     // Insere o usuário no banco de dados
-    const resultado = await baseDados.query(
+    const resultado = await db.query(
       `INSERT INTO usuarios (nome, email, senha, papel)
        VALUES ($1, $2, $3, $4) 
        RETURNING id, nome, email, papel`, // Não retorna a senha por segurança
@@ -71,30 +82,19 @@ router.post("/", autenticar, autorizarPapel("admin"), async (req, res) => {
   }
 });
 
-/**
- * GET /usuarios
- * Lista todos os usuários (somente admin)
- */
-router.get("/", autenticar, autorizarPapel("admin"), async (req, res) => {
-  try {
-    const resultado = await baseDados.query(
-      "SELECT id, nome, email, papel FROM usuarios ORDER BY id"
-    );
-
-    return res.json({
-      sucesso: true,
-      quantidade: resultado.rows.length,
-      usuarios: resultado.rows,
-    });
-  } catch (erro) {
-    console.error("Erro ao listar usuários:", erro);
-    return res.status(500).json({
-      sucesso: false,
-      erro: "ERRO_BANCO_DADOS",
-      mensagem: "Falha ao recuperar lista de usuários",
-    });
-  }
+router.post("/login", async (req, res) => {
+  // ...existing code...
 });
 
-// Exporta o roteador para ser usado no arquivo principal
-module.exports = router;
+// Rotas protegidas
+router.use(autenticar);
+
+router.get("/perfil", async (req, res) => {
+  // ...existing code...
+});
+
+router.put("/atualizar", upload.single("foto"), async (req, res) => {
+  // ...existing code...
+});
+
+export default router;

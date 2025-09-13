@@ -1,12 +1,67 @@
-/* Efeito de máscara para carrossel de parceiros */
+/* Reset e configurações base */
 
-.mask-carousel-partners {
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variáveis globais */
+
+:root {
+    --primary-color: #DC2626;
+    --secondary-color: #1F2937;
+    --text-color: #ffffff;
+    --background-light: #F9FAFB;
 }
 
 
-/* Animação marquee para logos dos parceiros */
+/* Estilos base */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        @apply bg-white text-gray-700 font-regular;
+    }
+}
+
+
+/* Componentes customizados */
+
+@layer components {
+    .container-custom {
+        @apply max-w-7xl mx-auto px-4 sm: px-6 lg: px-8;
+    }
+    .btn-primary {
+        @apply bg-red-600 text-white px-6 py-2 rounded-[5px] hover: bg-red-700 transition-colors duration-300;
+    }
+}
+
+
+/* Utilidades customizadas */
+
+@layer utilities {
+    /* Aspect ratio para hero */
+    .aspect-hero {
+        aspect-ratio: 16/9;
+    }
+    @media (max-width: 768px) {
+        .aspect-hero {
+            aspect-ratio: 3/4;
+        }
+    }
+    /* Esconder scrollbar */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+/* Animações */
 
 @keyframes logo-marquee {
     0% {
@@ -19,4 +74,148 @@
 
 .animate-logo-marquee {
     animation: logo-marquee 18s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-scroll {
+    animation: scroll 5s linear infinite;
+}
+
+@keyframes infinite-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-infinite-scroll {
+    display: flex;
+    animation: infinite-scroll 20s linear infinite;
+    width: fit-content;
+}
+
+
+/* Quando passar o mouse, pausa a animação */
+
+.animate-infinite-scroll:hover {
+    animation-play-state: paused;
+}
+
+
+/* Ajuste para velocidade em mobile */
+
+@media (max-width: 768px) {
+    .animate-infinite-scroll {
+        animation-duration: 15s;
+        /* Velocidade mais rápida no mobile */
+    }
+}
+
+
+/* Máscaras e efeitos */
+
+.mask-carousel-partners {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+
+/* Classes de transição */
+
+.transition-custom {
+    @apply transition-all duration-300 ease-in-out;
+}
+
+
+/* Classes de layout */
+
+.flex-center {
+    @apply flex items-center justify-center;
+}
+
+.flex-between {
+    @apply flex items-center justify-between;
+}
+
+
+/* No seu arquivo de estilos globais */
+
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+        position: relative;
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        height: 4rem;
+        /* 64px */
+    }
+    /* Previne scroll quando carrossel está ativo */
+    .carousel-active {
+        overflow: hidden;
+        height: 100vh;
+    }
+    .carousel-container {
+        height: 0vh !important;
+    }
+    .carousel-image {
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+    .container {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .text-mobile {
+        font-size: 0.875rem;
+    }
+    .desktop-only {
+        display: none !important;
+    }
+    .partner-logo {
+        width: 120px;
+        height: auto;
+    }
+    .carousel-container {
+        margin-top: 100px;
+        /* Ajuste conforme necessário */
+    }
+    .header-mobile {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        z-index: 50;
+        background: white;
+    }
+    /* Ajuste para o conteúdo abaixo do carrossel */
+    .content-below-carousel {
+        margin-top: calc(100vh - 64px);
+        position: relative;
+        z-index: 20;
+        background: white;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-only {
+        display: none !important;
+    }
 }

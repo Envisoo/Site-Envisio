@@ -1,11 +1,19 @@
 /** @format */
 
-const express = require("express");
-const router = express.Router();
-const multer = require("multer");
-const path = require("path");
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
+import express from "express";
+import { Router } from "express";
+import multer from "multer";
+import path from "path";
+import { db } from "../db/conexao.js";
+import { autenticar } from "../middlewares/autenticar.js";
+import { autorizarPapel } from "../middlewares/autorizarPapel.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const router = Router();
 
 // Configuração do destino e nome do arquivo
 const storage = multer.diskStorage({
@@ -60,7 +68,7 @@ router.post(
     const caminho = req.file.path.replace(/\\/g, "/");
 
     try {
-      await require("../configuracoes/baseDados").query(
+      await db.query(
         "UPDATE cursos SET imagem = $1 WHERE id = $2",
         [caminho, cursoId]
       );
@@ -77,4 +85,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;

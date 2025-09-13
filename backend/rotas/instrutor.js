@@ -1,14 +1,17 @@
 /** @format */
 
-// rotas/inscricoes.js
-const express = require("express");
-const router = express.Router();
-const db = require("../configuracoes/baseDados");
-const autenticar = require("../middleware/autenticar");
-const autorizarPapel = require("../middleware/autorizarPapel");
-const exceljs = require("exceljs");
-const { enviarNotificacao } = require("../utils/notificacao.js");
-const PDFDocument = require("pdfkit");
+import express from "express";
+import { Router } from "express";
+import { db } from "../db/conexao.js";
+import { autenticar } from "../middlewares/autenticar.js";
+import { autorizarPapel } from "../middlewares/autorizarPapel.js";
+import exceljs from "exceljs";
+import { enviarNotificacao } from "../utils/notificacao.js";
+import PDFDocument from "pdfkit";
+
+const router = Router();
+
+// ==================== ROTAS ESPECÍFICAS DO INSTRUTOR ====================
 
 // Ver cursos criados pelo instrutor com estatísticas
 router.get(
@@ -24,16 +27,28 @@ router.get(
         SELECT 
           c.id,
           c.titulo,
+          c.descricao,
+          c.categoria,
+          c.duracao,
+          c.nivel,
+          c.preco,
+          c.status,
+          c.visualizacoes,
+          c.avaliacao,
           COUNT(DISTINCT i.usuario_id) AS total_inscritos,
           ROUND(AVG(a.nota), 1) AS media_avaliacoes,
-          COUNT(DISTINCT f.usuario_id) AS total_favoritos
+          COUNT(DISTINCT f.usuario_id) AS total_favoritos,
+          COUNT(DISTINCT m.id) AS total_modulos,
+          COUNT(DISTINCT au.id) AS total_aulas
         FROM cursos c
         LEFT JOIN inscricoes i ON i.curso_id = c.id
         LEFT JOIN avaliacoes a ON a.curso_id = c.id
         LEFT JOIN favoritos f ON f.curso_id = c.id
+        LEFT JOIN modulos m ON m.curso_id = c.id
+        LEFT JOIN aulas au ON au.curso_id = c.id
         WHERE c.instrutor_id = $1
-        GROUP BY c.id
-        ORDER BY c.titulo
+        GROUP BY c.id, c.titulo, c.descricao, c.categoria, c.duracao, c.nivel, c.preco, c.status, c.visualizacoes, c.avaliacao
+        ORDER BY c.criado_em DESC
       `,
         [instrutorId]
       );
@@ -49,9 +64,633 @@ router.get(
   }
 );
 
+// Criar novo curso
+router.post(
+  "/cursos",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const instrutorId = req.usuario.id;
+    const {
+      titulo,
+      descricao,
+      categoria,
+      duracao,
+      nivel,
+      preco,
+      status = "rascunho",
+      acesso_vitalicio = false,
+      suporte = false,
+      certificado = false,
+      imagem,
+    } = req.body;
+
+    if (!titulo || !descricao || !categoria) {
+      return res.status(400).json({
+        erro: "Título, descrição e categoria são obrigatórios",
+      });
+    }
+
+    try {
+      const resultado = await db.query(
+        `INSERT INTO cursos (
+          titulo, descricao, categoria, duracao, nivel, preco, status,
+          acesso_vitalicio, suporte, certificado, imagem, instrutor_id, criado_em
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())
+        RETURNING *`,
+        [
+          titulo,
+          descricao,
+          categoria,
+          duracao || 0,
+          nivel || "iniciante",
+          preco || 0,
+          status,
+          acesso_vitalicio,
+          suporte,
+          certificado,
+          imagem,
+          instrutorId,
+        ]
+      );
+
+      res.status(201).json({
+        sucesso: true,
+        mensagem: "Curso criado com sucesso",
+        curso: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao criar curso" });
+    }
+  }
+);
+
+// Editar curso
+router.put(
+  "/cursos/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+    const {
+      titulo,
+      descricao,
+      categoria,
+      duracao,
+      nivel,
+      preco,
+      status,
+      acesso_vitalicio,
+      suporte,
+      certificado,
+      imagem,
+    } = req.body;
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [id, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `UPDATE cursos SET 
+          titulo = COALESCE($1, titulo),
+          descricao = COALESCE($2, descricao),
+          categoria = COALESCE($3, categoria),
+          duracao = COALESCE($4, duracao),
+          nivel = COALESCE($5, nivel),
+          preco = COALESCE($6, preco),
+          status = COALESCE($7, status),
+          acesso_vitalicio = COALESCE($8, acesso_vitalicio),
+          suporte = COALESCE($9, suporte),
+          certificado = COALESCE($10, certificado),
+          imagem = COALESCE($11, imagem),
+          atualizado_em = NOW()
+        WHERE id = $12 AND instrutor_id = $13
+        RETURNING *`,
+        [
+          titulo,
+          descricao,
+          categoria,
+          duracao,
+          nivel,
+          preco,
+          status,
+          acesso_vitalicio,
+          suporte,
+          certificado,
+          imagem,
+          id,
+          instrutorId,
+        ]
+      );
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Curso atualizado com sucesso",
+        curso: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao atualizar curso" });
+    }
+  }
+);
+
+// Excluir curso
+router.delete(
+  "/cursos/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [id, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      // Exclui o curso e todas as dependências
+      await db.query("DELETE FROM cursos WHERE id = $1", [id]);
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Curso excluído com sucesso",
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao excluir curso" });
+    }
+  }
+);
+
+// Obter detalhes de um curso específico
+router.get(
+  "/cursos/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      const resultado = await db.query(
+        `SELECT 
+          c.*,
+          COUNT(DISTINCT i.usuario_id) AS total_inscritos,
+          ROUND(AVG(a.nota), 1) AS media_avaliacoes,
+          COUNT(DISTINCT f.usuario_id) AS total_favoritos,
+          COUNT(DISTINCT m.id) AS total_modulos,
+          COUNT(DISTINCT au.id) AS total_aulas
+        FROM cursos c
+        LEFT JOIN inscricoes i ON i.curso_id = c.id
+        LEFT JOIN avaliacoes a ON a.curso_id = c.id
+        LEFT JOIN favoritos f ON f.curso_id = c.id
+        LEFT JOIN modulos m ON m.curso_id = c.id
+        LEFT JOIN aulas au ON au.curso_id = c.id
+        WHERE c.id = $1 AND c.instrutor_id = $2
+        GROUP BY c.id`,
+        [id, instrutorId]
+      );
+
+      if (resultado.rowCount === 0) {
+        return res.status(404).json({
+          erro: "Curso não encontrado",
+        });
+      }
+
+      res.status(200).json({
+        sucesso: true,
+        curso: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao buscar curso" });
+    }
+  }
+);
+
+// ==================== GERENCIAMENTO DE AULAS ====================
+
+// Listar aulas de um curso
+router.get(
+  "/cursos/:cursoId/aulas",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { cursoId } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [cursoId, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `SELECT a.*, m.titulo AS modulo_titulo
+         FROM aulas a
+         LEFT JOIN modulos m ON m.id = a.modulo_id
+         WHERE a.curso_id = $1
+         ORDER BY m.ordem ASC, a.ordem ASC`,
+        [cursoId]
+      );
+
+      res.status(200).json({
+        sucesso: true,
+        aulas: resultado.rows,
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao listar aulas" });
+    }
+  }
+);
+
+// Criar nova aula
+router.post(
+  "/cursos/:cursoId/aulas",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { cursoId } = req.params;
+    const instrutorId = req.usuario.id;
+    const {
+      titulo,
+      descricao,
+      video_url,
+      material_url,
+      duracao,
+      ordem,
+      modulo_id,
+      livre = false,
+    } = req.body;
+
+    if (!titulo || !descricao) {
+      return res.status(400).json({
+        erro: "Título e descrição são obrigatórios",
+      });
+    }
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [cursoId, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `INSERT INTO aulas (
+          curso_id, modulo_id, titulo, descricao, video_url, material_url, 
+          duracao, ordem, livre, criado_em
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())
+        RETURNING *`,
+        [
+          cursoId,
+          modulo_id,
+          titulo,
+          descricao,
+          video_url,
+          material_url,
+          duracao || 0,
+          ordem || 0,
+          livre,
+        ]
+      );
+
+      res.status(201).json({
+        sucesso: true,
+        mensagem: "Aula criada com sucesso",
+        aula: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao criar aula" });
+    }
+  }
+);
+
+// Editar aula
+router.put(
+  "/aulas/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+    const {
+      titulo,
+      descricao,
+      video_url,
+      material_url,
+      duracao,
+      ordem,
+      modulo_id,
+      livre,
+    } = req.body;
+
+    try {
+      // Verifica se a aula pertence a um curso do instrutor
+      const aula = await db.query(
+        `SELECT a.* FROM aulas a
+         JOIN cursos c ON c.id = a.curso_id
+         WHERE a.id = $1 AND c.instrutor_id = $2`,
+        [id, instrutorId]
+      );
+
+      if (aula.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Aula não encontrada ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `UPDATE aulas SET 
+          titulo = COALESCE($1, titulo),
+          descricao = COALESCE($2, descricao),
+          video_url = COALESCE($3, video_url),
+          material_url = COALESCE($4, material_url),
+          duracao = COALESCE($5, duracao),
+          ordem = COALESCE($6, ordem),
+          modulo_id = COALESCE($7, modulo_id),
+          livre = COALESCE($8, livre)
+        WHERE id = $9
+        RETURNING *`,
+        [
+          titulo,
+          descricao,
+          video_url,
+          material_url,
+          duracao,
+          ordem,
+          modulo_id,
+          livre,
+          id,
+        ]
+      );
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Aula atualizada com sucesso",
+        aula: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao atualizar aula" });
+    }
+  }
+);
+
+// Excluir aula
+router.delete(
+  "/aulas/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      // Verifica se a aula pertence a um curso do instrutor
+      const aula = await db.query(
+        `SELECT a.* FROM aulas a
+         JOIN cursos c ON c.id = a.curso_id
+         WHERE a.id = $1 AND c.instrutor_id = $2`,
+        [id, instrutorId]
+      );
+
+      if (aula.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Aula não encontrada ou acesso negado",
+        });
+      }
+
+      await db.query("DELETE FROM aulas WHERE id = $1", [id]);
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Aula excluída com sucesso",
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao excluir aula" });
+    }
+  }
+);
+
+// ==================== GERENCIAMENTO DE MÓDULOS ====================
+
+// Listar módulos de um curso
+router.get(
+  "/cursos/:cursoId/modulos",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { cursoId } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [cursoId, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `SELECT m.*, COUNT(a.id) AS total_aulas
+         FROM modulos m
+         LEFT JOIN aulas a ON a.modulo_id = m.id
+         WHERE m.curso_id = $1
+         GROUP BY m.id
+         ORDER BY m.ordem ASC`,
+        [cursoId]
+      );
+
+      res.status(200).json({
+        sucesso: true,
+        modulos: resultado.rows,
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao listar módulos" });
+    }
+  }
+);
+
+// Criar novo módulo
+router.post(
+  "/cursos/:cursoId/modulos",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { cursoId } = req.params;
+    const instrutorId = req.usuario.id;
+    const { titulo, descricao, ordem } = req.body;
+
+    if (!titulo) {
+      return res.status(400).json({
+        erro: "Título é obrigatório",
+      });
+    }
+
+    try {
+      // Verifica se o curso pertence ao instrutor
+      const curso = await db.query(
+        "SELECT * FROM cursos WHERE id = $1 AND instrutor_id = $2",
+        [cursoId, instrutorId]
+      );
+
+      if (curso.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Curso não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `INSERT INTO modulos (curso_id, titulo, descricao, ordem)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
+        [cursoId, titulo, descricao || "", ordem || 0]
+      );
+
+      res.status(201).json({
+        sucesso: true,
+        mensagem: "Módulo criado com sucesso",
+        modulo: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao criar módulo" });
+    }
+  }
+);
+
+// Editar módulo
+router.put(
+  "/modulos/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+    const { titulo, descricao, ordem } = req.body;
+
+    try {
+      // Verifica se o módulo pertence a um curso do instrutor
+      const modulo = await db.query(
+        `SELECT m.* FROM modulos m
+         JOIN cursos c ON c.id = m.curso_id
+         WHERE m.id = $1 AND c.instrutor_id = $2`,
+        [id, instrutorId]
+      );
+
+      if (modulo.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Módulo não encontrado ou acesso negado",
+        });
+      }
+
+      const resultado = await db.query(
+        `UPDATE modulos SET 
+          titulo = COALESCE($1, titulo),
+          descricao = COALESCE($2, descricao),
+          ordem = COALESCE($3, ordem)
+        WHERE id = $4
+        RETURNING *`,
+        [titulo, descricao, ordem, id]
+      );
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Módulo atualizado com sucesso",
+        modulo: resultado.rows[0],
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao atualizar módulo" });
+    }
+  }
+);
+
+// Excluir módulo
+router.delete(
+  "/modulos/:id",
+  autenticar,
+  autorizarPapel("instrutor"),
+  async (req, res) => {
+    const { id } = req.params;
+    const instrutorId = req.usuario.id;
+
+    try {
+      // Verifica se o módulo pertence a um curso do instrutor
+      const modulo = await db.query(
+        `SELECT m.* FROM modulos m
+         JOIN cursos c ON c.id = m.curso_id
+         WHERE m.id = $1 AND c.instrutor_id = $2`,
+        [id, instrutorId]
+      );
+
+      if (modulo.rowCount === 0) {
+        return res.status(403).json({
+          erro: "Módulo não encontrado ou acesso negado",
+        });
+      }
+
+      await db.query("DELETE FROM modulos WHERE id = $1", [id]);
+
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Módulo excluído com sucesso",
+      });
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: "Erro ao excluir módulo" });
+    }
+  }
+);
+
+// ==================== ESTATÍSTICAS E RELATÓRIOS ====================
+
 // Rota para buscar avaliações de um curso específico do instrutor
 router.get(
-  "/instrutor/avaliacoes/:cursoId",
+  "/avaliacoes/:cursoId",
   autenticar,
   autorizarPapel("instrutor"),
   async (req, res) => {
@@ -99,7 +738,7 @@ router.get(
 
 // Rota para buscar os alunos inscritos em um curso específico do instrutor
 router.get(
-  "/instrutor/inscritos/:cursoId",
+  "/inscritos/:cursoId",
   autenticar,
   autorizarPapel("instrutor"),
   async (req, res) => {
@@ -145,6 +784,8 @@ router.get(
   }
 );
 
+// ==================== ROTAS DE INSCRIÇÕES (MANTIDAS) ====================
+
 // PATCH /inscricoes/:id/concluir
 router.patch(
   "/:id/concluir",
@@ -163,13 +804,11 @@ router.patch(
         return res.status(404).json({ erro: "Inscrição não encontrada" });
       }
 
-      res
-        .status(200)
-        .json({
-          sucesso: true,
-          mensagem: "Curso marcado como concluído",
-          dados: resultado.rows[0],
-        });
+      res.status(200).json({
+        sucesso: true,
+        mensagem: "Curso marcado como concluído",
+        dados: resultado.rows[0],
+      });
     } catch (erro) {
       console.error(erro);
       res.status(500).json({ erro: "Erro ao atualizar inscrição" });
@@ -450,4 +1089,4 @@ router.get(
   }
 );
 
-module.exports = router;
+export default router;

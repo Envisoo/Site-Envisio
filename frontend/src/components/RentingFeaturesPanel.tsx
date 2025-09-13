@@ -1,70 +1,77 @@
 /** @format */
 
-// components/TabbedFeaturesPanel.tsx
+import React, { useState, useEffect } from "react";
+import { rentingFeatures, FeatureItem } from "../types/rentingFeatures";
+import PrinterSelector from "./PrinterSelector";
 
-import { useState } from "react";
-import { rentingFeatures } from "../types/rentingFeatures.ts";
+interface Props {
+  tipo: string;
+}
 
-type Props = {
-  slug: string;
-};
+export default function RentingFeaturesPanel({ tipo }: Props) {
+  const [selectedPrinter, setSelectedPrinter] = useState<string>("bizhub301i");
+  const effectiveTipo = tipo === "impressoras" ? selectedPrinter : tipo;
 
-export default function TabbedFeaturesPanel({ slug }: Props) {
-  const recurso = rentingFeatures[slug];
-  const abas = recurso.abas;
-  const dados = recurso.dados;
+  const { abas, dados } = rentingFeatures[effectiveTipo] || {
+    abas: [],
+    dados: {},
+  };
+  const [abaAtiva, setAbaAtiva] = useState<string>(abas?.[0] || "");
 
-  const [abaAtiva, setAbaAtiva] = useState(abas[0]);
+  useEffect(() => {
+    if (abas?.length > 0) {
+      setAbaAtiva(abas[0]);
+    }
+  }, [effectiveTipo, abas]);
 
   if (!abas?.length || !dados) return null;
 
-  const { lista, imagem } = dados[abaAtiva] || { lista: [], imagem: "" };
+  const { lista } = dados[abaAtiva] || { lista: [] };
 
   return (
     <div className="bg-white py-10 mt-10 border-t border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 px-4">
-        Funcionalidades
-      </h2>
+      <div className="px-4">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Funcionalidades
+        </h2>
+      </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 px-4">
-        {/* Menu lateral ou superior */}
-        <div className="w-full lg:w-1/2">
-          {/* Abas */}
-          <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-300">
-            {abas.map((aba) => (
-              <button
-                key={aba}
-                className={`px-4 py-2 text-sm font-semibold border-b-2 transition ${
-                  abaAtiva === aba
-                    ? "text-blue-600 border-blue-600"
-                    : "text-gray-600 border-transparent hover:border-gray-300"
-                }`}
-                onClick={() => setAbaAtiva(aba)}>
-                {aba}
-              </button>
-            ))}
-          </div>
+      {tipo === "impressoras" && (
+        <div className="-mt-2 border-b border-gray-200">
+          <PrinterSelector
+            selectedPrinter={selectedPrinter}
+            onSelectPrinter={setSelectedPrinter}
+          />
+        </div>
+      )}
 
-          {/* Conteúdo da aba */}
+      <div className="px-4 mt-6">
+        <div className="flex flex-wrap -mb-px border-b border-gray-200">
+          {abas.map((aba: string) => (
+            <button
+              key={aba}
+              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                abaAtiva === aba
+                  ? "border-red-500 text-red-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+              onClick={() => setAbaAtiva(aba)}>
+              {aba}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-6">
           <ul className="space-y-4">
-            {lista.map((item, idx) => (
-              <li key={idx}>
-                <strong className="block text-gray-800">{item.titulo}</strong>
+            {lista.map((item: FeatureItem, idx: number) => (
+              <li key={idx} className="pb-3 last:pb-0">
+                <strong className="block text-gray-800 mb-1">
+                  {item.titulo}
+                </strong>
                 <p className="text-sm text-gray-600">{item.descricao}</p>
               </li>
             ))}
           </ul>
-        </div>
-
-        {/* Imagem à direita */}
-        <div className="w-full lg:w-1/2">
-          {imagem && (
-            <img
-              src={imagem}
-              alt="Imagem da funcionalidade"
-              className="rounded-md w-full h-auto object-cover border border-gray-200"
-            />
-          )}
         </div>
       </div>
     </div>

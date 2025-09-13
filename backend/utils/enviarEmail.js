@@ -1,7 +1,7 @@
 /** @format */
 
 // utils/enviarEmail.js
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 // Substitua pelos dados do seu provedor (Gmail, Outlook etc)
 const transporter = nodemailer.createTransport({
@@ -27,4 +27,4 @@ async function enviarEmail(destinatario, assunto, corpo) {
   }
 }
 
-module.exports = enviarEmail;
+export default enviarEmail;

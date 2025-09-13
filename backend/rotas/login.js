@@ -1,19 +1,13 @@
 /** @format */
 
-// Carrega as variáveis do .env
-require("dotenv").config();
-
 // Importação dos módulos necessários
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const baseDados = require("../configuracoes/baseDados");
+import express from "express";
+import { Router } from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { db } from "../db/conexao.js";
 
-// Cria um roteador do Express
-const router = express.Router();
-
-// Chave secreta usada para gerar tokens JWT (idealmente deve ir para um arquivo .env)
-const JWT_SECRET = process.env.JWT_SECRET;
+const router = Router();
 
 /**
  * Rota POST para login de usuário
@@ -32,62 +26,52 @@ router.post("/", async (req, res) => {
 
   try {
     // Busca o usuário no banco de dados pelo email
-    const resultado = await baseDados.query(
-      "SELECT id, nome, email, senha, papel FROM usuarios WHERE email = $1",
-      [email]
-    );
+    const result = await db.query("SELECT * FROM usuarios WHERE email = $1", [
+      email,
+    ]);
+    const usuario = result.rows[0];
 
     // Verifica se o usuário existe
-    if (resultado.rows.length === 0) {
+    if (!usuario) {
       return res.status(401).json({
-        erro: "Credenciais inválidas",
-        sucesso: false,
+        erro: true,
+        mensagem: "Email ou senha incorretos",
       });
     }
-
-    const usuario = resultado.rows[0];
 
     // Compara a senha informada com a senha armazenada (hash)
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaValida) {
       return res.status(401).json({
-        erro: "Credenciais inválidas",
-        sucesso: false,
+        erro: true,
+        mensagem: "Email ou senha incorretos",
       });
     }
 
     // Gera o token JWT com ID, papel e nome do usuário
     const token = jwt.sign(
-      {
-        id: usuario.id,
-        nome: usuario.nome,
-        papel: usuario.papel,
-      },
-      JWT_SECRET,
-      { expiresIn: "1d" } // Token válido por 1 dia
+      { id: usuario.id },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" } // Token válido por 1 dia
     );
 
+    // Remove a senha antes de enviar
+    delete usuario.senha;
+
     // Resposta de sucesso com o token
-    res.json({
-      sucesso: true,
-      mensagem: "Login efetuado com sucesso",
+    return res.json({
+      erro: false,
+      usuario,
       token,
-      usuario: {
-        id: usuario.id,
-        nome: usuario.nome,
-        email: usuario.email,
-        papel: usuario.papel,
-      },
     });
-  } catch (erro) {
-    console.error("Erro ao fazer login:", erro);
-    res.status(500).json({
-      erro: "Erro interno no servidor",
-      sucesso: false,
+  } catch (error) {
+    console.error("Erro no login:", error);
+    return res.status(500).json({
+      erro: true,
+      mensagem: "Erro interno do servidor",
     });
   }
 });
 
-// Exporta o roteador
-module.exports = router;
+export default router;

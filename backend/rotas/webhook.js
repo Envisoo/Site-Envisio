@@ -1,9 +1,10 @@
 /** @format */
 
-// rotas/webhook.js
-const express = require("express");
-const router = express.Router();
-const db = require("../configuracoes/baseDados");
+import express from "express";
+import { Router } from "express";
+import { db } from "../db/conexao.js";
+
+const router = Router();
 
 /**
  * POST /webhook/pagamento
@@ -53,4 +54,4 @@ router.post("/pagamento", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
