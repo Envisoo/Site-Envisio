@@ -60,18 +60,18 @@ const services = [
 const testimonials = [
   {
     text: "A ENVISIO nos ajudou a transformar nosso negócio com soluções inovadoras.",
-    author: "João Silva",
-    role: "CEO, Empresa X",
+    author: "",
+    role: "Empresa X",
   },
   {
     text: "Equipe altamente qualificada e atendimento excelente.",
-    author: "Maria Santos",
-    role: "Gerente de TI, Empresa Y",
+    author: "",
+    role: "Empresa Y",
   },
   {
     text: "Serviços de qualidade e suporte sempre disponível.",
-    author: "Carlos Oliveira",
-    role: "Diretor, Empresa Z",
+    author: "",
+    role: "Empresa Z",
   },
 ];
 
@@ -154,14 +154,14 @@ export function HomeMobile() {
           </div>
 
           {/* Números */}
-          <div className="grid grid-cols-2 gap-4 py-6">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-3xl font-bold text-red-600">+ 2.500</div>
-              <div className="text-sm text-gray-600">Clientes Atendidos</div>
+          <div className="grid grid-cols-2 gap-6 py-8">
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2">+ 2.500</div>
+              <div className="text-gray-500">Clientes Atendidos</div>
             </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-3xl font-bold text-red-600">+ 5</div>
-              <div className="text-sm text-gray-600">anos no mercado</div>
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2">+ 5</div>
+              <div className="text-gray-500">anos no mercado</div>
             </div>
           </div>
 
@@ -172,15 +172,10 @@ export function HomeMobile() {
             </div>
             <div>
               <h4
-                className="font-semibold mb-1"
+                className="font-semibold mt-3"
                 style={{ fontFamily: "Segoe UI Semibold" }}>
                 Fundação da Empresa
               </h4>
-              <p
-                className="text-gray-600"
-                style={{ fontFamily: "Segoe UI Regular" }}>
-                Prestar serviços de consultoria e contabilidade
-              </p>
             </div>
           </div>
 
@@ -301,7 +296,7 @@ export function HomeMobile() {
 
               <div className="flex items-center gap-2 mb-4">
                 <svg
-                  className="w-4 h-4 text-red-500"
+                  className="w-4 h-4 text-black"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24">
@@ -312,7 +307,7 @@ export function HomeMobile() {
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-sm text-red-500">{curso.info}</span>
+                <span className="text-sm text-black">{curso.info}</span>
               </div>
 
               <motion.button
@@ -419,38 +414,38 @@ export function HomeMobile() {
           <div className="w-16 h-1 bg-red-600 mx-auto mb-6" />
         </motion.div>
 
-        {/* Carrossel de Logos */}
-        <div className="overflow-hidden py-2">
-          {" "}
-          {/* Removida a classe infinite-scroll-wrapper */}
-          <div className="flex animate-infinite-scroll">
-            {" "}
-            {/* Alterada a classe */}
-            {/* Primeiro conjunto de logos */}
-            {partners.map((partner, index) => (
-              <div
-                key={`${partner.id}-${index}`}
-                className="flex-shrink-0 mx-4 w-[120px]">
-                <img
-                  src={partner.imageUrl}
-                  alt={partner.name}
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-            ))}
-            {/* Duplica os logos para criar o efeito infinito */}
-            {partners.map((partner) => (
-              <div
-                key={`${partner.id}-duplicate`}
-                className="flex-shrink-0 mx-4"
-                style={{ width: "100px" }}>
-                <img
-                  src={partner.imageUrl}
-                  alt={partner.name}
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-            ))}
+        {/* Carrossel de Parceiros */}
+        <div className="max-w-5xl mx-auto mb-20 overflow-hidden">
+          <div
+            className="relative w-full"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+            }}>
+            <div
+              className="flex items-center gap-16 py-8 animate-logo-marquee"
+              style={{
+                width: `${
+                  partners.length * 2 * 180 + partners.length * 2 * 64
+                }px`, // largura total para loop
+                animation: "logo-marquee 22s linear infinite",
+              }}>
+              {[...partners, ...partners].map((partner, idx) => (
+                <div
+                  key={partner.id + "-" + idx}
+                  className="flex items-center flex-shrink-0"
+                  style={{ width: 180 }}>
+                  <img
+                    src={partner.imageUrl}
+                    alt={partner.name}
+                    className="h-20 w-auto object-contain mx-auto transition"
+                    style={{ maxWidth: 180 }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
