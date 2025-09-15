@@ -34,13 +34,13 @@ const Academia = () => {
     <section className="bg-gray-50">
       <div className="relative">
         {/* Full-screen banner */}
-        <div>
+        <div className=" h-[600px] relative">
           <picture>
             <source media="(min-width: 768px)" srcSet="/academia/banner.webp" />
             <img
               src="/academia/banner.webp"
               alt="Banner Academia Envisio"
-              className="w-full h-[415px] object-cover"
+              className="w-full h-[600px] object-cover"
             />
           </picture>
 
