@@ -1,9 +1,0 @@
-# Configuração de múltiplos serviços
-
-[backend]
-root = "back-end"
-start = "npm start"
-
-[frontend]
-root = "front-end"
-start = "npm run start"
