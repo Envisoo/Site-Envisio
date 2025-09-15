@@ -4,12 +4,12 @@
 
 set -e
 
-if [ "$APP" = "backend" ]; then
+if [ APP = "backend" ]; then
   echo "🚀 Iniciando o backend..."
   cd back-end
   npm install
   npm start
-elif [ "$APP" = "frontend" ]; then
+elif [ APP = "frontend" ]; then
   echo "🎨 Iniciando o frontend..."
   cd front-end
   npm install
