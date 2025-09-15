@@ -1,18 +1,21 @@
 #!/bin/bash
+# Script de inicialização para o Railway
+# Define qual app rodar: backend ou frontend
+
 set -e
 
-if [ -f "back-end/package.json" ]; then
-  echo "🚀 Iniciando backend..."
+if [ "$APP" = "backend" ]; then
+  echo "🚀 Iniciando o backend..."
   cd back-end
   npm install
   npm start
-elif [ -f "front-end/package.json" ]; then
-  echo "🚀 Iniciando frontend..."
+elif [ "$APP" = "frontend" ]; then
+  echo "🎨 Iniciando o frontend..."
   cd front-end
   npm install
   npm run build
   npm run start
 else
-  echo "❌ Nenhum projeto encontrado (backend ou frontend)."
+  echo "❌ Variável APP não definida. Use APP=backend ou APP=frontend."
   exit 1
 fi
