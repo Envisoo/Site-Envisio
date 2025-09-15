@@ -1,46 +1,158 @@
-# Getting Started with Create React App
+<!-- @format -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Frontend Site-Envisio
 
-## Available Scripts
+## 📱 Visão Geral
 
-In the project directory, you can run:
+Interface web do site institucional e plataforma de ensino online da Envisio, construída com React e TypeScript.
 
-### `npm start`
+## 🚀 Tecnologias Principais
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 18
+- TypeScript
+- TailwindCSS
+- Axios
+- React Router DOM v6
+- Postmark
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 💻 Pré-requisitos
 
-### `npm test`
+- Node.js v16+
+- npm ou yarn
+- Conexão com backend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Instalação e Execução
 
-### `npm run build`
+1. **Instale as dependências:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Configure as variáveis de ambiente:**
+   Crie um arquivo `.env` na raiz do projeto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```env
+REACT_APP_API_URL=http://localhost:3001
+REACT_APP_POSTMARK_TOKEN=seu_token_aqui
+```
 
-### `npm run eject`
+3. **Execute o projeto:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📁 Estrutura do Projeto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+src/
+├── components/          # Componentes reutilizáveis
+├── pages/              # Páginas da aplicação
+├── services/           # Serviços e API
+├── styles/             # Estilos globais
+├── utils/              # Funções utilitárias
+└── App.tsx             # Componente principal
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 📋 Scripts Disponíveis
 
-## Learn More
+- **Desenvolvimento:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Build de Produção:**
+
+```bash
+npm run build
+```
+
+- **Testes:**
+
+```bash
+npm test
+```
+
+- **Lint:**
+
+```bash
+npm run lint
+```
+
+## 🎨 Componentes Principais
+
+### Páginas
+
+- Home
+- Sobre
+- Cursos
+- Blog
+- Contato
+- Área do Aluno
+- Dashboard Admin
+
+### Funcionalidades
+
+- ✅ Sistema de autenticação
+- ✅ Área administrativa
+- ✅ Gerenciamento de cursos
+- ✅ Formulário de contato
+- ✅ Upload de arquivos
+- ✅ Sistema de pagamentos
+- ✅ Perfil do usuário
+- ✅ Emissão de certificados
+
+## 📱 Responsividade
+
+- Layout adaptativo para dispositivos móveis
+- Breakpoints personalizados
+- Otimizado para tablets e smartphones
+
+## 🔒 Segurança
+
+- Autenticação JWT
+- Proteção de rotas
+- Validação de formulários
+- Sanitização de dados
+
+## 📤 Deploy
+
+Para fazer deploy em produção:
+
+```bash
+npm run build
+```
+
+Os arquivos serão gerados na pasta `build/`
+
+## 🐛 Debugging
+
+1. Use o React Developer Tools
+2. Console do navegador
+3. VSCode debugger
+
+## 📚 Documentação Adicional
+
+- [Create React App](https://create-react-app.dev/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+
+## 🤝 Contribuição
+
+1. Faça um Fork
+2. Crie sua Feature Branch (`git checkout -b feature/MinhaFeature`)
+3. Commit suas mudanças (`git commit -m 'Add: MinhaFeature'`)
+4. Push para a Branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
+
+## 👥 Autores
+
+- Teodoro Paulo
+
+## 📞 Suporte
+
+- Email: teodorop990@gmail.com
+- LinkedIn: [Teodoro Pedro](https://www.linkedin.com/in/teodoro-pedro-6a075b28a/)
