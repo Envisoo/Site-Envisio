@@ -37,10 +37,10 @@ const routeFiles = [
   { path: "./rotas/webhook.js", route: "/webhook" },
   { path: "./rotas/modulos.js", route: "/modulos" },
   { path: "./rotas/licoes.js", route: "/licoes" },
-  { path: "./rotas/emailRoutes.js", route: "/api/email" },
+  { path: "./rotas/emailRoutes.js", route: "/api" },
 ];
 
-// Função para carregar rotas dinamicamente
+// Função para carregar rotas
 const setupRoutes = async () => {
   try {
     for (const { path, route } of routeFiles) {
@@ -65,15 +65,20 @@ const setupRoutes = async () => {
 // Inicializa as rotas
 await setupRoutes();
 
-// Rota básica da API
-app.get("/api", (req, res) => {
-  res.send("🚀 API da Envisio está no ar!");
+// Servir arquivos estáticos do React
+app.use(express.static(path.join(__dirname, "public")));
+
+// Qualquer rota que não for API cai aqui → React Router cuida
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Configuração de arquivos estáticos (uploads)
+// Configuração de arquivos estáticos
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-// Inicialização do servidor
+app.get("/", (req, res) => {
+  res.send("🚀 API da Envisio está no ar!");
+});
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
