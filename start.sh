@@ -1,5 +1,5 @@
-#!/bin/bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 echo "📂 Diretório atual: $(pwd)"
 echo "📂 Conteúdo disponível:"
