@@ -125,11 +125,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: active ? 1.03 : 1 }}
       className={`cursor-pointer rounded-[5px] p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
         active
           ? "border-red-500 bg-white shadow-2xl"
-          : "border-transparent bg-white/50 shadow-lg"
+          : "border-transparent bg-white/50 shadow-lg hover:opacity-75"
       }`}>
       <div>
         <div className="flex items-center gap-4 mb-4">
@@ -375,10 +375,11 @@ const RentingSection = () => {
                     1
                 )
               }
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
               aria-label="Anterior">
               <ChevronLeft className="w-7 h-7 text-red-600" />
             </button>
+
             <div
               ref={carouselRef}
               className="flex gap-8 overflow-x-auto no-scrollbar py-4 px-12 snap-x snap-mandatory scroll-smooth justify-start"
@@ -392,7 +393,11 @@ const RentingSection = () => {
               {rentingServices.map((service) => (
                 <div
                   key={service.id}
-                  className="min-w-[300px] sm:min-w-[350px] snap-start">
+                  className={`min-w-[300px] sm:min-w-[350px] snap-start transition-all duration-300 ${
+                    activeService.id !== service.id
+                      ? "opacity-50 blur-[0.5px] scale-95"
+                      : ""
+                  }`}>
                   <ServiceCard
                     service={service}
                     active={activeService.id === service.id}
@@ -401,6 +406,7 @@ const RentingSection = () => {
                 </div>
               ))}
             </div>
+
             <button
               onClick={() =>
                 scrollToCard(
@@ -408,7 +414,7 @@ const RentingSection = () => {
                     1
                 )
               }
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              className="absolute -right-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
               aria-label="Próximo">
               <ChevronRight className="w-7 h-7 text-red-600" />
             </button>
