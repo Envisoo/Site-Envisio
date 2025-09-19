@@ -39,25 +39,17 @@ const routeFiles = [
 ];
 
 // Função para carregar rotas dinamicamente
-const setupRoutes = async () => {
+for (const { path, route } of routeFiles) {
   try {
-    for (const { path, route } of routeFiles) {
-      try {
-        console.log(`📂 Carregando rota: ${path}`);
-        const module = await import(path);
-        app.use(route, module.default);
-        console.log(`✅ Rota carregada: ${route}`);
-      } catch (error) {
-        console.error(`❌ Erro ao carregar ${path}:`, error);
-        throw error;
-      }
-    }
-    console.log("✅ Todas as rotas carregadas com sucesso");
+    console.log(`📂 Carregando rota: ${path}`);
+    const module = require(join(__dirname, path)); // garante caminho certo
+    app.use(route, module.default || module); // fallback se não for default
+    console.log(`✅ Rota carregada: ${route}`);
   } catch (error) {
-    console.error("❌ Erro ao carregar rotas:", error);
-    process.exit(1);
+    console.error(`❌ Erro ao carregar ${path}:`, error.message);
+    throw error;
   }
-};
+}
 
 // Inicializa as rotas
 await setupRoutes();
