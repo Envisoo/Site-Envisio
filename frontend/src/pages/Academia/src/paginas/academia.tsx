@@ -73,8 +73,8 @@ const Academia = () => {
         name: formData.nome,
         email: formData.email,
         phone: formData.telefone,
-        message: formData.empresa,
-        mensagem: formData.mensagem,
+        empresa: formData.empresa,
+        message: formData.mensagem,
         subject: `Nova Inscrição CCNA - ${formData.nome}`,
         text: emailBody,
         area: "Inscrição CCNA",
@@ -278,8 +278,61 @@ const Academia = () => {
       </div>
 
       {/* Terceira Seção - Conteúdo Programático */}
-      <div className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <div className="relative py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+        {/* Padrão de Bolinhas */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute w-4 h-4 bg-red-500 rounded-full top-10 left-10 animate-float"></div>
+          <div className="absolute w-6 h-6 bg-blue-500 rounded-full top-20 right-20 animate-float-delayed"></div>
+          <div className="absolute w-3 h-3 bg-yellow-500 rounded-full bottom-10 left-1/4 animate-float"></div>
+          {/* Ícones Educacionais */}
+          <div className="grid grid-cols-6 gap-20 p-10">
+            {[...Array(24)].map((_, i) => (
+              <div
+                key={i}
+                className="w-8 h-8 opacity-20 transform rotate-45 transition-transform"
+                style={{
+                  animation: `float ${2 + (i % 3)}s infinite ease-in-out ${
+                    i * 0.1
+                  }s`,
+                }}>
+                {i % 4 === 0 && (
+                  <svg
+                    className="w-full h-full text-red-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 005.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                  </svg>
+                )}
+                {i % 4 === 1 && (
+                  <svg
+                    className="w-full h-full text-blue-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                  </svg>
+                )}
+                {i % 4 === 2 && (
+                  <svg
+                    className="w-full h-full text-yellow-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                  </svg>
+                )}
+                {i % 4 === 3 && (
+                  <svg
+                    className="w-full h-full text-green-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                  </svg>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Conteúdo do Curso */}
             <div className="lg:w-2/3">
@@ -296,8 +349,8 @@ const Academia = () => {
 
             {/* Card Fixo de Inscrição */}
             <div className="lg:w-1/3">
-              <div className="sticky top-6 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-                <div className="bg-red-600 text-white p-6 text-center">
+              <div className="sticky top-6 bg-white rounded-[5px] shadow-lg overflow-hidden border border-gray-200">
+                <div className="bg-red-700 text-white p-6 text-center">
                   <h3 className="text-2xl font-bold mb-2">CCNA 200-301</h3>
                   <p className="text-lg">Inscrições Abertas</p>
                 </div>

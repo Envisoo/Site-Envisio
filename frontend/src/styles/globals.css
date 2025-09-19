@@ -104,13 +104,11 @@
     width: fit-content;
 }
 
-
 /* Quando passar o mouse, pausa a animação */
 
 .animate-infinite-scroll:hover {
     animation-play-state: paused;
 }
-
 
 /* Ajuste para velocidade em mobile */
 
@@ -121,6 +119,31 @@
     }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
 
 /* Máscaras e efeitos */
 
