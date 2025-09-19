@@ -65,14 +65,7 @@ const setupRoutes = async () => {
 await setupRoutes();
 
 // Configuração de arquivos estáticos
-// Configuração de arquivos estáticos (frontend + uploads)
 app.use("/uploads", express.static(join(__dirname, "uploads")));
-app.use(express.static(join(__dirname, "public")));
-
-// Se nenhuma rota do backend bater, serve o index.html do frontend
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "public", "index.html"));
-});
 
 const PORT = process.env.PORT || 3001;
 
