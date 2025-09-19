@@ -67,9 +67,9 @@ await setupRoutes();
 // Configuração de arquivos estáticos
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log(`🟢 Servidor rodando na porta ${PORT}`);
   console.log(`🔗 Acesse: http://localhost:${PORT}`);
 });
