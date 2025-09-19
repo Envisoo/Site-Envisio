@@ -10,14 +10,6 @@ import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Servir arquivos estáticos do React
-app.use(express.static(path.join(__dirname, "public")));
-
-// Qualquer rota que não for API cai aqui → React Router cuida
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 dotenv.config();
 
 const app = express();
@@ -72,6 +64,14 @@ const setupRoutes = async () => {
 
 // Inicializa as rotas
 await setupRoutes();
+
+// Servir arquivos estáticos do React
+app.use(express.static(path.join(__dirname, "public")));
+
+// Qualquer rota que não for API cai aqui → React Router cuida
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // Configuração de arquivos estáticos
 app.use("/uploads", express.static(join(__dirname, "uploads")));
