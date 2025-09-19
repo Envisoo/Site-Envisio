@@ -1,4 +1,5 @@
 /** @format */
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -38,32 +39,36 @@ const routeFiles = [
   { path: "./rotas/emailRoutes.js", route: "/api" },
 ];
 
-// Função para carregar rotas dinamicamente
-for (const { path, route } of routeFiles) {
+// Função para carregar rotas
+const setupRoutes = async () => {
   try {
-    console.log(`📂 Carregando rota: ${path}`);
-    const module = require(join(__dirname, path)); // garante caminho certo
-    app.use(route, module.default || module); // fallback se não for default
-    console.log(`✅ Rota carregada: ${route}`);
+    for (const { path, route } of routeFiles) {
+      try {
+        console.log(`📂 Carregando rota: ${path}`);
+        const module = await import(path);
+        app.use(route, module.default);
+        console.log(`✅ Rota carregada: ${route}`);
+      } catch (error) {
+        console.error(`❌ Erro ao carregar ${path}:`, error);
+        throw error;
+      }
+    }
+
+    console.log("✅ Todas as rotas carregadas com sucesso");
   } catch (error) {
-    console.error(`❌ Erro ao carregar ${path}:`, error.message);
-    throw error;
+    console.error("❌ Erro ao carregar rotas:", error);
+    process.exit(1);
   }
-}
+};
 
 // Inicializa as rotas
 await setupRoutes();
 
-// Configuração de arquivos estáticos (uploads de usuários)
+// Configuração de arquivos estáticos
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-// Servir o frontend buildado
-app.use(express.static(join(__dirname, "public")));
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "public", "index.html"));
-});
+const PORT = process.env.PORT || 3001;
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🟢 Servidor rodando na porta ${PORT}`);
   console.log(`🔗 Acesse: http://localhost:${PORT}`);
