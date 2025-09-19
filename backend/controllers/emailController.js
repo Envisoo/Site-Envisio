@@ -15,7 +15,10 @@ const client = new postmark.ServerClient(token);
 
 export const enviarEmail = async (req, res) => {
   try {
-    console.log("🔑 Token Postmark:", token ? "Token presente" : "Token ausente");
+    console.log(
+      "🔑 Token Postmark:",
+      token ? "Token presente" : "Token ausente"
+    );
     console.log("📧 EMAIL_FROM:", process.env.EMAIL_FROM);
     console.log("📧 EMAIL_TO:", process.env.EMAIL_TO);
     console.log("📝 Request body:", req.body);
@@ -38,9 +41,11 @@ export const enviarEmail = async (req, res) => {
 
     // Verifica se a conta Postmark está aprovada
     console.log("📤 Tentando enviar email via Postmark...");
-    console.log(`📧 De: ${process.env.EMAIL_FROM} Para: ${process.env.EMAIL_TO}`);
+    console.log(
+      `📧 De: ${process.env.EMAIL_FROM} Para: ${process.env.EMAIL_TO}`
+    );
     console.log(`📋 Assunto: Novo Contato - ${area} - ${name}`);
-    
+
     try {
       const response = await client.sendEmail({
         From: process.env.EMAIL_FROM,
@@ -71,12 +76,17 @@ export const enviarEmail = async (req, res) => {
         ReplyTo: email,
       });
 
-      console.log("✅ Email enviado com sucesso! MessageID:", response.MessageID);
+      console.log(
+        "✅ Email enviado com sucesso! MessageID:",
+        response.MessageID
+      );
       res.json({ success: true, messageId: response.MessageID });
-      
     } catch (postmarkError) {
-      console.log("⚠️ Erro do Postmark (conta pendente):", postmarkError.message);
-      
+      console.log(
+        "⚠️ Erro do Postmark (conta pendente):",
+        postmarkError.message
+      );
+
       // Fallback: Log detalhado para desenvolvimento
       console.log("📝 DADOS DO CONTATO RECEBIDOS:");
       console.log("=".repeat(50));
@@ -90,12 +100,12 @@ export const enviarEmail = async (req, res) => {
       if (nif) console.log(`NIF: ${nif}`);
       console.log(`Mensagem: ${message}`);
       console.log("=".repeat(50));
-      
+
       // Retorna sucesso para o frontend (dados foram logados)
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         messageId: "logged-" + Date.now(),
-        note: "Dados salvos nos logs do servidor (conta Postmark pendente)"
+        note: "Dados salvos nos logs do servidor (conta Postmark pendente)",
       });
     }
   } catch (error) {

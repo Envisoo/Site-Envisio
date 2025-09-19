@@ -47,6 +47,13 @@ const Academia = () => {
     setLoading(true);
     setError("");
 
+    // Validate required fields
+    if (!formData.nome.trim() || !formData.email.trim()) {
+      setError("Por favor, preencha todos os campos obrigatórios.");
+      setLoading(false);
+      return;
+    }
+
     try {
       // Format the email body to include all relevant information
       const emailBody = `
@@ -59,16 +66,24 @@ const Academia = () => {
         
         Mensagem:
         ${formData.mensagem || "Nenhuma mensagem adicional."}
-        
-        ---
-        Este é um e-mail automático, por favor não responda diretamente.
       `;
 
-      await axios.post("http://localhost:3001/api/email", {
-        ...formData,
+      // Create a new object with only the necessary data
+      const emailData = {
+        name: formData.nome,
+        email: formData.email,
+        phone: formData.telefone,
+        message: formData.empresa,
+        mensagem: formData.mensagem,
+        subject: `Nova Inscrição CCNA - ${formData.nome}`,
+        text: emailBody,
         area: "Inscrição CCNA",
         tipoCliente: "Aluno",
-      });
+      };
+
+      console.log("Enviando dados:", emailData); // Debug log
+
+      await axios.post("http://localhost:8080/api/email", emailData);
 
       setSuccess(true);
       setTimeout(() => {
@@ -83,7 +98,10 @@ const Academia = () => {
         });
       }, 3000);
     } catch (error) {
-      setError("Erro ao enviar inscrição. Tente novamente.");
+      console.error("Erro ao enviar inscrição:", error);
+      setError(
+        "Ocorreu um erro ao enviar sua inscrição. Por favor, tente novamente."
+      );
     } finally {
       setLoading(false);
     }
@@ -285,8 +303,8 @@ const Academia = () => {
                 </div>
                 <div className="p-6 space-y-6">
                   <CourseFeature icon="clock" text="Duração: 6 meses" />
-                  <CourseFeature icon="book" text="40 módulos completos" />
-                  <CourseFeature icon="video" text="180 horas de conteúdo" />
+                  <CourseFeature icon="book" text="10 módulos completos" />
+                  <CourseFeature icon="video" text="4 horas de Aulas" />
                   <CourseFeature
                     icon="certificate"
                     text="Certificado oficial"
@@ -323,20 +341,20 @@ const Academia = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="w-full max-w-md mx-auto bg-white rounded-lg shadow-xl relative"
+                className="w-full max-w-md mx-auto bg-white rounded-lg shadow-xl relative overflow-visible"
                 onClick={(e: React.MouseEvent<HTMLDivElement>) =>
                   e.stopPropagation()
                 }>
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-gray-800">
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-2xl font-bold text-gray-800">
                       Inscrição CCNA
                     </h3>
                     <button
                       onClick={() => setIsModalOpen(false)}
-                      className="text-gray-500 hover:text-gray-700">
+                      className="text-gray-500 hover:text-gray-700 focus:outline-none">
                       <svg
-                        className="w-5 h-5"
+                        className="w-6 h-6"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24">
@@ -379,9 +397,9 @@ const Academia = () => {
                       onSubmit={
                         handleSubmit as React.FormEventHandler<HTMLFormElement>
                       }
-                      className="space-y-3">
+                      className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
                           Nome Completo *
                         </label>
                         <input
@@ -391,12 +409,13 @@ const Academia = () => {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setFormData({ ...formData, nome: e.target.value })
                           }
-                          className="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          placeholder="Seu nome completo"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
                           E-mail *
                         </label>
                         <input
@@ -406,13 +425,14 @@ const Academia = () => {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setFormData({ ...formData, email: e.target.value })
                           }
-                          className="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          placeholder="seu@email.com"
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
                             Telefone
                           </label>
                           <input
@@ -426,11 +446,12 @@ const Academia = () => {
                                 telefone: e.target.value,
                               })
                             }
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            placeholder="(XX) XXXXX-XXXX"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
                             Empresa
                           </label>
                           <input
@@ -444,13 +465,14 @@ const Academia = () => {
                                 empresa: e.target.value,
                               })
                             }
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            placeholder="Sua empresa (opcional)"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
                           Mensagem
                         </label>
                         <textarea
@@ -463,18 +485,46 @@ const Academia = () => {
                               mensagem: e.target.value,
                             })
                           }
-                          rows={2}
-                          className="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500"
+                          rows={3}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          placeholder="Alguma observação ou dúvida?"
                         />
                       </div>
 
-                      {error && <p className="text-red-500 text-xs">{error}</p>}
+                      {error && (
+                        <div className="text-red-500 text-sm py-2 px-3 bg-red-50 rounded-md">
+                          {error}
+                        </div>
+                      )}
 
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
-                        {loading ? "Enviando..." : "Confirmar Inscrição"}
+                        className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        {loading ? (
+                          <span className="flex items-center justify-center">
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24">
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Enviando...
+                          </span>
+                        ) : (
+                          "Confirmar Inscrição"
+                        )}
                       </button>
                     </form>
                   )}
@@ -506,59 +556,62 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module, index }) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="flex items-center justify-between p-4 hover:bg-gray-50">
+      transition={{ delay: index * 0.05 }}
+      className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full px-5 py-3 flex items-center justify-between transition-colors duration-200 ${
+          isOpen ? "bg-gray-100" : "hover:bg-gray-100"
+        }`}>
         <div className="flex items-center gap-4">
-          {/* Ícone de Bloqueio/Status */}
-          <div className="text-gray-400">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-600 border border-gray-300">
+            <span className="font-medium text-sm">
+              {String(index + 1).padStart(2, "0")}
+            </span>
           </div>
-
-          {/* Título do Módulo */}
-          <div>
-            <h3 className="text-base font-medium text-gray-900">
-              Módulo {String(index).padStart(2, "0")}
+          <div className="text-left">
+            <h3 className="text-base font-medium text-gray-700">
+              {module.title}
             </h3>
-            <p className="text-sm text-gray-500">{module.title}</p>
+            <p className="text-xs text-gray-500">
+              {module.topics.length} tópicos
+            </p>
           </div>
         </div>
-
-        {/* Contador de Tópicos e Status */}
-        <div className="flex items-center gap-4">
-          <div className="text-sm text-gray-500">
-            {module.topics.length} Tópicos
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-            <span className="text-sm text-gray-500">0% Concluído</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <svg
+            className={`w-4 h-4 text-gray-500 transform transition-transform duration-200 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
-      </div>
+      </button>
 
-      {/* Conteúdo do Módulo */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
-            className="border-t border-gray-200 overflow-hidden">
-            <div className="p-4 space-y-3">
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white border-t border-gray-200">
+            <div className="p-2 space-y-1">
               {module.topics.map((topic, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg group">
-                  {/* Ícone do Tópico */}
-                  <div className="mt-1">
+                  className="flex items-center gap-3 p-2 rounded hover:bg-gray-50 transition-colors duration-150">
+                  <div className="flex-shrink-0 w-5 h-5 flex items-center justify-center text-gray-400">
                     <svg
-                      className="w-4 h-4 text-gray-400"
+                      className="w-3.5 h-3.5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24">
@@ -566,56 +619,17 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module, index }) => {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        d="M5 13l4 4L19 7"
                       />
                     </svg>
                   </div>
-
-                  {/* Título do Tópico */}
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-600 group-hover:text-gray-900">
-                      {topic}
-                    </p>
-                  </div>
-
-                  {/* Status do Tópico */}
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full border-2 border-gray-300"></div>
-                  </div>
+                  <span className="text-sm text-gray-600">{topic}</span>
                 </div>
               ))}
-            </div>
-
-            {/* Barra de Progresso */}
-            <div className="px-4 pb-4">
-              <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div className="w-0 h-full bg-red-500 transition-all duration-300"></div>
-              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Botão Expandir */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2 border-t border-gray-200 text-sm text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-2">
-        <span>{isOpen ? "Recolher" : "Expandir"}</span>
-        <svg
-          className={`w-4 h-4 transform transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
     </motion.div>
   );
 };
@@ -637,7 +651,7 @@ const CourseFeature = ({ icon, text }: CourseFeatureProps) => (
 // Dados dos módulos
 const modules = [
   {
-    title: "Fundamentos de Rede",
+    title: "Módulo 1: Fundamentos de Rede",
     topics: [
       "Arquitetura TCP/IP e OSI",
       "Endereçamento IPv4 e IPv6",
@@ -646,7 +660,7 @@ const modules = [
     ],
   },
   {
-    title: "Switching",
+    title: "Módulo 2: Switching",
     topics: [
       "VLANs e Trunking",
       "Spanning Tree Protocol",
