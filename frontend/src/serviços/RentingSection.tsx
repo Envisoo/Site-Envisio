@@ -69,10 +69,10 @@ const rentingServices = [
   },
   {
     id: 3,
-    title: "Servidores",
+    title: "Infraestrutura e Servidores",
     slug: "servidores",
     description:
-      "Infraestrutura de TI robusta e segura para garantir a disponibilidade e desempenho dos seus sistemas.",
+      "Instalação, configuração e gerenciamento de servidores físicos e virtuais, oferecendo robustez e escalabilidade para o seu negócio.",
     icon: <Server className="w-8 h-8 text-red-600" />,
     items: [
       "Processamento robusto",

@@ -78,8 +78,8 @@ const businessSegments: Record<SegmentKey, Segment> = {
     image: "/images/contabilidade-bg.jpg",
     icon: "📊",
     testimonial: {
-      text: "A parceria com a empresa revolucionou nossa gestão financeira",
-      role: " Tech Solutions",
+      text: "Trabalhamos há anos com a Envisio e nunca tivemos reclamações. Serviço dinâmico, responsável e de total confiança.",
+      role: " ReiBoque",
       author: "",
     },
   },
@@ -97,7 +97,7 @@ const businessSegments: Record<SegmentKey, Segment> = {
     image: "/images/tecnicos-bg.jpg",
     icon: "🔧",
     testimonial: {
-      text: "Eficiência e profissionalismo em cada projeto executado",
+      text: "A Envisio demonstra comprometimento, responsabilidade e total disponibilidade. Sempre disposta a resolver problemas com seriedade e sem desistir.",
       author: "",
       role: "Global Corp",
     },
@@ -144,7 +144,8 @@ const services = [
   },
   {
     title: "Sistemas de Segurança",
-    description: "CCTV, controle de acesso, biometria e monitoramento 24h.",
+    description:
+      "Implementação de políticas de segurança, proteção contra ameaças digitais, soluções de backup e monitoramento de acessos.",
     tipo: "hardware",
     image: "/images/imagem cads/Destaque4.webp",
   },
@@ -556,7 +557,7 @@ export function HeroSection() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => navigate("/Academia")}
+                    onClick={() => navigate("/academia")}
                     className="mt-auto w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-[5px] flex items-center justify-center group hover:from-red-700 hover:to-red-800 transition-all"
                     style={{ fontFamily: "Segoe UI Regular" }}>
                     Visita-nos

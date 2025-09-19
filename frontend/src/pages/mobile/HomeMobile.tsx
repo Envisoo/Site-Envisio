@@ -312,7 +312,7 @@ export function HomeMobile() {
 
               <motion.button
                 whileTap={{ scale: 0.98 }}
-                onClick={() => navigate("/Academia")}
+                onClick={() => navigate("/academia")}
                 className="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
                 Visite-nos
                 <span className="ml-2">→</span>

@@ -21,7 +21,7 @@ import SuporteTecnico from "./pages/SuporteTecnico";
 import ServicosHardware from "./serviços/ServicosHardware";
 import ServicosSoftware from "./serviços/ServicosSoftware";
 import ScrollToTop from "./components/ScrollToTop";
-import Academia from "./pages/Academia";
+
 import QuemSomosMobile from "./pages/mobile/QuemSomosMobile";
 import { useWindowSize } from "./hooks/useWindowSize";
 import ServicosHardwareMobile from "./pages/mobile/ServicosHardwareMobile";
@@ -100,16 +100,6 @@ export function App() {
 
               {/* Rotas da Academia - Com layout próprio */}
               <Route path="/academia/*" element={<RotasAcademia />} />
-              <Route
-                path="/Academia"
-                element={
-                  <>
-                    <Navbar />
-                    <Academia />
-                    <Footer />
-                  </>
-                }
-              />
 
               {/* Outras rotas existentes */}
               <Route

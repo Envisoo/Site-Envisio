@@ -33,9 +33,9 @@ import {
 const hardwareServices = [
   {
     id: 1,
-    title: "Redes Estruturadas (Cisco)",
+    title: " Redes e Conectividade",
     description:
-      "Projetamos e implementamos redes robustas, seguras e escaláveis para empresas de todos os portes, utilizando equipamentos Cisco de última geração com garantia de desempenho e segurança.",
+      "Consultoria, instalação e configuração de redes de computadores, Wi-Fi e telefonia (VoIP/PABX), garantindo estabilidade e alta performance.",
     icon: <Server className="w-8 h-8 text-blue-600" />,
     items: [
       "🔒 Segurança contra ataques e acessos não autorizados",
@@ -76,9 +76,9 @@ const hardwareServices = [
   },
   {
     id: 4,
-    title: "Serviços de Manutenção e Apoio Técnico",
+    title: "Serviços de Manutenção e suporte",
     description:
-      "Manutenção preventiva e corretiva para garantir o funcionamento contínuo e estável dos seus sistemas de TI.",
+      "Manutenção preventiva e corretiva de computadores e notebooks, instalação de sistemas operacionais, remoção de vírus, backup e recuperação de dados.",
     icon: <Settings className="w-8 h-8 text-green-600" />,
     items: [
       "⚡ Resposta rápida a incidentes",

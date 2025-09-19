@@ -12,7 +12,7 @@ const About = () => {
 
   const team: TeamMember[] = [
     {
-      name: "Sílvio Miezi",
+      name: "Stézia da Conceição",
       role: "CEO e Fundador",
       bgColor: "bg-red-600",
       gender: "male",

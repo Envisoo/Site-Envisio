@@ -27,7 +27,7 @@ const softwareServices = [
     id: 1,
     title: "Consultoria em TI",
     description:
-      "Soluções estratégicas em tecnologia para impulsionar a eficiência e inovação do seu negócio, com foco em resultados mensuráveis e crescimento sustentável.",
+      "Planeamento estratégico, auditoria de sistemas e orientação para modernização tecnológica, sempre de acordo com a necessidade de cada cliente.",
     icon: <BadgeCheck className="w-8 h-8 text-red-600" />,
     items: [
       "Redução de custos através da eliminação de desperdícios",

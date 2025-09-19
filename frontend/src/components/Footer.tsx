@@ -52,7 +52,7 @@ export default function Footer() {
       { nome: "Hardware", url: "/servicos/hardware" },
       { nome: "Software", url: "/servicos/software" },
       { nome: "Renting", url: "/servicos/renting" },
-      { nome: "Academia", url: "/Academia" },
+      { nome: "Academia", url: "/academia" },
     ],
     contato: [
       { nome: "+244 947 137 676", url: "tel:+244947137676", icon: "📞" },
