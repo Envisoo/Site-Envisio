@@ -74,7 +74,6 @@ app.get("/api", (req, res) => {
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
 // Servir arquivos estáticos do React (frontend)
-app.use(express.static(path.join(__dirname, "public")));
 
 // Qualquer rota que não for API cai aqui → React Router cuida
 app.get("*", (req, res) => {
