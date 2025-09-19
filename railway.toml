@@ -1,15 +1,15 @@
-# Configuração de múltiplos serviços
-
-[backend]
-root = "backend"
-start = "npm start"
-
-[frontend]
-root = "frontend"
-start = "npm run start"
-
+# railway.toml
 [build]
-builder = "dockerfile"
+builder = "DOCKERFILE"
 
-[deploy]
-startCommand = "sh ./start.sh"
+[services.backend]
+root = "backend"
+dockerfile = "backend/Dockerfile"
+autoDeploy = true
+startCommand = "npm start"
+
+[services.frontend]
+root = "frontend"
+dockerfile = "frontend/Dockerfile"
+autoDeploy = true
+startCommand = "serve -s build -l $PORT"
