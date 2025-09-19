@@ -5,6 +5,6 @@ import { enviarEmail } from "../controllers/emailController.js";
 
 const router = Router();
 
-router.post("/email", enviarEmail);
+router.post("/", enviarEmail);
 
 export default router;
