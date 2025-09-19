@@ -5,7 +5,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import path from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,7 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // Lista de rotas para importar
 const routeFiles = [
@@ -72,11 +70,6 @@ app.use("/uploads", express.static(join(__dirname, "uploads")));
 app.get("/", (req, res) => {
   res.send("🚀 API da Envisio está no ar!");
 });
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-});
-
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
