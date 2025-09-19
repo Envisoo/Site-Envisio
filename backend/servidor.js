@@ -1,5 +1,4 @@
 /** @format */
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -39,7 +38,7 @@ const routeFiles = [
   { path: "./rotas/emailRoutes.js", route: "/api" },
 ];
 
-// Função para carregar rotas
+// Função para carregar rotas dinamicamente
 const setupRoutes = async () => {
   try {
     for (const { path, route } of routeFiles) {
@@ -53,7 +52,6 @@ const setupRoutes = async () => {
         throw error;
       }
     }
-
     console.log("✅ Todas as rotas carregadas com sucesso");
   } catch (error) {
     console.error("❌ Erro ao carregar rotas:", error);
@@ -64,11 +62,16 @@ const setupRoutes = async () => {
 // Inicializa as rotas
 await setupRoutes();
 
-// Configuração de arquivos estáticos
+// Configuração de arquivos estáticos (uploads de usuários)
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 3001;
+// Servir o frontend buildado
+app.use(express.static(join(__dirname, "public")));
+app.get("*", (req, res) => {
+  res.sendFile(join(__dirname, "public", "index.html"));
+});
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🟢 Servidor rodando na porta ${PORT}`);
   console.log(`🔗 Acesse: http://localhost:${PORT}`);
