@@ -67,6 +67,9 @@ await setupRoutes();
 // Configuração de arquivos estáticos
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
+app.get("/", (req, res) => {
+  res.send("🚀 API da Envisio está no ar!");
+});
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
