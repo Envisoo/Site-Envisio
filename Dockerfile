@@ -16,7 +16,8 @@ RUN npm install
 
 # Instala dependências do frontend
 WORKDIR /app/frontend
-RUN npm install
+RUN npm install --legacy-peer-deps
+
 
 # Volta para a raiz
 WORKDIR /app
