@@ -37,7 +37,7 @@ COPY backend/ ./
 COPY --from=build-frontend /app/frontend/build ./public
 
 # Expõe a porta
-EXPOSE 3001
+EXPOSE 8080
 
 # Inicia o servidor backend
 CMD ["npm", "start"]
