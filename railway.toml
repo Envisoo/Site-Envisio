@@ -7,3 +7,9 @@ start = "npm start"
 [frontend]
 root = "frontend"
 start = "npm run start"
+
+[build]
+builder = "dockerfile"
+
+[deploy]
+startCommand = "sh ./start.sh"
