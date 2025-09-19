@@ -73,13 +73,6 @@ app.get("/api", (req, res) => {
 // Configuração de arquivos estáticos (uploads)
 app.use("/uploads", express.static(join(__dirname, "uploads")));
 
-// Servir arquivos estáticos do React (frontend)
-
-// Qualquer rota que não for API cai aqui → React Router cuida
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 // Inicialização do servidor
 const PORT = process.env.PORT || 8080;
 
