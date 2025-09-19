@@ -1,18 +1,22 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-if [ -f "back-end/package.json" ]; then
+echo "📂 Diretório atual: $(pwd)"
+echo "📂 Conteúdo disponível:"
+ls -la
+
+if [ -f "backend/package.json" ]; then
   echo "🚀 Iniciando backend..."
-  cd back-end
+  cd backend
   npm install
-  npm start
-elif [ -f "front-end/package.json" ]; then
-  echo "🚀 Iniciando frontend..."
-  cd front-end
+  exec npm start
+elif [ -f "frontend/package.json" ]; then
+  echo "🎨 Iniciando frontend..."
+  cd frontend
   npm install
   npm run build
-  npm run start
+  exec npm run start
 else
-  echo "❌ Nenhum projeto encontrado (backend ou frontend)."
+  echo "❌ Nenhum projeto encontrado dentro do container!"
   exit 1
 fi
