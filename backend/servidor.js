@@ -40,7 +40,7 @@ const routeFiles = [
   { path: "./rotas/emailRoutes.js", route: "/api" },
 ];
 
-// Função para carregar rotas
+// Função para carregar rotas dinamicamente
 const setupRoutes = async () => {
   try {
     for (const { path, route } of routeFiles) {
@@ -65,7 +65,15 @@ const setupRoutes = async () => {
 // Inicializa as rotas
 await setupRoutes();
 
-// Servir arquivos estáticos do React
+// Rota básica da API
+app.get("/api", (req, res) => {
+  res.send("🚀 API da Envisio está no ar!");
+});
+
+// Configuração de arquivos estáticos (uploads)
+app.use("/uploads", express.static(join(__dirname, "uploads")));
+
+// Servir arquivos estáticos do React (frontend)
 app.use(express.static(path.join(__dirname, "public")));
 
 // Qualquer rota que não for API cai aqui → React Router cuida
@@ -73,12 +81,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Configuração de arquivos estáticos
-app.use("/uploads", express.static(join(__dirname, "uploads")));
-
-app.get("/", (req, res) => {
-  res.send("🚀 API da Envisio está no ar!");
-});
+// Inicialização do servidor
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
