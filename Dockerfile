@@ -1,35 +1,43 @@
-# Etapa 1: build do frontend
+# ===========================
+# Estágio 1: Build do Frontend
+# ===========================
 FROM node:18 AS build-frontend
 
 WORKDIR /app/frontend
 
-# Copia apenas dependências primeiro (cache otimizado)
+# Copiar apenas package.json e package-lock.json primeiro (cache)
 COPY frontend/package*.json ./
+
+# Instalar dependências do frontend
 RUN npm install --legacy-peer-deps
 
-# Copia código do frontend
+# Copiar código do frontend
 COPY frontend/ ./
 
-# Build de produção do frontend
+# Build do frontend
 RUN npm run build
 
-# Etapa 2: backend
+# ===========================
+# Estágio 2: Backend + Build do Frontend
+# ===========================
 FROM node:18
 
 WORKDIR /app/backend
 
-# Copia dependências do backend
+# Copiar apenas package.json e package-lock.json do backend
 COPY backend/package*.json ./
+
+# Instalar dependências do backend
 RUN npm install --legacy-peer-deps
 
-# Copia código do backend
+# Copiar o código backend
 COPY backend/ ./
 
-# Copia o build do frontend para dentro do backend (servido como estático)
+# Copiar o build do frontend para a pasta pública do backend
 COPY --from=build-frontend /app/frontend/build ./public
 
-# Expõe porta Railway
-EXPOSE 3000
+# Expõe a porta
+EXPOSE 3001
 
-# Comando de start do backend
+# Inicia o servidor backend
 CMD ["npm", "start"]
