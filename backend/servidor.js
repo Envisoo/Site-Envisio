@@ -4,10 +4,18 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { path, dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Servir arquivos estáticos do React
+app.use(express.static(path.join(__dirname, "public")));
+
+// Qualquer rota que não for API cai aqui → React Router cuida
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 dotenv.config();
 
