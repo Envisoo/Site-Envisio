@@ -37,7 +37,7 @@ const routeFiles = [
   { path: "./rotas/webhook.js", route: "/webhook" },
   { path: "./rotas/modulos.js", route: "/modulos" },
   { path: "./rotas/licoes.js", route: "/licoes" },
-  { path: "./rotas/emailRoutes.js", route: "/api" },
+  { path: "./rotas/emailRoutes.js", route: "/emails" },
 ];
 
 // Função para carregar rotas dinamicamente
