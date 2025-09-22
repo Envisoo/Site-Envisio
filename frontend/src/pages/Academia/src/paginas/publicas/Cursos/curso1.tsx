@@ -684,16 +684,6 @@ export default function CursoDetalhe() {
                   </li>
                 </ul>
               </div>
-
-              {/* Botão de Contato Fixo em Mobile */}
-              <div className="lg:hidden bg-white p-4 shadow-lg fixed bottom-0 left-0 right-0 z-10 border-t border-gray-200">
-                <button
-                  onClick={() => navigate(-1)}
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 px-6 rounded-lg font-medium text-lg transition-all duration-300 flex items-center justify-center space-x-2">
-                  <MessageCircle size={20} />
-                  <span>Entrar em Contato</span>
-                </button>
-              </div>
             </div>
           </div>
         </div>

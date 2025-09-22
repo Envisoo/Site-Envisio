@@ -339,16 +339,19 @@ export default function Navbar() {
               <div className="w-6 h-6 relative">
                 <motion.span
                   animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="absolute w-full h-0.5 bg-current transform transition-all"
                 />
                 <motion.span
                   animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                  transition={{ duration: 0.2 }}
                   className="absolute w-full h-0.5 bg-current top-2.5"
                 />
                 <motion.span
                   animate={
                     isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }
                   }
+                  transition={{ duration: 0.2 }}
                   className="absolute w-full h-0.5 bg-current top-5"
                 />
               </div>
