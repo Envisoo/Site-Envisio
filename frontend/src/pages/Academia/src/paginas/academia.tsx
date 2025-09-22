@@ -244,23 +244,45 @@ const Academia = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="space-y-4">
-                <div className="flex items-center justify-center md:justify-start">
-                  <svg
-                    className="w-6 h-6 mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                  <span>Solução ERP Completa</span>
+                <div className="flex flex-col md:flex-row justify-center md:justify-between gap-4">
+                  <div className="flex items-center justify-center md:justify-start">
+                    <svg
+                      className="w-6 h-6 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                    <span>Solução ERP Completa</span>
+                  </div>
+                  <div className="flex items-center justify-center md:justify-start">
+                    <svg
+                      className="w-6 h-6 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                    <span>Módulos Práticos</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-center md:justify-start">
-                  <svg
-                    className="w-6 h-6 mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                  </svg>
-                  <span>Módulos Práticos</span>
+                <div className="flex flex-col md:flex-row justify-center md:justify-between gap-4">
+                  <div className="flex items-center justify-center md:justify-start">
+                    <svg
+                      className="w-6 h-6 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                    <span>Material de Apoio</span>
+                  </div>
+                  <div className="flex items-center justify-center md:justify-start">
+                    <svg
+                      className="w-6 h-6 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                    <span>Certificado Oficial</span>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -386,25 +408,27 @@ const Academia = () => {
             </div>
 
             {/* Card Fixo de Inscrição */}
-            <div className="lg:w-1/4 ml-24">
+            <div className="lg:w-1/4 md:ml-24">
               <div className="sticky top-6 bg-white rounded-[5px] shadow-lg overflow-hidden border border-gray-200">
                 <div className="bg-red-700 text-white p-6 text-center">
                   <h3 className="text-2xl font-bold mb-2">Cegid Primavera</h3>
                   <p className="text-lg">Inscrições Abertas</p>
                 </div>
-                <div className="p-6 space-y-3">
-                  <CourseFeature icon="clock" text="Duração: 2 Semanas" />
-                  <CourseFeature icon="book" text="10 módulos completos" />
-                  <CourseFeature icon="video" text="Material de apoio" />
-                  <CourseFeature
-                    icon="certificate"
-                    text="Certificado oficial"
-                  />
-                  <div></div>
+                <div className="p-4 space-y- ">
+                  <div className="flex flex-col  justify-center  gap-4">
+                    <CourseFeature icon="clock" text="Duração: 2 Semanas" />
+                    <CourseFeature icon="book" text="10 módulos completos" />
+
+                    <CourseFeature icon="video" text="Material de apoio" />
+                    <CourseFeature
+                      icon="certificate"
+                      text="Certificado oficial"
+                    />
+                  </div>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-[300px] bg-red-600 hover:bg-red-700 text-white font-bold mt-12 py-4 px-6 rounded-[5px]
-    transition duration-300 transform hover:scale-105 ml-3">
+                    className="w-full md:w-full bg-red-600 hover:bg-red-700 text-white font-bold mt-8 md:mt-12 py-4 px-6 rounded-[5px]
+    transition duration-300 transform hover:scale-105">
                     Inscrever-me no Curso
                   </button>
 
