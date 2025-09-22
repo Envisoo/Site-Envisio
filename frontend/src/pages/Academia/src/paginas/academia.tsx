@@ -18,6 +18,7 @@ const Academia = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [openModuleIndex, setOpenModuleIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const updateClock = () => setCurrentTime(new Date());
@@ -332,7 +333,17 @@ const Academia = () => {
 
               <div className="space-y-4">
                 {modules.map((module, index) => (
-                  <ModuleCard key={index} module={module} index={index} />
+                  <ModuleCard
+                    key={index}
+                    module={module}
+                    index={index}
+                    isOpen={openModuleIndex === index}
+                    onToggle={() =>
+                      setOpenModuleIndex(
+                        openModuleIndex === index ? null : index
+                      )
+                    }
+                  />
                 ))}
               </div>
 
@@ -627,11 +638,16 @@ type ModuleCardProps = {
     topics: string[];
   };
   index: number;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
-const ModuleCard: React.FC<ModuleCardProps> = ({ module, index }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const ModuleCard: React.FC<ModuleCardProps> = ({
+  module,
+  index,
+  isOpen,
+  onToggle,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -639,7 +655,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module, index }) => {
       transition={{ delay: index * 0.05 }}
       className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         className={`w-full px-5 py-3 flex items-center justify-between transition-colors duration-200 ${
           isOpen ? "bg-gray-100" : "hover:bg-gray-100"
         }`}>

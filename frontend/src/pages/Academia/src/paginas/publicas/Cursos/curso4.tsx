@@ -564,7 +564,7 @@ export default function Curso4() {
             {/* Conteúdo Principal */}
             <div className="lg:col-span-2">
               {/* Conteúdo Programático */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+              <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
                   Conteúdo Programático
                 </h2>
@@ -583,7 +583,7 @@ export default function Curso4() {
                     {modulosFonte.map((modulo: Modulo, index: number) => (
                       <div
                         key={modulo.id}
-                        className="border rounded-lg overflow-hidden">
+                        className="border rounded-[5px] overflow-hidden">
                         <button
                           onClick={() =>
                             setModuloAberto(
@@ -641,7 +641,7 @@ export default function Curso4() {
               </div>
 
               {/* Requisitos */}
-              <div className="bg-white rounded-xl shadow-sm p-6 mt-8 border border-gray-100">
+              <div className="bg-white rounded-[5px] shadow-sm p-6 mt-8 border border-gray-100">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
                   Requisitos
                 </h2>
@@ -690,7 +690,7 @@ export default function Curso4() {
             {/* Barra Lateral */}
             <div className="space-y-6">
               {/* Instrutor */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+              <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">Instrutor</h3>
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
@@ -709,7 +709,7 @@ export default function Curso4() {
               </div>
 
               {/* Informações do Curso */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+              <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">
                   Informações do Curso
                 </h3>
