@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Academia = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -57,7 +58,7 @@ const Academia = () => {
     try {
       // Format the email body to include all relevant information
       const emailBody = `
-        Nova inscrição no curso CCNA 200-301:
+        Nova inscrição no curso Cegid Primavera:
         
         Nome: ${formData.nome}
         Email: ${formData.email}
@@ -75,9 +76,9 @@ const Academia = () => {
         phone: formData.telefone,
         empresa: formData.empresa,
         message: formData.mensagem,
-        subject: `Nova Inscrição CCNA - ${formData.nome}`,
+        subject: `Nova Inscrição Cegid Primavera - ${formData.nome}`,
         text: emailBody,
-        area: "Inscrição CCNA",
+        area: "Inscrição Cegid Primavera",
         tipoCliente: "Aluno",
       };
 
@@ -219,7 +220,7 @@ const Academia = () => {
       </div>
 
       {/* Segunda Seção - Flyer Promocional */}
-      <div className="py-16 h-[600px] bg-gradient-to-r from-red-900 to-red-700 text-white">
+      <div className="py-16 h-[600px] bg-gradient-to-r from-red-800 via-red-700 to-red-700 text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="md:w-1/2 text-center md:text-left">
@@ -227,15 +228,15 @@ const Academia = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-3xl md:text-4xl font-bold mb-6">
-                Certificação CCNA 200-301
+                Cegid Primavera
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
                 className="text-xl mb-8">
-                Prepare-se para o exame oficial Cisco CCNA com os melhores
-                especialistas de Portugal
+                Aprenda a dominar o ERP mais utilizado em Angola e Portugal para
+                gestão empresarial completa
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -249,7 +250,7 @@ const Academia = () => {
                     viewBox="0 0 20 20">
                     <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
-                  <span>Certificado Oficial Reconhecido</span>
+                  <span>Solução ERP Completa</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <svg
@@ -258,21 +259,10 @@ const Academia = () => {
                     viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                   </svg>
-                  <span>Turmas Limitadas</span>
+                  <span>Módulos Práticos</span>
                 </div>
               </motion.div>
             </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-              className="md:w-1/2">
-              <img
-                src="/academia/ccna-promo.webp"
-                alt="CCNA Certification"
-                className="rounded-lg shadow-2xl"
-              />
-            </motion.div>
           </div>
         </div>
       </div>
@@ -345,13 +335,50 @@ const Academia = () => {
                   <ModuleCard key={index} module={module} index={index} />
                 ))}
               </div>
+
+              {/* Botão para ver conteúdo completo */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="mt-8 ml-[-80px] text-center">
+                <Link
+                  to="/academia/curso1"
+                  className="inline-flex items-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-[5px] transition duration-300 transform hover:scale-105 shadow-lg">
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
+                  </svg>
+                  Ver Curso
+                  <svg
+                    className="w-5 h-5 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </Link>
+              </motion.div>
             </div>
 
             {/* Card Fixo de Inscrição */}
             <div className="lg:w-1/3">
               <div className="sticky top-6 bg-white rounded-[5px] shadow-lg overflow-hidden border border-gray-200">
                 <div className="bg-red-700 text-white p-6 text-center">
-                  <h3 className="text-2xl font-bold mb-2">CCNA 200-301</h3>
+                  <h3 className="text-2xl font-bold mb-2">Cegid Primavera</h3>
                   <p className="text-lg">Inscrições Abertas</p>
                 </div>
                 <div className="p-6 space-y-6">
@@ -401,7 +428,7 @@ const Academia = () => {
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-2xl font-bold text-gray-800">
-                      Inscrição CCNA
+                      Inscrição Cegid Primavera
                     </h3>
                     <button
                       onClick={() => setIsModalOpen(false)}
@@ -435,7 +462,7 @@ const Academia = () => {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                         />
                       </svg>
                       <h4 className="text-xl font-semibold text-gray-800 mb-2">
@@ -704,22 +731,43 @@ const CourseFeature = ({ icon, text }: CourseFeatureProps) => (
 // Dados dos módulos
 const modules = [
   {
-    title: "Módulo 1: Fundamentos de Rede",
+    title: "Módulo 1: Conceitos Base de ERP",
     topics: [
-      "Arquitetura TCP/IP e OSI",
-      "Endereçamento IPv4 e IPv6",
-      "Fundamentos de Switching",
-      "Operações básicas de roteamento",
+      "O que é um ERP",
+      "História e evolução do ERP",
+      "Por que é importante",
+      "Como funciona um sistema ERP",
+      "Tipos de implementação de ERP",
+      "Seis principais benefícios do ERP",
     ],
   },
   {
-    title: "Módulo 2: Switching",
+    title: "Módulo 2: Instalação e Administração do ERP Cegid Primavera",
     topics: [
-      "VLANs e Trunking",
-      "Spanning Tree Protocol",
-      "EtherChannel",
-      "Inter-VLAN Routing",
+      "Instalação",
+      "Criação de Empresas",
+      "Manutenção de Dados",
+      "Gestão de Utilizadores e Segurança",
+      "Licenciamento",
+      "Outras Funcionalidades",
+      "Caso Prático",
     ],
   },
-  // Adicione mais módulos conforme necessário
+  {
+    title: "Módulo 3: Processo de Gestão - Compras",
+    topics: [
+      "Ficha de Fornecedores",
+      "Registo de documentos de Compra",
+      "Reprodução de conteúdos entre documentos",
+      "Operações de estorno",
+      "Obrigações Fiscais",
+      "Reimpressão de documentos",
+      "Mapas de Análises",
+      "Caso Prático",
+    ],
+  },
+  {
+    title: "Módulo 4: Processo de Gestão - Inventário",
+    topics: ["Conceitos e operações de Inventário"],
+  },
 ];

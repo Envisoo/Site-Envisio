@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 
 export interface CursoDetalhe {
+  aulas: any;
+  modulos: any;
+  objetivos: any;
+  imagemUrl: string;
+  requisitos: any;
+  conteudoDetalhado: string;
   id: string;
   titulo: string;
   descricao: string;
@@ -9,6 +15,7 @@ export interface CursoDetalhe {
   duracao: number;
   nivel: string;
   instrutor: string | {
+    bio: string;
     nome: string;
     avaliacao: number;
     alunos: number;
@@ -36,11 +43,14 @@ export function useCurso(id: string) {
     if (!id) return;
     
     setCarregando(true);
-    api.get(`/cursos/${id}`)
+    api
+      .get(`/cursos/${id}?_embed=modulos`)
       .then((res) => setCurso(res.data))
-      .catch((err) => setErro(err.response?.data?.mensagem || "Erro ao carregar curso"))
+      .catch((err) =>
+        setErro(err.response?.data?.mensagem || "Erro ao carregar curso")
+      )
       .finally(() => setCarregando(false));
   }, [id]);
 
   return { curso, carregando, erro };
-} 
+}

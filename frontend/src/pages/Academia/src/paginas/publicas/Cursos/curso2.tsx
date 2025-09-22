@@ -11,12 +11,11 @@ import {
   useState,
 } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contextos/AuthContext";
-import { useCurso } from "../../hooks/useCurso";
-import { useModulos } from "../../hooks/useModulos";
+import { AuthContext } from "../../../contextos/AuthContext";
+import { useCurso } from "../../../hooks/useCurso";
+import { useModulos } from "../../../hooks/useModulos";
 import { Helmet } from "react-helmet-async";
 import {
-  Clock,
   Star,
   Users,
   Award,
@@ -36,14 +35,15 @@ import {
   ChevronDown,
   FileText,
 } from "lucide-react";
-import Spinner from "../../componentes/Spinner";
-import ModalVideo from "../../componentes/ModalVideo";
-import api from "../../utils/api";
-import { Curso, Instrutor, Modulo, Aula } from "../../tipos/Curso";
+import Spinner from "../../../componentes/Spinner";
+import ModalVideo from "../../../componentes/ModalVideo";
+import FormularioInscricao from "../../../componentes/FormularioInscricao"; // Import the FormularioInscricao component
+import api from "../../../utils/api";
+import { Curso, Instrutor, Modulo, Aula } from "../../../tipos/Curso";
 import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
-} from "../../data/Modulo";
+} from "../../../data/Modulo";
 
 interface Avaliacao {
   id: string;
@@ -55,7 +55,7 @@ interface Avaliacao {
 
 export default function CursoDetalhe() {
   const { id } = useParams<{ id: string }>();
-  const { curso, carregando, erro } = useCurso(id || "");
+  const dadosCurso = useCurso(id || "");
   const { usuario } = useContext(AuthContext);
   const navigate = useNavigate();
   const [modalAberto, setModalAberto] = useState(false);
@@ -67,11 +67,30 @@ export default function CursoDetalhe() {
   const [mediaAvaliacoes, setMediaAvaliacoes] = useState(0);
   const [carregandoAvaliacoes, setCarregandoAvaliacoes] = useState(true);
   const [moduloAberto, setModuloAberto] = useState<number | null>(null);
+  const [modalInscricaoAberto, setModalInscricaoAberto] = useState(false); // Add the state for the FormularioInscricao modal
   const {
     modulos,
     carregando: carregandoModulos,
     erro: erroModulos,
   } = useModulos(id);
+
+  // Fallback local para quando esta página é acessada sem :id na rota
+  const cursoLocal: Curso = {
+    id: "programacao-web-frontend",
+    titulo: "Programação Web Frontend",
+    descricao:
+      "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas.",
+    categoria: "Programação",
+    duracao: 20,
+    nivel: "iniciante",
+    imagemUrl: "",
+    requisitos: ["Computador e internet"],
+  } as Curso;
+
+  // Seleciona a fonte de dados do curso: API (quando há id) ou local (sem id)
+  const curso = id ? dadosCurso.curso : (cursoLocal as Curso);
+  const carregando: boolean = id ? dadosCurso.carregando : false;
+  const erro: string | null = id ? (dadosCurso as any).erro : null;
 
   // Busca as aulas do backend
   useEffect(() => {
@@ -178,7 +197,351 @@ export default function CursoDetalhe() {
     return key ? modulosDict[key] : undefined;
   })();
 
+  const modulosDefinidosAqui: Modulo[] = [
+    {
+      id: "m2-1",
+      titulo: "Módulo 1: Introdução ao Curso",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-1-a1",
+          titulo: "Definição da Programação Web",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-1-a2",
+          titulo:
+            "O mercado em Angola e no mundo (oportunidades e remunerações)",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-1-a3",
+          titulo: "O mito da IA capaz de substituir os programadores",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-1-a4",
+          titulo: "Apresentação do conteúdo programático do curso",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 0,
+    },
+    {
+      id: "m2-2",
+      titulo: "Módulo 2: O Projecto de Fim de Curso",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-2-a1",
+          titulo: "Apresentação do projecto de fim de curso",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-2-a2",
+          titulo: "Instalação e configuração das ferramentas de trabalho",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-2-a3",
+          titulo: "Introdução ao Git & Github",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 1,
+    },
+    {
+      id: "m2-3",
+      titulo: "Módulo 3: HiperText Markup Language (HTML)",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-3-a1",
+          titulo: "Tags e a estrutura de um documento HTML",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-3-a2",
+          titulo: "Elementos de texto e formatação",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-3-a3",
+          titulo: "Links e navegação",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-3-a4",
+          titulo: "Imagens e mídia",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m2-3-a5", titulo: "Tabelas", duracao: "", tipo: "texto" },
+        {
+          id: "m2-3-a6",
+          titulo: "Formulários e interactividade",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-3-a7",
+          titulo: "Estruturação da página web",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-3-a8",
+          titulo: "Comentários no código HTML",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 2,
+    },
+    {
+      id: "m2-4",
+      titulo: "Módulo 4: Cascading Style Sheets (CSS)",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-4-a1",
+          titulo: "Introdução ao CSS",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a2",
+          titulo:
+            "Formas de aplicação do CSS e vantagens no uso do CSS externo",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a3",
+          titulo: "Seletores e especificidade",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a4",
+          titulo: "Seletores: tag, classe e id",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a5",
+          titulo: "Seletores combinados e descendentes",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a6",
+          titulo: "Propriedades de texto e cores",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a7",
+          titulo: "Layouts com Box Model",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a8",
+          titulo: "Posicionamento e display",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a9",
+          titulo: "Flexbox layout e suas propriedades",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m2-4-a10", titulo: "Grid layout", duracao: "", tipo: "texto" },
+        {
+          id: "m2-4-a11",
+          titulo: "Responsividade com Media Queries",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-4-a12",
+          titulo: "Animações e transições",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 3,
+    },
+    {
+      id: "m2-5",
+      titulo: "Módulo 5: JQuery",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-5-a1",
+          titulo: "Introdução ao JQuery",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m2-5-a2", titulo: "Seletores", duracao: "", tipo: "texto" },
+        {
+          id: "m2-5-a3",
+          titulo: "Manipulação de elementos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-5-a4",
+          titulo: "Manipulação de eventos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-5-a5",
+          titulo: "Criação e inserção de elementos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-5-a6",
+          titulo: "Captura de dados",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 4,
+    },
+    {
+      id: "m2-6",
+      titulo: "Módulo 6: Conclusão e Apresentação do Projecto de Fim de Curso",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-6-a1",
+          titulo:
+            "Apresentação do projecto de fim de curso e esclarecimento de dúvidas",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 5,
+    },
+    {
+      id: "m2-7",
+      titulo: "Módulo 7: Ética Profissional",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-7-a1",
+          titulo:
+            "A colaboração dentro de uma equipa de desenvolvimento de software",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a2",
+          titulo:
+            "A comunicação como chave para o sucesso de qualquer projecto",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a3",
+          titulo: "Canais de comunicação e ferramentas de colaboração",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a4",
+          titulo: "Pontualidade, organização e responsabilidade",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a5",
+          titulo:
+            "Resolução de conflitos e respeito às diferentes ideologias, crenças e opiniões",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a6",
+          titulo: "Lei 22/11 de 17 de Junho – Proteção de Dados Pessoais",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-7-a7",
+          titulo: "Acordos de Confidencialidade",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 6,
+    },
+    {
+      id: "m2-8",
+      titulo: "Módulo 8: Perfil Profissional",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m2-8-a1",
+          titulo:
+            "Como adquirir experiência profissional sem trabalhar por conta de outrem",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-8-a2",
+          titulo: "O Currículo Vitae de um programador",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-8-a3",
+          titulo: "Criação de um portfólio de sucesso",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-8-a4",
+          titulo: "O perfil no LinkedIn",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-8-a5",
+          titulo: "Identificação da oportunidade ideal de trabalho",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m2-8-a6",
+          titulo: "Progressão de carreira e o empreendedorismo Tech",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 7,
+    },
+  ];
+
   const modulosFonte: Modulo[] =
+    (modulosDefinidosAqui &&
+      modulosDefinidosAqui.length > 0 &&
+      modulosDefinidosAqui) ||
     (dictById && dictById.length > 0 && dictById) ||
     (modulos && modulos.length > 0 && modulos) ||
     (curso?.modulos &&
@@ -213,7 +576,7 @@ export default function CursoDetalhe() {
       <section className="relative bg-gradient-to-r h-[500px] from-gray-800 to-gray-500 text-white mt-[-75px]  pt-10">
         <div className="max-w-6xl mx-auto px-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/academia/cursos")}
             className="flex items-center text-white hover:text-blue-200 mb-8 transition-colors">
             <ArrowLeft className="mr-2" size={20} />
             Voltar para Cursos
@@ -232,23 +595,11 @@ export default function CursoDetalhe() {
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <button className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                <button
+                  onClick={() => setModalInscricaoAberto(true)} // Open the FormularioInscricao modal
+                  className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
                 </button>
-              </div>
-            </div>
-
-            <div className="w-full md:w-96 bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="p-6">
-                <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
-                  <img
-                    src={
-                      curso.imagemUrl || "https://via.placeholder.com/800x450"
-                    }
-                    alt={curso.titulo}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -298,9 +649,6 @@ export default function CursoDetalhe() {
                             </h3>
                           </div>
                           <div className="flex items-center">
-                            <span className="text-sm text-gray-500 mr-4">
-                              {modulo.duracaoTotal}
-                            </span>
                             <ChevronDown
                               className={`transition-transform duration-200 ${
                                 moduloAberto === index
@@ -330,14 +678,6 @@ export default function CursoDetalhe() {
                                     <h4 className="font-medium text-gray-800">
                                       {aula.titulo}
                                     </h4>
-                                    {aula.duracao && (
-                                      <div className="text-sm text-gray-500 mt-1">
-                                        <span className="flex items-center">
-                                          <Clock className="mr-1" size={14} />
-                                          {aula.duracao}
-                                        </span>
-                                      </div>
-                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -350,7 +690,7 @@ export default function CursoDetalhe() {
               </div>
 
               {/* Requisitos */}
-              <div className="bg-white rounded-xl shadow-sm p-6 py-10 border border-gray-100 mt-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 mt-8 border border-gray-100">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
                   Requisitos
                 </h2>
@@ -402,12 +742,8 @@ export default function CursoDetalhe() {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">Instrutor</h3>
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
-                    <img
-                      src={"https://i.pravatar.cc/150?img=32"}
-                      alt={instrutor?.nome}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">I</span>
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900">{"Instrutor"}</h4>
@@ -469,6 +805,17 @@ export default function CursoDetalhe() {
         isOpen={modalAberto}
         onClose={() => setModalAberto(false)}
         videoUrl={videoUrl}
+      />
+
+      {/* Modal de Inscrição */}
+      <FormularioInscricao
+        isOpen={modalInscricaoAberto}
+        onClose={() => setModalInscricaoAberto(false)}
+        cursoNome={curso.titulo}
+        cursoArea={curso.categoria || "Cursos"}
+        onSuccess={() => {
+          setModalInscricaoAberto(false);
+        }}
       />
     </div>
   );

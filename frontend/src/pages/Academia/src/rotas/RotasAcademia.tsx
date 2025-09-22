@@ -12,6 +12,10 @@ import LayoutInstrutor from "../componentes/LayoutInstrutor";
 import AcademiaHome from "../paginas/academia";
 import CursosAcademia from "../paginas/publicas/Cursos";
 import CursoDetalhe from "../paginas/publicas/CursoDetalhe";
+import Curso1 from "../paginas/publicas/Cursos/curso1";
+import Curso2 from "../paginas/publicas/Cursos/curso2";
+import Curso3 from "../paginas/publicas/Cursos/curso3";
+import Curso4 from "../paginas/publicas/Cursos/curso4";
 import LoginAcademia from "../paginas/autenticacao/Login";
 import CadastroAcademia from "../paginas/autenticacao/Cadastro";
 import RecuperarSenha from "../paginas/autenticacao/RecuperarSenha";
@@ -278,6 +282,38 @@ const RotasAcademia = () => {
               element={
                 <LayoutAcademia>
                   <CursosAcademia />
+                </LayoutAcademia>
+              }
+            />
+            <Route
+              path="/curso1"
+              element={
+                <LayoutAcademia>
+                  <Curso1 />
+                </LayoutAcademia>
+              }
+            />
+            <Route
+              path="/curso2"
+              element={
+                <LayoutAcademia>
+                  <Curso2 />
+                </LayoutAcademia>
+              }
+            />
+            <Route
+              path="/curso3"
+              element={
+                <LayoutAcademia>
+                  <Curso3 />
+                </LayoutAcademia>
+              }
+            />
+            <Route
+              path="/curso4"
+              element={
+                <LayoutAcademia>
+                  <Curso4 />
                 </LayoutAcademia>
               }
             />

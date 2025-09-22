@@ -11,12 +11,11 @@ import {
   useState,
 } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contextos/AuthContext";
-import { useCurso } from "../../hooks/useCurso";
-import { useModulos } from "../../hooks/useModulos";
+import { AuthContext } from "../../../contextos/AuthContext";
+import { useCurso } from "../../../hooks/useCurso";
+import { useModulos } from "../../../hooks/useModulos";
 import { Helmet } from "react-helmet-async";
 import {
-  Clock,
   Star,
   Users,
   Award,
@@ -36,14 +35,15 @@ import {
   ChevronDown,
   FileText,
 } from "lucide-react";
-import Spinner from "../../componentes/Spinner";
-import ModalVideo from "../../componentes/ModalVideo";
-import api from "../../utils/api";
-import { Curso, Instrutor, Modulo, Aula } from "../../tipos/Curso";
+import Spinner from "../../../componentes/Spinner";
+import ModalVideo from "../../../componentes/ModalVideo";
+import FormularioInscricao from "../../../componentes/FormularioInscricao"; // Import the FormularioInscricao component
+import api from "../../../utils/api";
+import { Curso, Instrutor, Modulo, Aula } from "../../../tipos/Curso";
 import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
-} from "../../data/Modulo";
+} from "../../../data/Modulo";
 
 interface Avaliacao {
   id: string;
@@ -55,7 +55,7 @@ interface Avaliacao {
 
 export default function CursoDetalhe() {
   const { id } = useParams<{ id: string }>();
-  const { curso, carregando, erro } = useCurso(id || "");
+  const dadosCurso = useCurso(id || "");
   const { usuario } = useContext(AuthContext);
   const navigate = useNavigate();
   const [modalAberto, setModalAberto] = useState(false);
@@ -67,12 +67,45 @@ export default function CursoDetalhe() {
   const [mediaAvaliacoes, setMediaAvaliacoes] = useState(0);
   const [carregandoAvaliacoes, setCarregandoAvaliacoes] = useState(true);
   const [moduloAberto, setModuloAberto] = useState<number | null>(null);
+  const [modalInscricaoAberto, setModalInscricaoAberto] = useState(false); // Add the state for the FormularioInscricao modal
   const {
     modulos,
     carregando: carregandoModulos,
     erro: erroModulos,
   } = useModulos(id);
 
+  // Fallback local para rota fixa (sem :id)
+  const cursoLocal: Curso = {
+    id: "cegid-primavera",
+    titulo: "Cegid Primavera",
+    descricao:
+      "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP para empresas.",
+    categoria: "Gestão/ERP",
+    duracao: 2 as any,
+    nivel: "iniciante" as any,
+    imagemUrl: "",
+    requisitos: ["Noções de gestão empresarial"],
+  } as unknown as Curso;
+
+  const cursoExibir = (id ? dadosCurso.curso : (cursoLocal as Curso)) as Curso;
+
+  // Fallback local para quando esta página é acessada sem :id na rota
+  const cursoLocalFallback: Curso = {
+    id: "javascript-basico-ao-avancado",
+    titulo: "JavaScript Básico ao Avançado",
+    descricao:
+      "Aprenda JavaScript do zero até conceitos avançados com conteúdo prático e direto ao ponto.",
+    categoria: "Programação",
+    duracao: 20,
+    nivel: "iniciante",
+    imagemUrl: "",
+    requisitos: ["Computador e internet"],
+  } as Curso;
+
+  // Seleciona a fonte de dados do curso: API (quando há id) ou local (sem id)
+  const curso = id ? dadosCurso.curso : (cursoLocalFallback as Curso);
+  const carregando: boolean = id ? dadosCurso.carregando : false;
+  const erro: string | null = id ? (dadosCurso as any).erro : null;
   // Busca as aulas do backend
   useEffect(() => {
     if (!id) return;
@@ -103,10 +136,10 @@ export default function CursoDetalhe() {
 
   // Corrige o tipo do instrutor
   const instrutor =
-    typeof curso?.instrutor === "object"
-      ? curso?.instrutor
+    typeof cursoExibir?.instrutor === "object"
+      ? cursoExibir?.instrutor
       : {
-          nome: curso?.instrutor || "Instrutor",
+          nome: (cursoExibir as any)?.instrutor || "Instrutor",
           avaliacao: 0,
           alunos: 0,
           aulas: 0,
@@ -149,8 +182,8 @@ export default function CursoDetalhe() {
   const dictById = (() => {
     if (!id && !curso) return undefined;
     const raw = id ? String(id) : "";
-    const courseId = curso?.id ? String(curso.id) : "";
-    const titleSlug = curso?.titulo ? slugify(curso.titulo) : "";
+    const courseId = cursoExibir?.id ? String(cursoExibir.id) : "";
+    const titleSlug = cursoExibir?.titulo ? slugify(cursoExibir.titulo) : "";
 
     const candidates = [
       raw,
@@ -178,7 +211,236 @@ export default function CursoDetalhe() {
     return key ? modulosDict[key] : undefined;
   })();
 
+  const modulosDefinidosAqui: Modulo[] = [
+    {
+      id: "m1-1",
+      titulo: "Módulo 1: Conceitos Base de ERP",
+      duracaoTotal: "",
+      aulas: [
+        { id: "m1-1-a1", titulo: "O que é um ERP", duracao: "", tipo: "texto" },
+        {
+          id: "m1-1-a2",
+          titulo: "História e evolução do ERP",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-1-a3",
+          titulo: "Por que é importante",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-1-a4",
+          titulo: "Como funciona um sistema ERP",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-1-a5",
+          titulo: "Tipos de implementação de ERP",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-1-a6",
+          titulo: "Seis principais benefícios do ERP",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 0,
+    },
+    {
+      id: "m1-2",
+      titulo: "Módulo 2: Instalação e Administração do ERP Cegid Primavera",
+      duracaoTotal: "",
+      aulas: [
+        { id: "m1-2-a1", titulo: "Instalação", duracao: "", tipo: "texto" },
+        {
+          id: "m1-2-a2",
+          titulo: "Criação de Empresas",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-2-a3",
+          titulo: "Manutenção de Dados",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-2-a4",
+          titulo: "Gestão de Utilizadores e Segurança",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m1-2-a5", titulo: "Licenciamento", duracao: "", tipo: "texto" },
+        {
+          id: "m1-2-a6",
+          titulo: "Outras Funcionalidades",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m1-2-a7", titulo: "Caso Prático", duracao: "", tipo: "texto" },
+      ],
+      ordem: 1,
+    },
+    {
+      id: "m1-3",
+      titulo: "Módulo 3: Processo de Gestão - Compras",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-3-a1",
+          titulo: "Ficha de Fornecedores",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a2",
+          titulo: "Registo de documentos de Compra",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a3",
+          titulo: "Reprodução de conteúdos entre documentos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a4",
+          titulo: "Operações de estorno",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a5",
+          titulo: "Obrigações Fiscais",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a6",
+          titulo: "Reimpressão de documentos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m1-3-a7",
+          titulo: "Mapas de Análises",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m1-3-a8", titulo: "Caso Prático", duracao: "", tipo: "texto" },
+      ],
+      ordem: 2,
+    },
+    {
+      id: "m1-4",
+      titulo: "Módulo 4: Processo de Gestão - Inventário",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-4-a1",
+          titulo: "Conceitos e operações de Inventário",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 3,
+    },
+    {
+      id: "m1-5",
+      titulo: "Módulo 5: Processo de Gestão - Logística",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-5-a1",
+          titulo: "Fluxos e processos de Logística",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 4,
+    },
+    {
+      id: "m1-6",
+      titulo: "Módulo 6: Tesouraria",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-6-a1",
+          titulo: "Gestão de Tesouraria",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 5,
+    },
+    {
+      id: "m1-7",
+      titulo: "Módulo 7: Contabilidade e Fiscalidade",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-7-a1",
+          titulo: "Configuração e processos de Contabilidade e Fiscalidade",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 6,
+    },
+    {
+      id: "m1-8",
+      titulo: "Módulo 8: Gestão de Ativos",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-8-a1",
+          titulo: "Processos de Gestão de Ativos",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 7,
+    },
+    {
+      id: "m1-9",
+      titulo: "Módulo 9: Processamento de Salários",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-9-a1",
+          titulo: "Processos de Processamento de Salários",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 8,
+    },
+    {
+      id: "m1-10",
+      titulo: "Módulo 10: Caso Prático Final",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m1-10-a1",
+          titulo: "Caso Prático – Integração dos módulos",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 9,
+    },
+  ];
+
   const modulosFonte: Modulo[] =
+    (modulosDefinidosAqui &&
+      modulosDefinidosAqui.length > 0 &&
+      modulosDefinidosAqui) ||
     (dictById && dictById.length > 0 && dictById) ||
     (modulos && modulos.length > 0 && modulos) ||
     (curso?.modulos &&
@@ -186,8 +448,8 @@ export default function CursoDetalhe() {
       (curso.modulos as Modulo[])) ||
     modulosDataFallback;
 
-  if (carregando) return <Spinner />;
-  if (erro || !curso) {
+  if (id && carregando) return <Spinner />;
+  if (id && (erro || !cursoExibir)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center max-w-md p-6 bg-white rounded-xl shadow-lg border border-gray-200">
@@ -213,7 +475,7 @@ export default function CursoDetalhe() {
       <section className="relative bg-gradient-to-r h-[500px] from-gray-800 to-gray-500 text-white mt-[-75px]  pt-10">
         <div className="max-w-6xl mx-auto px-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/academia/cursos")}
             className="flex items-center text-white hover:text-blue-200 mb-8 transition-colors">
             <ArrowLeft className="mr-2" size={20} />
             Voltar para Cursos
@@ -222,33 +484,21 @@ export default function CursoDetalhe() {
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-1">
               <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
-                {curso.categoria || "Desenvolvimento"}
+                {cursoExibir.categoria || "Desenvolvimento"}
               </span>
               <h1 className="text-3xl mt-6 md:text-5xl text-white font-bold mb-4">
-                {curso.titulo}
+                {cursoExibir.titulo}
               </h1>
               <p className="text-lg mt-4 text-white max-w-3xl mb-6">
-                {curso.descricao}
+                {cursoExibir.descricao}
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <button className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                <button
+                  onClick={() => setModalInscricaoAberto(true)} // Open the FormularioInscricao modal
+                  className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
                 </button>
-              </div>
-            </div>
-
-            <div className="w-full md:w-96 bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="p-6">
-                <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
-                  <img
-                    src={
-                      curso.imagemUrl || "https://via.placeholder.com/800x450"
-                    }
-                    alt={curso.titulo}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -298,9 +548,6 @@ export default function CursoDetalhe() {
                             </h3>
                           </div>
                           <div className="flex items-center">
-                            <span className="text-sm text-gray-500 mr-4">
-                              {modulo.duracaoTotal}
-                            </span>
                             <ChevronDown
                               className={`transition-transform duration-200 ${
                                 moduloAberto === index
@@ -330,14 +577,6 @@ export default function CursoDetalhe() {
                                     <h4 className="font-medium text-gray-800">
                                       {aula.titulo}
                                     </h4>
-                                    {aula.duracao && (
-                                      <div className="text-sm text-gray-500 mt-1">
-                                        <span className="flex items-center">
-                                          <Clock className="mr-1" size={14} />
-                                          {aula.duracao}
-                                        </span>
-                                      </div>
-                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -350,12 +589,12 @@ export default function CursoDetalhe() {
               </div>
 
               {/* Requisitos */}
-              <div className="bg-white rounded-xl shadow-sm p-6 py-10 border border-gray-100 mt-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 mt-8 border border-gray-100">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
                   Requisitos
                 </h2>
                 <ul className="space-y-2 text-gray-600">
-                  {curso.requisitos?.map(
+                  {cursoExibir.requisitos?.map(
                     (
                       requisito:
                         | string
@@ -402,12 +641,8 @@ export default function CursoDetalhe() {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">Instrutor</h3>
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
-                    <img
-                      src={"https://i.pravatar.cc/150?img=32"}
-                      alt={instrutor?.nome}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">I</span>
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900">{"Instrutor"}</h4>
@@ -430,13 +665,13 @@ export default function CursoDetalhe() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {curso.duracao || "N/A"} horas
+                      {cursoExibir.duracao || "N/A"} Semanas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Nível</span>
                     <span className="font-medium">
-                      {curso.nivel || "Todos"}
+                      {cursoExibir.nivel || "Todos"}
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
@@ -469,6 +704,17 @@ export default function CursoDetalhe() {
         isOpen={modalAberto}
         onClose={() => setModalAberto(false)}
         videoUrl={videoUrl}
+      />
+
+      {/* Modal de Inscrição */}
+      <FormularioInscricao
+        isOpen={modalInscricaoAberto}
+        onClose={() => setModalInscricaoAberto(false)}
+        cursoNome={cursoExibir.titulo}
+        cursoArea={cursoExibir.categoria || "Cursos"}
+        onSuccess={() => {
+          setModalInscricaoAberto(false);
+        }}
       />
     </div>
   );

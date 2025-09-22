@@ -11,12 +11,11 @@ import {
   useState,
 } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contextos/AuthContext";
-import { useCurso } from "../../hooks/useCurso";
-import { useModulos } from "../../hooks/useModulos";
+import { AuthContext } from "../../../contextos/AuthContext";
+import { useCurso } from "../../../hooks/useCurso";
+import { useModulos } from "../../../hooks/useModulos";
 import { Helmet } from "react-helmet-async";
 import {
-  Clock,
   Star,
   Users,
   Award,
@@ -36,14 +35,15 @@ import {
   ChevronDown,
   FileText,
 } from "lucide-react";
-import Spinner from "../../componentes/Spinner";
-import ModalVideo from "../../componentes/ModalVideo";
-import api from "../../utils/api";
-import { Curso, Instrutor, Modulo, Aula } from "../../tipos/Curso";
+import Spinner from "../../../componentes/Spinner";
+import ModalVideo from "../../../componentes/ModalVideo";
+import FormularioInscricao from "../../../componentes/FormularioInscricao"; // Import the FormularioInscricao component
+import api from "../../../utils/api";
+import { Curso, Instrutor, Modulo, Aula } from "../../../tipos/Curso";
 import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
-} from "../../data/Modulo";
+} from "../../../data/Modulo";
 
 interface Avaliacao {
   id: string;
@@ -53,7 +53,7 @@ interface Avaliacao {
   criado_em: string;
 }
 
-export default function CursoDetalhe() {
+export default function Curso4() {
   const { id } = useParams<{ id: string }>();
   const { curso, carregando, erro } = useCurso(id || "");
   const { usuario } = useContext(AuthContext);
@@ -67,13 +67,13 @@ export default function CursoDetalhe() {
   const [mediaAvaliacoes, setMediaAvaliacoes] = useState(0);
   const [carregandoAvaliacoes, setCarregandoAvaliacoes] = useState(true);
   const [moduloAberto, setModuloAberto] = useState<number | null>(null);
+  const [modalInscricaoAberto, setModalInscricaoAberto] = useState(false); // Add the state for the modal
   const {
     modulos,
     carregando: carregandoModulos,
     erro: erroModulos,
   } = useModulos(id);
 
-  // Busca as aulas do backend
   useEffect(() => {
     if (!id) return;
     setCarregandoAulas(true);
@@ -84,7 +84,6 @@ export default function CursoDetalhe() {
       .finally(() => setCarregandoAulas(false));
   }, [id]);
 
-  // Busca as avaliações do curso
   useEffect(() => {
     if (!id) return;
     setCarregandoAvaliacoes(true);
@@ -101,18 +100,31 @@ export default function CursoDetalhe() {
       .finally(() => setCarregandoAvaliacoes(false));
   }, [id]);
 
-  // Corrige o tipo do instrutor
+  // Curso local para rotas fixas (sem :id)
+  const localCurso: Partial<Curso> = {
+    id: "sql-server",
+    titulo: "SQL Server",
+    categoria: "Banco de Dados",
+    descricao:
+      "Consultas SQL, modelagem, procedures, views e administração básica no SQL Server.",
+    duracao: 14,
+    nivel: "Intermediário" as any,
+    requisitos: ["Lógica de programação"],
+    imagemUrl: undefined,
+  };
+
+  const cursoExibir = (id ? curso : (localCurso as Curso)) as Curso;
+
   const instrutor =
-    typeof curso?.instrutor === "object"
-      ? curso?.instrutor
+    typeof cursoExibir?.instrutor === "object"
+      ? cursoExibir?.instrutor
       : {
-          nome: curso?.instrutor || "Instrutor",
+          nome: (cursoExibir as any)?.instrutor || "Instrutor",
           avaliacao: 0,
           alunos: 0,
           aulas: 0,
         };
 
-  // Permissão de acesso às aulas
   const podeAcessarAula = (aula: Aula): boolean => {
     if (!usuario) return false;
     if (usuario.papel === "admin" || usuario.papel === "instrutor") return true;
@@ -124,7 +136,6 @@ export default function CursoDetalhe() {
     setModalAberto(true);
   };
 
-  // Função para renderizar estrelas
   const renderizarEstrelas = (nota: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -136,7 +147,6 @@ export default function CursoDetalhe() {
     ));
   };
 
-  // normaliza ID para bater com dicionário
   const slugify = (valor: string) =>
     valor
       .normalize("NFD")
@@ -167,18 +177,322 @@ export default function CursoDetalhe() {
       (k) => modulosDict[k] && modulosDict[k].length > 0
     );
 
-    // Logs úteis de diagnóstico
-    console.log("[CursoDetalhe] id da rota:", raw);
-    console.log("[CursoDetalhe] candidatos normalizados:", candidates);
+    console.log("[Curso4] id da rota:", raw);
+    console.log("[Curso4] candidatos normalizados:", candidates);
     console.log(
-      "[CursoDetalhe] chave encontrada no dicionário:",
+      "[Curso4] chave encontrada no dicionário:",
       key ?? "nenhuma (fallback)"
     );
 
     return key ? modulosDict[key] : undefined;
   })();
 
+  // CONTEÚDO LOCAL ESPECÍFICO DO CURSO 4
+  const modulosDefinidosAqui: Modulo[] = [
+    {
+      id: "m4-1",
+      titulo: "Módulo 1: Introdução ao SQL Server",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-1-a1",
+          titulo: "Conceitos Básicos de Banco de Dados",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a2",
+          titulo: "O que é um banco de dados relacional",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a3",
+          titulo: "Conceito de Tabelas, Colunas, Registros, Chaves",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a4",
+          titulo: "Instalação do SQL Server e SSMS",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a5",
+          titulo:
+            "Baixando o SQL Server Express e SQL Server Management Studio (SSMS)",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a6",
+          titulo: "Configuração inicial",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a7",
+          titulo: "Primeiros Comandos",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-1-a8",
+          titulo: "CREATE DATABASE",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m4-1-a9", titulo: "CREATE TABLE", duracao: "", tipo: "texto" },
+        {
+          id: "m4-1-a10",
+          titulo: "SELECT simples",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 0,
+    },
+    {
+      id: "m4-2",
+      titulo: "Módulo 2: Manipulação de Dados (DML)",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-2-a1",
+          titulo: "Inserindo Dados",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a2",
+          titulo: "Comando INSERT INTO",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a3",
+          titulo: "Inserção de múltiplos registros",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a4",
+          titulo: "Atualizando e Removendo Dados",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a5",
+          titulo: "UPDATE com WHERE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a6",
+          titulo: "DELETE com WHERE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a7",
+          titulo: "Consultas Simples",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a8",
+          titulo: "SELECT, DISTINCT",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a9",
+          titulo: "Filtros com WHERE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-2-a10",
+          titulo: "Ordenação com ORDER BY",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 1,
+    },
+    {
+      id: "m4-3",
+      titulo: "Módulo 3: Consultas Avançadas",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-3-a1",
+          titulo: "Funções de Agregação",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-3-a2",
+          titulo: "COUNT, SUM, AVG, MAX, MIN",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-3-a3",
+          titulo: "Agrupamentos com GROUP BY e HAVING",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-3-a4",
+          titulo: "Joins (Junções)",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m4-3-a5", titulo: "INNER JOIN", duracao: "", tipo: "texto" },
+        {
+          id: "m4-3-a6",
+          titulo: "LEFT JOIN, RIGHT JOIN",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-3-a7",
+          titulo: "FULL OUTER JOIN",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 2,
+    },
+    {
+      id: "m4-4",
+      titulo: "Módulo 4: Estrutura de Banco de Dados (DDL)",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-4-a1",
+          titulo: "Criação e Modificação de Estruturas",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-4-a2",
+          titulo: "CREATE TABLE, ALTER TABLE, DROP TABLE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-4-a3",
+          titulo: "Tipos de dados no SQL Server",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-4-a4",
+          titulo: "Chaves e Restrições",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-4-a5",
+          titulo: "PRIMARY KEY, FOREIGN KEY",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-4-a6",
+          titulo: "UNIQUE, CHECK, DEFAULT, NOT NULL",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 3,
+    },
+    {
+      id: "m4-5",
+      titulo: "Módulo 5: Programação SQL (T-SQL)",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-5-a1",
+          titulo: "Variáveis, IF, WHILE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-5-a2",
+          titulo: "Declaração e uso de variáveis",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-5-a3",
+          titulo: "Controle de fluxo",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-5-a4",
+          titulo: "Stored Procedures e Functions",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-5-a5",
+          titulo: "CREATE PROCEDURE, CREATE FUNCTION",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-5-a6",
+          titulo: "Parâmetros, retorno",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 4,
+    },
+    {
+      id: "m4-6",
+      titulo: "Módulo 6: Administração e Segurança",
+      duracaoTotal: "",
+      aulas: [
+        {
+          id: "m4-6-a1",
+          titulo: "Backup e Restauração",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-6-a2",
+          titulo: "BACKUP DATABASE, RESTORE DATABASE",
+          duracao: "",
+          tipo: "texto",
+        },
+        {
+          id: "m4-6-a3",
+          titulo: "Estratégias de backup",
+          duracao: "",
+          tipo: "texto",
+        },
+        { id: "m4-6-a4", titulo: "Views", duracao: "", tipo: "texto" },
+        {
+          id: "m4-6-a5",
+          titulo: "Criação de VIEWs",
+          duracao: "",
+          tipo: "texto",
+        },
+      ],
+      ordem: 5,
+    },
+  ];
+
   const modulosFonte: Modulo[] =
+    (modulosDefinidosAqui &&
+      modulosDefinidosAqui.length > 0 &&
+      modulosDefinidosAqui) ||
     (dictById && dictById.length > 0 && dictById) ||
     (modulos && modulos.length > 0 && modulos) ||
     (curso?.modulos &&
@@ -186,8 +500,8 @@ export default function CursoDetalhe() {
       (curso.modulos as Modulo[])) ||
     modulosDataFallback;
 
-  if (carregando) return <Spinner />;
-  if (erro || !curso) {
+  if (id && carregando) return <Spinner />;
+  if (id && (erro || !cursoExibir)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center max-w-md p-6 bg-white rounded-xl shadow-lg border border-gray-200">
@@ -213,7 +527,7 @@ export default function CursoDetalhe() {
       <section className="relative bg-gradient-to-r h-[500px] from-gray-800 to-gray-500 text-white mt-[-75px]  pt-10">
         <div className="max-w-6xl mx-auto px-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/academia/cursos")}
             className="flex items-center text-white hover:text-blue-200 mb-8 transition-colors">
             <ArrowLeft className="mr-2" size={20} />
             Voltar para Cursos
@@ -222,33 +536,21 @@ export default function CursoDetalhe() {
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-1">
               <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
-                {curso.categoria || "Desenvolvimento"}
+                {cursoExibir.categoria || "Desenvolvimento"}
               </span>
               <h1 className="text-3xl mt-6 md:text-5xl text-white font-bold mb-4">
-                {curso.titulo}
+                {cursoExibir.titulo}
               </h1>
               <p className="text-lg mt-4 text-white max-w-3xl mb-6">
-                {curso.descricao}
+                {cursoExibir.descricao}
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <button className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                <button
+                  onClick={() => setModalInscricaoAberto(true)} // Open the modal when the button is clicked
+                  className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
                 </button>
-              </div>
-            </div>
-
-            <div className="w-full md:w-96 bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="p-6">
-                <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
-                  <img
-                    src={
-                      curso.imagemUrl || "https://via.placeholder.com/800x450"
-                    }
-                    alt={curso.titulo}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -298,9 +600,6 @@ export default function CursoDetalhe() {
                             </h3>
                           </div>
                           <div className="flex items-center">
-                            <span className="text-sm text-gray-500 mr-4">
-                              {modulo.duracaoTotal}
-                            </span>
                             <ChevronDown
                               className={`transition-transform duration-200 ${
                                 moduloAberto === index
@@ -330,14 +629,6 @@ export default function CursoDetalhe() {
                                     <h4 className="font-medium text-gray-800">
                                       {aula.titulo}
                                     </h4>
-                                    {aula.duracao && (
-                                      <div className="text-sm text-gray-500 mt-1">
-                                        <span className="flex items-center">
-                                          <Clock className="mr-1" size={14} />
-                                          {aula.duracao}
-                                        </span>
-                                      </div>
-                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -350,12 +641,12 @@ export default function CursoDetalhe() {
               </div>
 
               {/* Requisitos */}
-              <div className="bg-white rounded-xl shadow-sm p-6 py-10 border border-gray-100 mt-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 mt-8 border border-gray-100">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">
                   Requisitos
                 </h2>
                 <ul className="space-y-2 text-gray-600">
-                  {curso.requisitos?.map(
+                  {cursoExibir.requisitos?.map(
                     (
                       requisito:
                         | string
@@ -402,12 +693,8 @@ export default function CursoDetalhe() {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">Instrutor</h3>
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
-                    <img
-                      src={"https://i.pravatar.cc/150?img=32"}
-                      alt={instrutor?.nome}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">I</span>
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900">{"Instrutor"}</h4>
@@ -430,13 +717,13 @@ export default function CursoDetalhe() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {curso.duracao || "N/A"} horas
+                      {cursoExibir.duracao || "N/A"} horas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Nível</span>
                     <span className="font-medium">
-                      {curso.nivel || "Todos"}
+                      {cursoExibir.nivel || "Todos"}
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
@@ -469,6 +756,17 @@ export default function CursoDetalhe() {
         isOpen={modalAberto}
         onClose={() => setModalAberto(false)}
         videoUrl={videoUrl}
+      />
+
+      {/* Modal de Inscrição */}
+      <FormularioInscricao
+        isOpen={modalInscricaoAberto}
+        onClose={() => setModalInscricaoAberto(false)}
+        cursoNome={cursoExibir?.titulo || "Curso"}
+        cursoArea={cursoExibir?.categoria || "Cursos"}
+        onSuccess={() => {
+          setModalInscricaoAberto(false);
+        }}
       />
     </div>
   );

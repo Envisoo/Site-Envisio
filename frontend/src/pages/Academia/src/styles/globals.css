@@ -40,3 +40,25 @@
 .swiper-pagination-bullet-active {
     background: #4f46e5 !important;
 }
+
+
+/* Adicione essas classes personalizadas */
+
+@keyframes pulse-slow {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.03);
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
+/* Ou se preferir usar o Tailwind, adicione ao tailwind.config.js */

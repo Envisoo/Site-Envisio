@@ -31,6 +31,7 @@ import { useCursos } from "../../hooks/useCursos";
 import { Curso } from "../../tipos/Curso";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useModulos } from "../../hooks/useModulos";
 
 // Interface para os filtros
 interface Filtros {
@@ -45,281 +46,62 @@ interface Filtros {
   suporte?: boolean;
 }
 
-// Componente de estatísticas em tempo real
-const EstatisticasTempoReal = () => {
-  const [ref, inView] = useInView({ triggerOnce: true });
-
-  const estatisticas = [
-    {
-      titulo: "Cursos Disponíveis",
-      valor: 156,
-      icone: BookOpen,
-      cor: "bg-blue-500",
-      descricao: "Cursos ativos no momento",
-    },
-    {
-      titulo: "Estudantes Ativos",
-      valor: 2847,
-      icone: Users,
-      cor: "bg-green-500",
-      descricao: "Estudantes aprendendo",
-    },
-    {
-      titulo: "Instrutores",
-      valor: 23,
-      icone: Award,
-      cor: "bg-purple-500",
-      descricao: "Especialistas certificados",
-    },
-    {
-      titulo: "Certificados Emitidos",
-      valor: 1893,
-      icone: CheckCircle,
-      cor: "bg-orange-500",
-      descricao: "Certificados válidos",
-    },
-  ];
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {estatisticas.map((stat, index) => (
-        <motion.div
-          key={stat.titulo}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600 mb-1">
-                {stat.titulo}
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {stat.valor.toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">{stat.descricao}</p>
-            </div>
-            <div className={`p-3 rounded-lg ${stat.cor} text-white`}>
-              <stat.icone size={24} />
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-};
-
-// Componente de filtros avançados
-const FiltrosAvancados = ({
-  filtros,
-  setFiltros,
-  mostrarFiltros,
-  setMostrarFiltros,
-}: {
-  filtros: Filtros;
-  setFiltros: (filtros: Filtros) => void;
-  mostrarFiltros: boolean;
-  setMostrarFiltros: (mostrar: boolean) => void;
-}) => {
-  return (
-    <AnimatePresence>
-      {mostrarFiltros && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Preço */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Faixa de Preço (Kz)
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={filtros.precoMin || ""}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, precoMin: e.target.value })
-                  }
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={filtros.precoMax || ""}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, precoMax: e.target.value })
-                  }
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            {/* Duração */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Duração (horas)
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={filtros.duracaoMin || ""}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, duracaoMin: e.target.value })
-                  }
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={filtros.duracaoMax || ""}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, duracaoMax: e.target.value })
-                  }
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            {/* Nível */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Nível
-              </label>
-              <select
-                value={filtros.nivel || ""}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, nivel: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="">Todos os níveis</option>
-                <option value="iniciante">Iniciante</option>
-                <option value="intermediario">Intermediário</option>
-                <option value="avancado">Avançado</option>
-              </select>
-            </div>
-
-            {/* Status */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Status
-              </label>
-              <select
-                value={filtros.status || ""}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, status: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="">Todos os status</option>
-                <option value="disponivel">Disponível</option>
-                <option value="brevemente">Brevemente</option>
-                <option value="desenvolvimento">Em Desenvolvimento</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Filtros adicionais */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="certificado"
-                checked={filtros.certificado || false}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, certificado: e.target.checked })
-                }
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label htmlFor="certificado" className="text-sm text-gray-700">
-                Com certificado
-              </label>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="acessoVitalicio"
-                checked={filtros.acessoVitalicio || false}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, acessoVitalicio: e.target.checked })
-                }
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label
-                htmlFor="acessoVitalicio"
-                className="text-sm text-gray-700">
-                Acesso vitalício
-              </label>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="suporte"
-                checked={filtros.suporte || false}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, suporte: e.target.checked })
-                }
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label htmlFor="suporte" className="text-sm text-gray-700">
-                Com suporte
-              </label>
-            </div>
-          </div>
-
-          {/* Botões de ação */}
-          <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
-            <button
-              onClick={() => setFiltros({})}
-              className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors">
-              Limpar filtros
-            </button>
-            <button
-              onClick={() => setMostrarFiltros(false)}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Aplicar filtros
-            </button>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
 // Componente de card de curso
 const CursoCard = ({
   curso,
   onFavoritar,
   onQuickView,
   favoritos,
+  navigate,
+  destino,
 }: {
   curso: Curso;
   onFavoritar: (id: string) => void;
   onQuickView: (curso: Curso) => void;
   favoritos: string[];
+  navigate: any;
+  destino?: string;
 }) => {
   const [ref, inView] = useInView({ triggerOnce: true });
   const isFavorito = favoritos.includes(curso.id);
-  const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  // Show the "Ver mais" button only if the description is long enough
+  const shouldShowVerMais = (curso?.descricao?.length ?? 0) > 140;
+
+  // Destino customizado para cursos específicos
+  const getDestinoCurso = (c: Curso) => {
+    const id = String((c as any)?.id ?? "")
+      .toLowerCase()
+      .trim();
+    const titulo = String((c as any)?.titulo ?? "").toLowerCase();
+    // Ajuste as condições conforme o seu dado real
+    if (
+      id === "react-completo" ||
+      titulo.includes("react completo") ||
+      titulo.includes("react completo")
+    ) {
+      return "/academia/curso2";
+    }
+
+    if (
+      id === "javascript-basico-ao-avancado" ||
+      titulo.includes("javascript-basico-ao-avancado") ||
+      titulo.includes("javascript-basico-ao-avancado")
+    ) {
+      return "/academia/curso1";
+    }
+    return `/academia/curso/${c.id}`;
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "disponivel":
-        return "bg-green-100 text-green-800";
+        return "bg-red-100 text-red-800";
       case "brevemente":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-amber-100 text-amber-800";
       case "desenvolvimento":
-        return "bg-gray-100 text-gray-800";
+        return "bg-blue-100 text-blue-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -330,7 +112,7 @@ const CursoCard = ({
       case "disponivel":
         return "Disponível";
       case "brevemente":
-        return "Brevemente";
+        return "Em Breve";
       case "desenvolvimento":
         return "Em Desenvolvimento";
       default:
@@ -343,12 +125,31 @@ const CursoCard = ({
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5 }}
-      className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 group">
-      {/* Imagem do curso */}
-      <div className="relative h-48 bg-gradient-to-br from-blue-500 to-purple-600">
-        <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300" />
-        <div className="absolute top-4 left-4">
+      whileHover={{
+        y: -5,
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="relative bg-white rounded-[5px] overflow-hidden group cursor-pointer flex flex-col h-full border border-gray-100 hover:shadow-md transition-shadow duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}>
+      {/* Imagem do curso sem overlay */}
+      <div className="relative h-48 overflow-hidden flex-shrink-0">
+        <motion.img
+          src={
+            curso.imagemUrl ||
+            "https://source.unsplash.com/random/400x300/?course"
+          }
+          alt={curso.titulo}
+          className="w-full h-full object-cover transform transition-transform duration-500"
+          animate={{
+            scale: isHovered ? 1.05 : 1,
+          }}
+        />
+
+        {/* Badge de status */}
+        <div className="absolute top-4 left-4 z-20">
           <span
             className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
               curso.status
@@ -356,276 +157,57 @@ const CursoCard = ({
             {getStatusText(curso.status)}
           </span>
         </div>
-        <div className="absolute top-4 right-4 flex space-x-2">
-          <button
-            onClick={() => onFavoritar(curso.id)}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              isFavorito
-                ? "bg-red-500 text-white"
-                : "bg-white bg-opacity-80 text-gray-700 hover:bg-red-500 hover:text-white"
-            }`}>
-            <Heart size={16} fill={isFavorito ? "currentColor" : "none"} />
-          </button>
-          <button
-            onClick={() => onQuickView(curso)}
-            className="p-2 rounded-full bg-white bg-opacity-80 text-gray-700 hover:bg-blue-500 hover:text-white transition-all duration-200">
-            <Eye size={16} />
-          </button>
-        </div>
-        <div className="absolute bottom-4 left-4">
-          <div className="flex items-center space-x-2 text-white">
-            <Star size={16} fill="currentColor" />
-            <span className="text-sm font-medium">{curso.avaliacao}</span>
-          </div>
-        </div>
       </div>
 
       {/* Conteúdo do card */}
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-3">
-          <h3
-            onClick={() => navigate(`/academia/curso/${curso.id}`)}
-            className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors cursor-pointer">
-            {curso.titulo}
-          </h3>
-        </div>
+      <div className="p-6 flex flex-col flex-grow">
+        <h3
+          onClick={() => navigate(destino ?? getDestinoCurso(curso))}
+          className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-red-600 transition-colors mb-2">
+          {curso.titulo}
+        </h3>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {curso.descricao}
-        </p>
-
-        {/* Métricas do curso */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Clock size={14} />
-            <span>{curso.duracao}h</span>
-          </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Users size={14} />
-            <span>{curso.instrutor?.alunos || 0} alunos</span>
-          </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <BookOpen size={14} />
-            <span>{curso.instrutor?.aulas || 0} aulas</span>
-          </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Eye size={14} />
-            <span>{curso.visualizacoes || 0} visualizações</span>
-          </div>
-        </div>
-
-        {/* Recursos do curso */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {curso.certificado && (
-            <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-              Certificado
-            </span>
-          )}
-          {curso.acessoVitalicio && (
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-              Acesso vitalício
-            </span>
-          )}
-          {curso.suporte && (
-            <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
-              Suporte
-            </span>
-          )}
-        </div>
-
-        {/* Preço e ação */}
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-2xl font-bold text-gray-900">
-              {curso.preco?.toLocaleString()} Kz
-            </span>
-            {curso.preco && curso.preco > 0 && (
-              <span className="text-sm text-gray-500 line-through ml-2">
-                {(curso.preco * 1.2).toLocaleString()} Kz
-              </span>
-            )}
-          </div>
-          <button
-            onClick={() => navigate(`/academia/curso/${curso.id}`)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-            Detalhes
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-// Componente de modal de visualização rápida
-const QuickViewModal = ({
-  curso,
-  isOpen,
-  onClose,
-}: {
-  curso: Curso | null;
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
-  if (!isOpen || !curso) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-        onClick={onClose}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-          <div className="p-6">
-            <div className="flex justify-between items-start mb-6">
-              <h2
-                // Removido o onClick que usava 'navigate' não definido
-                className="text-2xl font-bold text-gray-900">
-                {curso.titulo}
-              </h2>
-              <button
-                onClick={onClose}
-                className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-4" />
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <Clock size={16} />
-                    <span>Duração: {curso.duracao} horas</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <Star size={16} />
-                    <span>Avaliação: {curso.avaliacao}/5</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <Users size={16} />
-                    <span>{curso.instrutor?.alunos || 0} alunos inscritos</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Descrição
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">{curso.descricao}</p>
-
-                <div className="space-y-2 mb-4">
-                  {curso.certificado && (
-                    <div className="flex items-center space-x-2 text-sm text-green-600">
-                      <CheckCircle size={16} />
-                      <span>Certificado incluído</span>
-                    </div>
-                  )}
-                  {curso.acessoVitalicio && (
-                    <div className="flex items-center space-x-2 text-sm text-blue-600">
-                      <CheckCircle size={16} />
-                      <span>Acesso vitalício</span>
-                    </div>
-                  )}
-                  {curso.suporte && (
-                    <div className="flex items-center space-x-2 text-sm text-purple-600">
-                      <CheckCircle size={16} />
-                      <span>Suporte incluído</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-gray-900">
-                      {curso.preco?.toLocaleString()} Kz
-                    </span>
-                    {curso.preco && curso.preco > 0 && (
-                      <span className="text-sm text-gray-500 line-through">
-                        {(curso.preco * 1.2).toLocaleString()} Kz
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() =>
-                      (window.location.href = `/academia/curso/${curso.id}`)
-                    }
-                    className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    {curso.status === "disponivel"
-                      ? "Inscrever-se agora"
-                      : "Lista de espera"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-// Componente de newsletter para cursos brevemente
-const NewsletterCursosBrevemente = () => {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast.success(
-        "Inscrito com sucesso! Será notificado quando novos cursos estiverem disponíveis."
-      );
-      setIsSubscribed(true);
-      setEmail("");
-    }
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white">
-      <div className="text-center">
-        <Bell size={48} className="mx-auto mb-4 text-blue-200" />
-        <h3 className="text-2xl font-bold mb-2">Fique por dentro!</h3>
-        <p className="text-blue-100 mb-6">
-          Inscreva-se para ser notificado quando novos cursos estiverem
-          disponíveis
-        </p>
-
-        {!isSubscribed ? (
-          <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
-            <div className="flex">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Seu email"
-                className="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                required
+        <div className="relative">
+          <p
+            className={`text-gray-600 text-sm mb-1 transition-all duration-300 ${
+              isExpanded ? "" : "line-clamp-3"
+            }`}>
+            {curso.descricao || "Sem descrição disponível"}
+          </p>
+          {shouldShowVerMais && (
+            <button
+              className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center mt-2"
+              onClick={() => setIsExpanded((v) => !v)}>
+              {isExpanded ? "Ver menos" : "Ver mais"}
+              <ChevronDown
+                size={16}
+                className={`ml-1 transition-transform duration-200 ${
+                  isExpanded ? "transform rotate-180" : ""
+                }`}
               />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-white text-blue-600 rounded-r-lg font-medium hover:bg-gray-100 transition-colors">
-                Inscrever
-              </button>
-            </div>
-          </form>
-        ) : (
-          <div className="flex items-center justify-center space-x-2 text-green-200">
-            <CheckCircle size={20} />
-            <span>Inscrito com sucesso!</span>
-          </div>
-        )}
+            </button>
+          )}
+        </div>
+
+        {/* Botão de ação principal */}
+        <div className="mt-auto pt-4">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate(destino ?? getDestinoCurso(curso))}
+            className="w-full py-2.5 px-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-[5px] font-medium text-sm hover:shadow-lg hover:shadow-red-100 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600">
+            <span>Ver Detalhes</span>
+            <motion.span
+              animate={{ x: isHovered ? 3 : 0 }}
+              transition={{
+                duration: 0.3,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}>
+              →
+            </motion.span>
+          </motion.button>
+        </div>
       </div>
     </motion.div>
   );
@@ -635,17 +217,18 @@ const NewsletterCursosBrevemente = () => {
 export default function Cursos() {
   const { cursos, carregando, erro } = useCursos();
   const [filtros, setFiltros] = useState<Filtros>({});
-  const [ordenacao, setOrdenacao] = useState("relevancia");
-  const [visualizacao, setVisualizacao] = useState("grid");
-  const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [favoritos, setFavoritos] = useState<string[]>([]);
   const [cursoSelecionado, setCursoSelecionado] = useState<Curso | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [busca, setBusca] = useState("");
+  const { modulos, carregando: carregandoModulos } = useModulos(
+    cursoSelecionado?.id
+  );
+  const navigate = useNavigate();
 
   // Filtrar e ordenar cursos
   const cursosFiltrados = useMemo(() => {
-    let filtrados = cursos.filter((curso: Curso) => {
+    return cursos.filter((curso: Curso) => {
       // Filtro de busca
       if (
         busca &&
@@ -654,58 +237,13 @@ export default function Cursos() {
       ) {
         return false;
       }
-
-      // Filtros avançados
-      if (filtros.precoMin && curso.preco < Number(filtros.precoMin))
-        return false;
-      if (filtros.precoMax && curso.preco > Number(filtros.precoMax))
-        return false;
-      if (filtros.duracaoMin && curso.duracao < Number(filtros.duracaoMin))
-        return false;
-      if (filtros.duracaoMax && curso.duracao > Number(filtros.duracaoMax))
-        return false;
-      if (filtros.nivel && curso.nivel !== filtros.nivel) return false;
-      if (filtros.status && curso.status !== filtros.status) return false;
-      if (filtros.certificado && !curso.certificado) return false;
-      if (filtros.acessoVitalicio && !curso.acessoVitalicio) return false;
-      if (filtros.suporte && !curso.suporte) return false;
-
       return true;
     });
-
-    // Ordenação
-    switch (ordenacao) {
-      case "avaliacao":
-        filtrados.sort((a, b) => b.avaliacao - a.avaliacao);
-        break;
-      case "preco":
-        filtrados.sort((a, b) => a.preco - b.preco);
-        break;
-      case "duracao":
-        filtrados.sort((a, b) => a.duracao - b.duracao);
-        break;
-      case "popularidade":
-        filtrados.sort(
-          (a, b) => (b.visualizacoes || 0) - (a.visualizacoes || 0)
-        );
-        break;
-      default:
-        // Relevância (mantém ordem original)
-        break;
-    }
-
-    return filtrados;
-  }, [cursos, filtros, ordenacao, busca]);
+  }, [cursos, busca]);
 
   // Separar cursos por status
   const cursosDisponiveis = cursosFiltrados.filter(
     (curso: Curso) => curso.status === "disponivel"
-  );
-  const cursosBrevemente = cursosFiltrados.filter(
-    (curso: Curso) => curso.status === "brevemente"
-  );
-  const cursosDesenvolvimento = cursosFiltrados.filter(
-    (curso: Curso) => curso.status === "desenvolvimento"
   );
 
   const handleFavoritar = (cursoId: string) => {
@@ -722,11 +260,55 @@ export default function Cursos() {
     setModalAberto(true);
   };
 
+  // Overrides fixos para os 4 cards exibidos
+  const getCardOverride = (index: number) => {
+    switch (index) {
+      case 0:
+        return {
+          id: "cegid-primavera",
+          titulo: "Cegid Primavera",
+          descricao:
+            "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP.",
+          categoria: "Gestão/ERP",
+          imagemUrl: "/academia/Primavera.jpg",
+        } as Partial<Curso>;
+      case 1:
+        return {
+          id: "programacao-web-frontend",
+          titulo: "Programação Web Frontend",
+          descricao:
+            "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas.",
+          categoria: "Programação",
+          imagemUrl: "/academia/frontend.jpg",
+        } as Partial<Curso>;
+      case 2:
+        return {
+          id: "logica-de-programacao",
+          titulo: "Lógica de Programação",
+          descricao:
+            "Fundamentos: variáveis, decisões, loops e resolução de problemas.",
+          categoria: "Programação",
+          imagemUrl: "/academia/logica.png",
+        } as Partial<Curso>;
+      case 3:
+        return {
+          id: "sql-server",
+          titulo: "SQL Server",
+          descricao:
+            "Consultas SQL, modelagem, procedures, views e administração básica.",
+          categoria: "Banco de Dados",
+          imagemUrl: "/academia/sql.png",
+        } as Partial<Curso>;
+      default:
+        return null;
+    }
+  };
+
   if (carregando) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Carregando cursos...</p>
         </div>
       </div>
@@ -750,238 +332,165 @@ export default function Cursos() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-bold text-gray-900 mb-4">
-            Explore Nossos Cursos
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubra cursos de alta qualidade ministrados por especialistas
-            certificados. Aprenda no seu ritmo e desenvolva habilidades valiosas
-            para o mercado angolano.
-          </motion.p>
-        </div>
-
-        {/* Estatísticas em tempo real */}
-        <EstatisticasTempoReal />
-
-        {/* Barra de ferramentas */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            {/* Busca */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={20}
-                />
-                <input
-                  type="text"
-                  placeholder="Buscar cursos..."
-                  value={busca}
-                  onChange={(e) => setBusca(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            {/* Controles */}
-            <div className="flex items-center space-x-4">
-              {/* Filtros */}
-              <button
-                onClick={() => setMostrarFiltros(!mostrarFiltros)}
-                className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                <Sliders size={16} />
-                <span>Filtros</span>
-                {mostrarFiltros ? (
-                  <ChevronUp size={16} />
-                ) : (
-                  <ChevronDown size={16} />
-                )}
-              </button>
-
-              {/* Ordenação */}
-              <select
-                value={ordenacao}
-                onChange={(e) => setOrdenacao(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="relevancia">Mais relevantes</option>
-                <option value="avaliacao">Melhor avaliados</option>
-                <option value="preco">Menor preço</option>
-                <option value="duracao">Menor duração</option>
-                <option value="popularidade">Mais populares</option>
-              </select>
-
-              {/* Visualização */}
-              <div className="flex border border-gray-300 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setVisualizacao("grid")}
-                  className={`p-2 ${
-                    visualizacao === "grid"
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-50"
-                  }`}>
-                  <Grid3X3 size={16} />
-                </button>
-                <button
-                  onClick={() => setVisualizacao("list")}
-                  className={`p-2 ${
-                    visualizacao === "list"
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-50"
-                  }`}>
-                  <List size={16} />
-                </button>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br mt-[-70px] from-gray-50 to-gray-100 relative overflow-hidden">
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 pt-8 pb-20 sm:px-6 lg:px-8">
+          {/* Cabeçalho */}
+          <div className="text-center mb-12">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Cursos disponíveis
+            </motion.h1>
           </div>
-        </div>
 
-        {/* Filtros avançados */}
-        <FiltrosAvancados
-          filtros={filtros}
-          setFiltros={setFiltros}
-          mostrarFiltros={mostrarFiltros}
-          setMostrarFiltros={setMostrarFiltros}
-        />
-
-        {/* Resultados */}
-        <div className="space-y-8">
-          {/* Cursos Disponíveis */}
-          {cursosDisponiveis.length > 0 && (
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Cursos Disponíveis
-                </h2>
-                <span className="text-sm text-gray-600">
-                  {cursosDisponiveis.length} cursos
-                </span>
-              </div>
-              <div
-                className={`grid gap-6 ${
-                  visualizacao === "grid"
-                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "grid-cols-1"
-                }`}>
-                {cursosDisponiveis.map((curso: Curso) => (
-                  <CursoCard
-                    key={curso.id}
-                    curso={curso}
-                    onFavoritar={handleFavoritar}
-                    onQuickView={handleQuickView}
-                    favoritos={favoritos}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Cursos Brevemente */}
-          {cursosBrevemente.length > 0 && (
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Cursos Brevemente
-                </h2>
-                <span className="text-sm text-gray-600">
-                  {cursosBrevemente.length} cursos
-                </span>
-              </div>
-              <div
-                className={`grid gap-6 ${
-                  visualizacao === "grid"
-                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "grid-cols-1"
-                }`}>
-                {cursosBrevemente.map((curso: Curso) => (
-                  <CursoCard
-                    key={curso.id}
-                    curso={curso}
-                    onFavoritar={handleFavoritar}
-                    onQuickView={handleQuickView}
-                    favoritos={favoritos}
-                  />
-                ))}
-              </div>
-              <div className="mt-8">
-                <NewsletterCursosBrevemente />
-              </div>
-            </section>
-          )}
-
-          {/* Cursos em Desenvolvimento */}
-          {cursosDesenvolvimento.length > 0 && (
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Cursos em Desenvolvimento
-                </h2>
-                <span className="text-sm text-gray-600">
-                  {cursosDesenvolvimento.length} cursos
-                </span>
-              </div>
-              <div
-                className={`grid gap-6 ${
-                  visualizacao === "grid"
-                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "grid-cols-1"
-                }`}>
-                {cursosDesenvolvimento.map((curso: Curso) => (
-                  <CursoCard
-                    key={curso.id}
-                    curso={curso}
-                    onFavoritar={handleFavoritar}
-                    onQuickView={handleQuickView}
-                    favoritos={favoritos}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Nenhum resultado */}
-          {cursosFiltrados.length === 0 && (
-            <div className="text-center py-12">
-              <BookOpen size={64} className="mx-auto text-gray-400 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Nenhum curso encontrado
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Tente ajustar os filtros ou termos de busca.
-              </p>
-              <button
-                onClick={() => {
-                  setFiltros({});
-                  setBusca("");
-                }}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Limpar filtros
-              </button>
+          {/* Lista de Cursos */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {cursosDisponiveis.slice(0, 4).map((curso: Curso, index) => {
+                const override = getCardOverride(index);
+                const cursoCard = override
+                  ? ({ ...curso, ...override } as Curso)
+                  : curso;
+                return (
+                  <motion.div
+                    key={cursoCard.id}
+                    className="h-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 * index }}>
+                    <CursoCard
+                      curso={cursoCard}
+                      onFavoritar={handleFavoritar}
+                      onQuickView={handleQuickView}
+                      favoritos={favoritos}
+                      navigate={navigate}
+                      destino={
+                        index === 0
+                          ? "/academia/curso1"
+                          : index === 1
+                          ? "/academia/curso2"
+                          : index === 2
+                          ? "/academia/curso3"
+                          : index === 3
+                          ? "/academia/curso4"
+                          : `/academia/curso/${cursoCard.id}`
+                      }
+                    />
+                  </motion.div>
+                );
+              })}
             </div>
-          )}
+          </motion.div>
+          {/* Modal Quick View - Conteúdo Programático */}
+          <AnimatePresence>
+            {modalAberto && cursoSelecionado && (
+              <motion.div
+                className="fixed inset-0 z-50 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}>
+                {/* Backdrop com blur */}
+                <div
+                  className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                  onClick={() => setModalAberto(false)}
+                />
+                {/* Card */}
+                <motion.div
+                  className="relative z-10 w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden"
+                  initial={{ scale: 0.95, y: 10, opacity: 0 }}
+                  animate={{ scale: 1, y: 0, opacity: 1 }}
+                  exit={{ scale: 0.95, y: 10, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 22 }}>
+                  <div className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {cursoSelecionado.titulo}
+                        </h3>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Conteúdo Programático
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setModalAberto(false)}
+                        className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
+                        <X size={20} />
+                      </button>
+                    </div>
+                    <div className="mt-4 max-h-96 overflow-y-auto">
+                      {carregandoModulos ? (
+                        <div className="py-10 text-center text-gray-500">
+                          Carregando conteúdo...
+                        </div>
+                      ) : modulos.length === 0 ? (
+                        <div className="py-10 text-center text-gray-500">
+                          Nenhum conteúdo programático disponível.
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {modulos.map((modulo, index) => (
+                            <div key={modulo.id} className="border rounded-lg">
+                              <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <BookOpen
+                                      className="text-blue-600"
+                                      size={16}
+                                    />
+                                  </div>
+                                  <span className="font-medium text-gray-800">
+                                    {modulo.titulo}
+                                  </span>
+                                </div>
+                                {modulo.duracaoTotal && (
+                                  <span className="text-sm text-gray-500">
+                                    {modulo.duracaoTotal}
+                                  </span>
+                                )}
+                              </div>
+                              {modulo.aulas && modulo.aulas.length > 0 && (
+                                <div className="px-4 py-2 text-sm text-gray-700">
+                                  <ul className="list-disc pl-5 space-y-1">
+                                    {modulo.aulas.map((aula) => (
+                                      <li key={aula.id}>{aula.titulo}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-6 flex items-center justify-end gap-3">
+                      <button
+                        onClick={() => setModalAberto(false)}
+                        className="px-4 py-2 rounded-[5px] border border-gray-300 text-gray-700 hover:bg-gray-50">
+                        Fechar
+                      </button>
+                      <button
+                        onClick={() => {
+                          setModalAberto(false);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                        className="px-4 py-2 rounded-[5px] bg-gradient-to-r from-red-500 to-red-600 text-white font-medium hover:shadow-lg border border-red-600">
+                        Inscrever-se
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-
-      {/* Modal de visualização rápida */}
-      <QuickViewModal
-        curso={cursoSelecionado}
-        isOpen={modalAberto}
-        onClose={() => {
-          setModalAberto(false);
-          setCursoSelecionado(null);
-        }}
-      />
     </div>
   );
 }
