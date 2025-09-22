@@ -375,14 +375,14 @@ const Academia = () => {
             </div>
 
             {/* Card Fixo de Inscrição */}
-            <div className="lg:w-1/3">
+            <div className="lg:w-1/4 ml-24">
               <div className="sticky top-6 bg-white rounded-[5px] shadow-lg overflow-hidden border border-gray-200">
                 <div className="bg-red-700 text-white p-6 text-center">
                   <h3 className="text-2xl font-bold mb-2">Cegid Primavera</h3>
                   <p className="text-lg">Inscrições Abertas</p>
                 </div>
                 <div className="p-6 space-y-6">
-                  <CourseFeature icon="clock" text="Duração: 6 meses" />
+                  <CourseFeature icon="clock" text="Duração: 2 Semanas" />
                   <CourseFeature icon="book" text="10 módulos completos" />
                   <CourseFeature icon="video" text="4 horas de Aulas" />
                   <CourseFeature
@@ -392,8 +392,8 @@ const Academia = () => {
 
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg 
-    transition duration-300 transform hover:scale-105">
+                    className="w-[300px] bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-[5px]
+    transition duration-300 transform hover:scale-105 ml-3">
                     Inscrever-me no Curso
                   </button>
 
