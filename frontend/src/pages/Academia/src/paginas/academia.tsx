@@ -392,18 +392,18 @@ const Academia = () => {
                   <h3 className="text-2xl font-bold mb-2">Cegid Primavera</h3>
                   <p className="text-lg">Inscrições Abertas</p>
                 </div>
-                <div className="p-6 space-y-6">
+                <div className="p-6 space-y-3">
                   <CourseFeature icon="clock" text="Duração: 2 Semanas" />
                   <CourseFeature icon="book" text="10 módulos completos" />
-                  <CourseFeature icon="video" text="4 horas de Aulas" />
+                  <CourseFeature icon="video" text="Material de apoio" />
                   <CourseFeature
                     icon="certificate"
                     text="Certificado oficial"
                   />
-
+                  <div></div>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-[300px] bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-[5px]
+                    className="w-[300px] bg-red-600 hover:bg-red-700 text-white font-bold mt-12 py-4 px-6 rounded-[5px]
     transition duration-300 transform hover:scale-105 ml-3">
                     Inscrever-me no Curso
                   </button>
