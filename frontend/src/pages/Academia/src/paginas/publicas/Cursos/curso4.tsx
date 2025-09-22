@@ -107,7 +107,7 @@ export default function Curso4() {
     categoria: "Banco de Dados",
     descricao:
       "Consultas SQL, modelagem, procedures, views e administração básica no SQL Server.",
-    duracao: 14,
+    duracao: 3,
     nivel: "Intermediário" as any,
     requisitos: ["Lógica de programação"],
     imagemUrl: undefined,
@@ -717,7 +717,7 @@ export default function Curso4() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {cursoExibir.duracao || "N/A"} horas
+                      {cursoExibir.duracao || "N/A"} Semanas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">

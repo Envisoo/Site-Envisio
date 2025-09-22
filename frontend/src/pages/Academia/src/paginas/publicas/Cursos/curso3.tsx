@@ -109,7 +109,7 @@ export default function Curso3() {
     categoria: "Programação",
     descricao:
       "Aprenda fundamentos: variáveis, estruturas de decisão, loops e decomposição de problemas.",
-    duracao: 16 as any,
+    duracao: 6 as any,
     nivel: "iniciante" as any,
     requisitos: ["Vontade de aprender"],
     imagemUrl: undefined,
@@ -621,7 +621,7 @@ export default function Curso3() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {cursoExibir.duracao || "N/A"} horas
+                      {cursoExibir.duracao || "N/A"} Semanas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">

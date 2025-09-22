@@ -81,7 +81,7 @@ export default function CursoDetalhe() {
     descricao:
       "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas.",
     categoria: "Programação",
-    duracao: 20,
+    duracao: 2,
     nivel: "iniciante",
     imagemUrl: "",
     requisitos: ["Computador e internet"],
@@ -766,7 +766,7 @@ export default function CursoDetalhe() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {curso.duracao || "N/A"} horas
+                      {curso.duracao || "N/A"} Semanas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
