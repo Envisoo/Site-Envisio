@@ -44,6 +44,7 @@ import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
 } from "../../../data/Modulo";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Avaliacao {
   id: string;
@@ -77,7 +78,7 @@ export default function CursoDetalhe() {
   // Fallback local para rota fixa (sem :id)
   const cursoLocal: Curso = {
     id: "cegid-primavera",
-    titulo: "Cegid Primavera",
+    titulo: "Cegid Primavera: Funcionalidades e Módulos",
     descricao:
       "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP para empresas.",
     categoria: "Gestão/ERP",
@@ -423,7 +424,7 @@ export default function CursoDetalhe() {
     },
     {
       id: "m1-10",
-      titulo: "Módulo 10: Caso Prático Final",
+      titulo: "Módulo 10: Caso Prático",
       duracaoTotal: "",
       aulas: [
         {
@@ -472,18 +473,18 @@ export default function CursoDetalhe() {
   return (
     <div className="bg-gray-50 ">
       {/* Banner */}
-      <section className="relative bg-gradient-to-r h-[500px] from-gray-800 to-gray-500 text-white mt-[-75px]  pt-10">
-        <div className="max-w-6xl mx-auto px-4">
+
+      <section className="relative h-[500px]  text-white mt-[-80px]">
+        <div className=" max-w-6xl mx-auto px-4 absolute inset-0 z-10">
           <button
             onClick={() => navigate("/academia/cursos")}
-            className="flex items-center text-white hover:text-blue-200 mb-8 transition-colors">
+            className="flex items-center text-white hover:text-blue-200 mb-8 mt-12 transition-colors">
             <ArrowLeft className="mr-2" size={20} />
             Voltar para Cursos
           </button>
-
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-1">
-              <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4">
+              <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-[5px] text-sm font-medium mb-4">
                 {cursoExibir.categoria || "Desenvolvimento"}
               </span>
               <h1 className="text-3xl mt-6 md:text-5xl text-white font-bold mb-4">
@@ -496,13 +497,19 @@ export default function CursoDetalhe() {
               <div className="mt-12 flex flex-wrap gap-4">
                 <button
                   onClick={() => setModalInscricaoAberto(true)} // Open the FormularioInscricao modal
-                  className="bg-red-500 hover:bg-red-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                  className="bg-gray-600  text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
                 </button>
               </div>
             </div>
           </div>
         </div>
+
+        <img
+          src="/academia/pagina home/detalhe.webp"
+          alt="Banner Serviços de Hardware"
+          className="w-full h-full object-cover"
+        />
       </section>
 
       {/* Conteúdo Principal */}
@@ -655,7 +662,7 @@ export default function CursoDetalhe() {
                   }
                 </p>
               </div>
-
+              {/* Informações do Curso */}
               {/* Informações do Curso */}
               <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">
@@ -665,24 +672,122 @@ export default function CursoDetalhe() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {cursoExibir.duracao || "N/A"} Semanas
+                      {curso?.duracao || "N/A"} Semanas
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Nível</span>
                     <span className="font-medium">
-                      {cursoExibir.nivel || "Todos"}
+                      {curso?.nivel || "Todos"}
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Idioma</span>
                     <span className="font-medium">Português</span>
                   </li>
-                  <li className="flex justify-between text-sm">
-                    <span className="text-gray-500">Certificado</span>
-                    <span className="font-medium text-green-600">Incluso</span>
-                  </li>
                 </ul>
+              </div>
+
+              <div className="bg-white rounded-[5px] shadow-sm p-6 mt-6 border border-gray-100">
+                <h3 className="font-semibold text-lg mb-4">
+                  O que este curso inclui
+                </h3>
+                <div className="space-y-4">
+                  {/* Certificado */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
+                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Award className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        Certificado de conclusão
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Receba um certificado reconhecido ao completar o curso
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Suporte */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100">
+                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Headphones className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        Suporte do instrutor
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Tire dúvidas diretamente com especialistas
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Material */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
+                    <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <FileText className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        Material complementar
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Slides, PDFs e recursos extras para apoio à aula
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Exercícios */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100">
+                    <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Play className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        Exercícios práticos
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Atividades hands-on para fixar o aprendizado
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Casos reais */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100">
+                    <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Users className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        Casos de uso reais
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Exemplos práticos do mercado de trabalho
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Conteúdo do curso */}
+                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 mt-6">
+                    <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <BookOpen className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-base">
+                        {modulosFonte.length} módulos completos
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {modulosFonte.reduce(
+                          (total, modulo) =>
+                            total + (modulo.aulas?.length || 0),
+                          0
+                        )}{" "}
+                        aulas em total • Acesso vitalício
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

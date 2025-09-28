@@ -286,7 +286,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    className="w-full bg-gray-600 text-white py-3 px-4 rounded-[5px] transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     {loading ? (
                       <span className="flex items-center justify-center">
                         <svg

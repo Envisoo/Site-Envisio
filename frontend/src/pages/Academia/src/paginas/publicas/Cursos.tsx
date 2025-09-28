@@ -26,6 +26,11 @@ import {
   ChevronUp,
   Sliders,
   BarChart3,
+  Share2,
+  ArrowRight,
+  Bookmark,
+  User,
+  BarChart,
 } from "lucide-react";
 import { useCursos } from "../../hooks/useCursos";
 import { Curso } from "../../tipos/Curso";
@@ -66,8 +71,9 @@ const CursoCard = ({
   const isFavorito = favoritos.includes(curso.id);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+
   // Show the "Ver mais" button only if the description is long enough
-  const shouldShowVerMais = (curso?.descricao?.length ?? 0) > 140;
+  const shouldShowVerMais = (curso?.descricao?.length ?? 0) > 120;
 
   // Destino customizado para cursos específicos
   const getDestinoCurso = (c: Curso) => {
@@ -75,7 +81,7 @@ const CursoCard = ({
       .toLowerCase()
       .trim();
     const titulo = String((c as any)?.titulo ?? "").toLowerCase();
-    // Ajuste as condições conforme o seu dado real
+
     if (
       id === "react-completo" ||
       titulo.includes("react completo") ||
@@ -94,29 +100,28 @@ const CursoCard = ({
     return `/academia/curso/${c.id}`;
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "disponivel":
-        return "bg-red-100 text-red-800";
-      case "brevemente":
-        return "bg-amber-100 text-amber-800";
-      case "desenvolvimento":
-        return "bg-blue-100 text-blue-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const shareUrl = `${window.location.origin}/academia/curso/${curso.id}`;
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "disponivel":
-        return "Disponível";
-      case "brevemente":
-        return "Em Breve";
-      case "desenvolvimento":
-        return "Em Desenvolvimento";
-      default:
-        return "Indisponível";
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: curso.titulo,
+          text: curso.descricao || "Confira este curso incrível!",
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error("Erro ao compartilhar:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        toast.success("Link copiado para a área de transferência!");
+      } catch (err) {
+        console.error("Erro ao copiar link:", err);
+        toast.error("Não foi possível copiar o link");
+      }
     }
   };
 
@@ -126,62 +131,97 @@ const CursoCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       whileHover={{
-        y: -5,
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        y: -8,
+        scale: 1.02,
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
       }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="relative bg-white rounded-[5px] overflow-hidden group cursor-pointer flex flex-col h-full border border-gray-100 hover:shadow-md transition-shadow duration-300"
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="relative bg-white rounded-[5px] overflow-hidden group cursor-pointer flex flex-col h-full border border-gray-300/80 hover:border-gray-300 transition-all duration-500 backdrop-blur-sm"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      {/* Imagem do curso sem overlay */}
-      <div className="relative h-48 overflow-hidden flex-shrink-0">
+      {/* Imagem do curso com overlay gradiente */}
+      <div className="relative h-52 overflow-hidden flex-shrink-0">
         <motion.img
           src={
             curso.imagemUrl ||
-            "https://source.unsplash.com/random/400x300/?course"
+            "https://source.unsplash.com/random/400x300/?course,technology"
           }
           alt={curso.titulo}
-          className="w-full h-full object-cover transform transition-transform duration-500"
+          className="w-full h-full  object-cover transform transition-transform duration-700"
           animate={{
-            scale: isHovered ? 1.05 : 1,
+            scale: isHovered ? 1.1 : 1,
           }}
         />
-
+        {/* Categoria */}
+        {curso.categoria && (
+          <div className="absolute top-4 left-4 z-20">
+            <span className="px-3 py-1.5 rounded-[5px] text-xs font-semibold bg-gray-200 backdrop-blur-sm text-gray-800 border border-white/20 shadow-lg">
+              {curso.categoria}
+            </span>
+          </div>
+        )}
+        {/* Botões de ação na imagem */}
+        <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleShare}
+            className="p-2 bg-white/95 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 group/share"
+            aria-label="Compartilhar curso">
+            <Share2
+              size={16}
+              className="text-gray-700 group-hover/share:text-blue-600 transition-colors"
+            />
+          </motion.button>
+        </div>
         {/* Badge de status */}
-        <div className="absolute top-4 left-4 z-20">
+
+        <div className="absolute bottom-4 left-4 z-20">
           <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-              curso.status
-            )}`}>
-            {getStatusText(curso.status)}
+            className={`px-2 py-1 rounded-[5px] text-xs font-medium text-white backdrop-blur-sm ${
+              curso.status === "disponivel"
+                ? "bg-green-500/90"
+                : curso.status === "breve"
+                ? "bg-amber-500/90"
+                : "bg-red-500/90"
+            }`}>
+            {curso.status === "disponivel"
+              ? "Disponível"
+              : curso.status === "breve"
+              ? "Em Breve"
+              : "Indisponível"}
           </span>
         </div>
       </div>
 
       {/* Conteúdo do card */}
       <div className="p-6 flex flex-col flex-grow">
+        {/* Título */}
         <h3
           onClick={() => navigate(destino ?? getDestinoCurso(curso))}
-          className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-red-600 transition-colors mb-2">
+          className="text-xl font-bold text-gray-900 line-clamp-2 transition-colors mb-3 group-hover:text-gray-700 leading-tight">
           {curso.titulo}
         </h3>
 
-        <div className="relative">
+        {/* Descrição */}
+        <div className="flex-grow">
           <p
-            className={`text-gray-600 text-sm mb-1 transition-all duration-300 ${
+            className={`text-gray-600 text-sm mb-3 transition-all duration-300 leading-relaxed ${
               isExpanded ? "" : "line-clamp-3"
             }`}>
             {curso.descricao || "Sem descrição disponível"}
           </p>
           {shouldShowVerMais && (
             <button
-              className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center mt-2"
-              onClick={() => setIsExpanded((v) => !v)}>
+              className="text-gray-600 hover:text-gray-700 text-sm font-medium flex items-center transition-colors group/vermais"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded((v) => !v);
+              }}>
               {isExpanded ? "Ver menos" : "Ver mais"}
               <ChevronDown
                 size={16}
-                className={`ml-1 transition-transform duration-200 ${
+                className={`ml-1 transition-transform duration-200 group-hover/vermais:translate-y-0.5 ${
                   isExpanded ? "transform rotate-180" : ""
                 }`}
               />
@@ -189,22 +229,24 @@ const CursoCard = ({
           )}
         </div>
 
+        {/* Metadados */}
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pt-3 border-t border-gray-100">
+          <div className="flex items-center space-x-4"></div>
+        </div>
+
         {/* Botão de ação principal */}
-        <div className="mt-auto pt-4">
+        <div className="mt-auto">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate(destino ?? getDestinoCurso(curso))}
-            className="w-full py-2.5 px-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-[5px] font-medium text-sm hover:shadow-lg hover:shadow-red-100 transition-all duration-300 flex items-center justify-center space-x-2 border border-red-600">
-            <span>Ver Detalhes</span>
+            className="w-full py-3 px-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-[5px] font-semibold text-sm hover:shadow-2xl hover:shadow-gray-900/25 transition-all duration-300 flex items-center justify-center space-x-2 group/btn border border-gray-800">
+            <span>Explorar Curso</span>
             <motion.span
-              animate={{ x: isHovered ? 3 : 0 }}
-              transition={{
-                duration: 0.3,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}>
-              →
+              animate={{ x: isHovered ? 4 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="group-hover/btn:translate-x-1 transition-transform">
+              <ArrowRight size={16} />
             </motion.span>
           </motion.button>
         </div>
@@ -266,10 +308,11 @@ export default function Cursos() {
       case 0:
         return {
           id: "cegid-primavera",
-          titulo: "Cegid Primavera",
+          titulo: "Cegid Primavera: Funcionalidades e Módulos",
           descricao:
-            "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP.",
+            "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP. Aprenda desde os fundamentos até técnicas avançadas de gestão empresarial.",
           categoria: "Gestão/ERP",
+          status: "disponivel",
           imagemUrl: "/academia/Primavera.jpg",
         } as Partial<Curso>;
       case 1:
@@ -277,8 +320,9 @@ export default function Cursos() {
           id: "programacao-web-frontend",
           titulo: "Programação Web Frontend",
           descricao:
-            "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas.",
+            "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas e as melhores ferramentas do mercado atual.",
           categoria: "Programação",
+          status: "breve",
           imagemUrl: "/academia/frontend.jpg",
         } as Partial<Curso>;
       case 2:
@@ -286,8 +330,9 @@ export default function Cursos() {
           id: "logica-de-programacao",
           titulo: "Lógica de Programação",
           descricao:
-            "Fundamentos: variáveis, decisões, loops e resolução de problemas.",
+            "Fundamentos essenciais: variáveis, decisões, loops e resolução de problemas. Prepare-se para qualquer linguagem de programação.",
           categoria: "Programação",
+          status: "breve",
           imagemUrl: "/academia/logica.png",
         } as Partial<Curso>;
       case 3:
@@ -295,8 +340,9 @@ export default function Cursos() {
           id: "sql-server",
           titulo: "SQL Server",
           descricao:
-            "Consultas SQL, modelagem, procedures, views e administração básica.",
+            "Consultas SQL, modelagem, procedures, views e administração básica. Domine um dos bancos de dados mais utilizados no mercado.",
           categoria: "Banco de Dados",
+          status: "breve",
           imagemUrl: "/academia/sql.png",
         } as Partial<Curso>;
       default:
@@ -306,10 +352,14 @@ export default function Cursos() {
 
   if (carregando) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando cursos...</p>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="rounded-full h-16 w-16 border-4 border-gray-600 border-t-transparent mx-auto mb-4"
+          />
+          <p className="text-gray-600 font-medium">Carregando cursos...</p>
         </div>
       </div>
     );
@@ -317,40 +367,59 @@ export default function Cursos() {
 
   if (erro) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 mb-4">
-            <BookOpen size={48} className="mx-auto" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8">
+          <div className="text-red-500 mb-6">
+            <BookOpen size={64} className="mx-auto opacity-80" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Erro ao carregar cursos
           </h2>
-          <p className="text-gray-600">Tente novamente mais tarde.</p>
+          <p className="text-gray-600 mb-6">
+            Não foi possível carregar os cursos neste momento. Por favor, tente
+            novamente mais tarde.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-gray-800 text-white rounded-[5px] font-medium hover:bg-gray-900 transition-colors">
+            Tentar Novamente
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br mt-[-70px] from-gray-50 to-gray-100 relative overflow-hidden">
-      <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 pt-8 pb-20 sm:px-6 lg:px-8">
-          {/* Cabeçalho */}
-          <div className="text-center mb-12">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Cursos disponíveis
-            </motion.h1>
+    <div className="bg-gradient-to-br mt-[-100px] from-gray-50 via-blue-50/30 to-gray-100  overflow-hidden">
+      <div className="relative">
+        {/* Cabeçalho Hero */}
+        <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="/academia/pagina home/detalhe.webp"
+              alt="Banner Cursos"
+              className="w-full h-full object-cover"
+            />
           </div>
 
+          {/* Conteúdo sobreposto */}
+          <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 lg:px-24 text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold mb-4 leading-tight max-w-3xl">
+              Transforme sua carreira com nossos cursos
+            </h1>
+            <p className="text-lg md:text-xl text-white mb-8 max-w-2xl">
+              Aprenda com especialistas e domine as habilidades mais demandadas
+              do mercado atual.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4"></div>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 pt-20 pb-20 sm:px-6 lg:px-8">
           {/* Lista de Cursos */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {cursosDisponiveis.slice(0, 4).map((curso: Curso, index) => {
@@ -364,7 +433,7 @@ export default function Cursos() {
                     className="h-full"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.1 * index }}>
+                    transition={{ duration: 0.5, delay: 0.1 * index }}>
                     <CursoCard
                       curso={cursoCard}
                       onFavoritar={handleFavoritar}
@@ -388,109 +457,132 @@ export default function Cursos() {
               })}
             </div>
           </motion.div>
-          {/* Modal Quick View - Conteúdo Programático */}
-          <AnimatePresence>
-            {modalAberto && cursoSelecionado && (
-              <motion.div
-                className="fixed inset-0 z-50 flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}>
-                {/* Backdrop com blur */}
-                <div
-                  className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                  onClick={() => setModalAberto(false)}
-                />
-                {/* Card */}
-                <motion.div
-                  className="relative z-10 w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden"
-                  initial={{ scale: 0.95, y: 10, opacity: 0 }}
-                  animate={{ scale: 1, y: 0, opacity: 1 }}
-                  exit={{ scale: 0.95, y: 10, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 22 }}>
-                  <div className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900">
-                          {cursoSelecionado.titulo}
-                        </h3>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Conteúdo Programático
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => setModalAberto(false)}
-                        className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
-                        <X size={20} />
-                      </button>
+          {/* Call to Action */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-center mt-16"></motion.div>
+        </div>
+      </div>
+
+      {/* Modal Quick View */}
+      <AnimatePresence>
+        {modalAberto && cursoSelecionado && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
+            {/* Backdrop com blur */}
+            <div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setModalAberto(false)}
+            />
+
+            {/* Card do Modal */}
+            <motion.div
+              className="relative z-10 w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden"
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+              <div className="p-8">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {cursoSelecionado.titulo}
+                    </h3>
+                    <p className="text-gray-500 mt-2">
+                      Conteúdo Programático Detalhado
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setModalAberto(false)}
+                    className="p-2 text-gray-500 hover:text-gray-700 rounded-xl hover:bg-gray-100 transition-colors">
+                    <X size={24} />
+                  </button>
+                </div>
+
+                <div className="max-h-96 overflow-y-auto">
+                  {carregandoModulos ? (
+                    <div className="py-12 text-center text-gray-500">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600 mx-auto mb-4"></div>
+                      Carregando conteúdo...
                     </div>
-                    <div className="mt-4 max-h-96 overflow-y-auto">
-                      {carregandoModulos ? (
-                        <div className="py-10 text-center text-gray-500">
-                          Carregando conteúdo...
-                        </div>
-                      ) : modulos.length === 0 ? (
-                        <div className="py-10 text-center text-gray-500">
-                          Nenhum conteúdo programático disponível.
-                        </div>
-                      ) : (
-                        <div className="space-y-3">
-                          {modulos.map((modulo, index) => (
-                            <div key={modulo.id} className="border rounded-lg">
-                              <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <BookOpen
-                                      className="text-blue-600"
-                                      size={16}
-                                    />
-                                  </div>
-                                  <span className="font-medium text-gray-800">
-                                    {modulo.titulo}
-                                  </span>
-                                </div>
+                  ) : modulos.length === 0 ? (
+                    <div className="py-12 text-center text-gray-500">
+                      <BookOpen size={48} className="mx-auto mb-4 opacity-50" />
+                      Nenhum conteúdo programático disponível no momento.
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {modulos.map((modulo, index) => (
+                        <motion.div
+                          key={modulo.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 transition-colors">
+                          <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-gray-100/50 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                                <BookOpen className="text-blue-600" size={18} />
+                              </div>
+                              <div>
+                                <span className="font-semibold text-gray-900">
+                                  {modulo.titulo}
+                                </span>
                                 {modulo.duracaoTotal && (
-                                  <span className="text-sm text-gray-500">
-                                    {modulo.duracaoTotal}
+                                  <span className="text-sm text-gray-500 ml-3">
+                                    • {modulo.duracaoTotal}
                                   </span>
                                 )}
                               </div>
-                              {modulo.aulas && modulo.aulas.length > 0 && (
-                                <div className="px-4 py-2 text-sm text-gray-700">
-                                  <ul className="list-disc pl-5 space-y-1">
-                                    {modulo.aulas.map((aula) => (
-                                      <li key={aula.id}>{aula.titulo}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
                             </div>
-                          ))}
-                        </div>
-                      )}
+                            <ChevronDown size={18} className="text-gray-400" />
+                          </div>
+
+                          {modulo.aulas && modulo.aulas.length > 0 && (
+                            <div className="px-6 py-4 bg-white">
+                              <ul className="space-y-3">
+                                {modulo.aulas.map((aula) => (
+                                  <li
+                                    key={aula.id}
+                                    className="flex items-center gap-3 text-sm text-gray-700">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                                    <span>{aula.titulo}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </motion.div>
+                      ))}
                     </div>
-                    <div className="mt-6 flex items-center justify-end gap-3">
-                      <button
-                        onClick={() => setModalAberto(false)}
-                        className="px-4 py-2 rounded-[5px] border border-gray-300 text-gray-700 hover:bg-gray-50">
-                        Fechar
-                      </button>
-                      <button
-                        onClick={() => {
-                          setModalAberto(false);
-                          window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
-                        className="px-4 py-2 rounded-[5px] bg-gradient-to-r from-red-500 to-red-600 text-white font-medium hover:shadow-lg border border-red-600">
-                        Inscrever-se
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+                  )}
+                </div>
+
+                <div className="mt-8 flex items-center justify-end gap-4">
+                  <button
+                    onClick={() => setModalAberto(false)}
+                    className="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                    Fechar
+                  </button>
+                  <button
+                    onClick={() => {
+                      setModalAberto(false);
+                      navigate(`/academia/curso/${cursoSelecionado.id}`);
+                    }}
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold hover:shadow-lg transition-all duration-300">
+                    Acessar Curso
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

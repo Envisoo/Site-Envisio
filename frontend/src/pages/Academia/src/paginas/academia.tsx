@@ -110,7 +110,7 @@ const Academia = () => {
   };
 
   return (
-    <section className="bg-gray-50 mt-[-80px]">
+    <section className="bg-gray-50 w-full mt-[-80px]">
       <div className="relative">
         {/* Full-screen banner */}
         <div className="relative w-full h-[430px] sm:h-[400px] md:h-[500px] lg:h-[500px] xl:h-[600px]">
@@ -221,73 +221,13 @@ const Academia = () => {
       </div>
 
       {/* Segunda Seção - Flyer Promocional */}
-      <div className="py-16 h-[600px] bg-gradient-to-r from-red-800 via-red-700 to-red-700 text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="md:w-1/2 text-center md:text-left">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-3xl md:text-4xl font-bold mb-6">
-                Cegid Primavera
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-xl mb-8">
-                Aprenda a dominar o ERP mais utilizado em Angola e Portugal para
-                gestão empresarial completa
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="space-y-4">
-                <div className="flex flex-col md:flex-row justify-center md:justify-between gap-4">
-                  <div className="flex items-center justify-center md:justify-start">
-                    <svg
-                      className="w-6 h-6 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                    <span>Solução ERP Completa</span>
-                  </div>
-                  <div className="flex items-center justify-center md:justify-start">
-                    <svg
-                      className="w-6 h-6 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                    </svg>
-                    <span>Módulos Práticos</span>
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row justify-center md:justify-between gap-4">
-                  <div className="flex items-center justify-center md:justify-start">
-                    <svg
-                      className="w-6 h-6 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20">
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>
-                    <span>Material de Apoio</span>
-                  </div>
-                  <div className="flex items-center justify-center md:justify-start">
-                    <svg
-                      className="w-6 h-6 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                    <span>Certificado Oficial</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
+      <div className="relative w-full aspect-video">
+        <img
+          src="/academia/pagina home/banner1.webp"
+          alt="Banner Academia Envisio"
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
 
       {/* Terceira Seção - Conteúdo Programático */}
@@ -377,7 +317,7 @@ const Academia = () => {
                 className="mt-8  text-center">
                 <Link
                   to="/academia/curso1"
-                  className="inline-flex justify-center items-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-[5px] transition duration-300 transform hover:scale-105 shadow-lg">
+                  className="inline-flex justify-center items-center px-4 py-3  bg-gray-600  text-white font-semibold rounded-[5px] transition duration-300 transform hover:scale-105 shadow-lg">
                   <svg
                     className="w-5 h-5 mr-2"
                     fill="none"
@@ -410,9 +350,13 @@ const Academia = () => {
             {/* Card Fixo de Inscrição */}
             <div className="lg:w-1/4 md:ml-24">
               <div className="sticky top-6 bg-white rounded-[5px] shadow-lg overflow-hidden border border-gray-200">
-                <div className="bg-red-700 text-white p-6 text-center">
-                  <h3 className="text-2xl font-bold mb-2">Cegid Primavera</h3>
-                  <p className="text-lg">Inscrições Abertas</p>
+                <div className="relative w-full">
+                  <img
+                    src="/academia/pagina home/inscricao.webp"
+                    alt="Banner Academia Envisio"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="p-4 space-y- ">
                   <div className="flex flex-col  justify-center  gap-4">
@@ -427,12 +371,12 @@ const Academia = () => {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-full md:w-full bg-red-600 hover:bg-red-700 text-white font-bold mt-8 md:mt-12 py-4 px-6 rounded-[5px]
-    transition duration-300 transform hover:scale-105">
+                    className="w-full md:w-full bg-gray-600 text-white font-bold mt-8 md:mt-12 py-4 px-6 rounded-[5px]
+     transition duration-300 transform hover:scale-105">
                     Inscrever-me no Curso
                   </button>
 
-                  <p className="text-center text-sm text-gray-500">
+                  <p className="text-center text-sm text-black-400">
                     Vagas limitadas
                   </p>
                 </div>
@@ -609,7 +553,7 @@ const Academia = () => {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-[5px] shadow-sm text-sm font-medium text-white bg-gray-600 « focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
                         {loading ? "Enviando..." : "Enviar Inscrição"}
                       </button>
                     </div>
