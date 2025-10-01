@@ -83,7 +83,7 @@ export default function CursoDetalhe() {
     id: "cegid-primavera",
     titulo: "Cegid Primavera: Funcionalidades e Módulos",
     descricao:
-      "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP para empresas.",
+      "Aprenda a dominar o ERP mais utilizado em Angola e Portugal para gestão empresarial completa.",
     categoria: "Gestão/ERP",
     duracao: 2 as any,
     horas: "130" as any,
