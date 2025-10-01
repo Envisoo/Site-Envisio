@@ -1,20 +1,26 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaLaptopCode, FaBookOpen, FaFileAlt, FaAward } from "react-icons/fa";
+import { Curso } from "../tipos";
 
 const Academia = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
+    sobrenome: "",
     email: "",
     telefone: "",
     empresa: "",
     mensagem: "",
+    turno: "",
   });
+  const [fileNames, setFileNames] = useState<string[]>([]);
+  const [arquivos, setArquivos] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -22,7 +28,7 @@ const Academia = () => {
 
   useEffect(() => {
     const updateClock = () => setCurrentTime(new Date());
-    updateClock(); // Update immediately
+    updateClock();
     const timer = setInterval(updateClock, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -44,48 +50,62 @@ const Academia = () => {
     });
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setArquivos(e.target.files);
+      setFileNames(Array.from(e.target.files).map((file) => file.name));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    // Validate required fields
-    if (!formData.nome.trim() || !formData.email.trim()) {
+    if (
+      !formData.nome ||
+      !formData.sobrenome ||
+      !formData.email ||
+      !formData.turno
+    ) {
       setError("Por favor, preencha todos os campos obrigatórios.");
       setLoading(false);
       return;
     }
 
+    if (!arquivos || arquivos.length === 0) {
+      setError("Por favor, anexe pelo menos um ficheiro PDF.");
+      setLoading(false);
+      return;
+    }
+
+    const invalidFiles = Array.from(arquivos).some(
+      (file) => file.type !== "application/pdf"
+    );
+    if (invalidFiles) {
+      setError("Apenas ficheiros PDF são permitidos.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Format the email body to include all relevant information
-      const emailBody = `
-        Nova inscrição no curso Cegid Primavera:
-        
-        Nome: ${formData.nome}
-        Email: ${formData.email}
-        Telefone: ${formData.telefone || "Não informado"}
-        Empresa: ${formData.empresa || "Não informada"}
-        
-        Mensagem:
-        ${formData.mensagem || "Nenhuma mensagem adicional."}
-      `;
+      const formDataToSend = new FormData();
 
-      // Create a new object with only the necessary data
-      const emailData = {
-        name: formData.nome,
-        email: formData.email,
-        phone: formData.telefone,
-        empresa: formData.empresa,
-        message: formData.mensagem,
-        subject: `Nova Inscrição Cegid Primavera - ${formData.nome}`,
-        text: emailBody,
-        area: "Inscrição Cegid Primavera",
-        tipoCliente: "Aluno",
-      };
+      // Append form data
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
 
-      console.log("Enviando dados:", emailData); // Debug log
+      // Append files
+      Array.from(arquivos).forEach((file) => {
+        formDataToSend.append(`arquivos`, file);
+      });
 
-      await axios.post("http://localhost:8080/api/email", emailData);
+      await axios.post("http://localhost:8080/api/email", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setSuccess(true);
       setTimeout(() => {
@@ -93,11 +113,15 @@ const Academia = () => {
         setSuccess(false);
         setFormData({
           nome: "",
+          sobrenome: "",
           email: "",
           telefone: "",
           empresa: "",
           mensagem: "",
+          turno: "",
         });
+        setFileNames([]);
+        setArquivos(null);
       }, 3000);
     } catch (error) {
       console.error("Erro ao enviar inscrição:", error);
@@ -108,6 +132,41 @@ const Academia = () => {
       setLoading(false);
     }
   };
+
+  const toggleModule = (index: number) => {
+    setOpenModuleIndex(openModuleIndex === index ? null : index);
+  };
+
+  const features = [
+    {
+      text: "Solução ERP Completa",
+      icon: <FaLaptopCode className="text-white" />,
+    },
+    {
+      text: "Módulos Práticos",
+      icon: <FaBookOpen className="text-white" />,
+    },
+    {
+      text: "Material de Apoio",
+      icon: <FaFileAlt className="text-white" />,
+    },
+    {
+      text: "Certificado Oficial",
+      icon: <FaAward className="text-white" />,
+    },
+  ];
+
+  // Fallback local para rota fixa (sem :id)
+  const cursoLocal: Curso = {
+    id: "cegid-primavera",
+    titulo: "Cegid Primavera: Funcionalidades e Módulos",
+    descricao:
+      "Aprenda a dominar o ERP mais utilizado em Angola e Portugal para gestão empresarial completa.",
+    imagemUrl: "",
+    requisitos: ["Nenhum requisito"],
+  } as unknown as Curso;
+
+  const cursoExibir = cursoLocal as Curso as Curso;
 
   return (
     <section className="bg-gray-50 w-full mt-[-80px]">
@@ -221,14 +280,26 @@ const Academia = () => {
       </div>
 
       {/* Segunda Seção - Flyer Promocional */}
-      <div className="relative w-full aspect-video">
+      <section className="relative h-[550px]  text-white ">
+        <div className=" max-w-6xl mx-auto px-4 absolute inset-0 z-10">
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            <div className="flex-1">
+              <h1 className="text-3xl md:text-5xl text-white font-bold mt-[20%]">
+                {cursoExibir.titulo}
+              </h1>
+              <p className="text-lg mt-4 text-white max-w-4xl mb-6">
+                {cursoExibir.descricao}
+              </p>
+            </div>
+          </div>
+        </div>
+
         <img
-          src="/academia/pagina home/banner1.webp"
-          alt="Banner Academia Envisio"
+          src="/academia/pagina home/detalhe.webp"
+          alt="Banner Serviços de Hardware"
           className="w-full h-full object-cover"
-          loading="lazy"
         />
-      </div>
+      </section>
 
       {/* Terceira Seção - Conteúdo Programático */}
       <div className="relative py-16 bg-gradient-to-br from-gray-50 to-gray-100">
@@ -330,7 +401,7 @@ const Academia = () => {
                       d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                     />
                   </svg>
-                  Ver Curso
+                  Mais detalhes do curso
                   <svg
                     className="w-5 h-5 ml-2"
                     fill="none"
@@ -376,9 +447,13 @@ const Academia = () => {
                     Inscrever-me no Curso
                   </button>
 
-                  <p className="text-center text-sm text-black-400">
-                    Vagas limitadas
-                  </p>
+                  <a
+                    href="https://wa.me/244947137676?text=Olá%20Envisio,%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full mt-4 border border-gray-300 bg-white text-gray-600 font-semibold py-3 px-6 rounded-[5px] transition duration-300 transform hover:scale-105 hover:bg-gray-50 block text-center">
+                    Contacta-nos
+                  </a>
                 </div>
               </div>
             </div>
@@ -389,76 +464,58 @@ const Academia = () => {
       {/* Modal de Inscrição */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden">
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Inscreva-se no Curso
-                  </h3>
-                  <button
-                    onClick={() => {
-                      setIsModalOpen(false);
-                      setError("");
-                      setSuccess(false);
-                    }}
-                    className="text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Fechar</span>
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-gray-800">
+                  Inscreva-se no Curso
+                </h3>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-500 hover:text-gray-700">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {error && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                  {error}
                 </div>
+              )}
 
-                {error && (
-                  <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
-                    {error}
-                  </div>
-                )}
-
-                {success ? (
-                  <div className="text-center py-8">
-                    <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-3">
-                      <svg
-                        className="h-6 w-6 text-green-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-1">
-                      Inscrição realizada com sucesso!
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      Entraremos em contato em breve com mais informações.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
+              {success ? (
+                <div className="text-center py-8">
+                  <div className="text-green-500 text-5xl mb-4">✓</div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Inscrição Enviada!
+                  </h3>
+                  <p className="text-gray-600">
+                    Obrigado por se inscrever. Entraremos em contato em breve.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label
                         htmlFor="nome"
-                        className="block text-sm font-medium text-gray-700 mb-1">
-                        Nome Completo <span className="text-red-500">*</span>
+                        className="block text-sm font-medium text-gray-700">
+                        Primeiro Nome *
                       </label>
                       <input
                         type="text"
@@ -467,99 +524,185 @@ const Academia = () => {
                         onChange={(e) =>
                           setFormData({ ...formData, nome: e.target.value })
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                        className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                         required
                       />
                     </div>
-
                     <div>
                       <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700 mb-1">
-                        Email <span className="text-red-500">*</span>
+                        htmlFor="sobrenome"
+                        className="block text-sm font-medium text-gray-700">
+                        Último Nome *
                       </label>
                       <input
-                        type="email"
-                        id="email"
-                        value={formData.email}
+                        type="text"
+                        id="sobrenome"
+                        value={formData.sobrenome}
                         onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
+                          setFormData({
+                            ...formData,
+                            sobrenome: e.target.value,
+                          })
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                        className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                         required
                       />
                     </div>
+                  </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label
-                          htmlFor="telefone"
-                          className="block text-sm font-medium text-gray-700 mb-1">
-                          Telefone
-                        </label>
-                        <input
-                          type="tel"
-                          id="telefone"
-                          value={formData.telefone}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              telefone: e.target.value,
-                            })
-                          }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        />
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="telefone"
+                      className="block text-sm font-medium text-gray-700">
+                      Telefone
+                    </label>
+                    <input
+                      type="tel"
+                      id="telefone"
+                      value={formData.telefone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, telefone: e.target.value })
+                      }
+                      className="mt-1 block w-full border border-gray-400 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="empresa"
+                      className="block text-sm font-medium text-gray-700">
+                      Empresa
+                    </label>
+                    <input
+                      type="text"
+                      id="empresa"
+                      value={formData.empresa}
+                      onChange={(e) =>
+                        setFormData({ ...formData, empresa: e.target.value })
+                      }
+                      className="mt-1 block w-full border border-gray-400 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="turno"
+                      className="block text-sm font-medium text-gray-700">
+                      Turno *
+                    </label>
+                    <select
+                      id="turno"
+                      value={formData.turno}
+                      onChange={(e) =>
+                        setFormData({ ...formData, turno: e.target.value })
+                      }
+                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 pr-8 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 appearance-none"
+                      required>
+                      <option value="">Selecione um turno</option>
+                      <option value="Segunda a Sexta - 9h às 17h">
+                        Segunda a Sexta - 9h às 17h
+                      </option>
+                      <option value="Sábado - 8h às 17h">
+                        Sábado - (8h às 12h) e Domingo - (8h às 17h)
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Anexar Ficheiros (PDF) *
+                    </label>
+                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <div className="space-y-1 text-center">
+                        <svg
+                          className="mx-auto h-12 w-12 text-gray-400"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 48 48"
+                          aria-hidden="true">
+                          <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <div className="flex text-sm text-gray-600">
+                          <label
+                            htmlFor="file-upload"
+                            className="relative cursor-pointer bg-white rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500">
+                            <span>Carregar ficheiros</span>
+                            <input
+                              id="file-upload"
+                              name="file-upload"
+                              type="file"
+                              className="sr-only"
+                              multiple
+                              accept=".pdf"
+                              onChange={handleFileChange}
+                            />
+                          </label>
+                          <p className="pl-1">ou arraste e solte</p>
+                        </div>
+                        <p className="text-xs text-gray-500">PDF até 10MB</p>
                       </div>
-
-                      <div>
-                        <label
-                          htmlFor="empresa"
-                          className="block text-sm font-medium text-gray-700 mb-1">
-                          Empresa
-                        </label>
-                        <input
-                          type="text"
-                          id="empresa"
-                          value={formData.empresa}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              empresa: e.target.value,
-                            })
-                          }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        />
+                    </div>
+                    {fileNames.length > 0 && (
+                      <div className="mt-2 text-sm text-gray-600">
+                        <p>Ficheiros selecionados:</p>
+                        <ul className="list-disc pl-5">
+                          {fileNames.map((name, index) => (
+                            <li key={index}>{name}</li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
+                    )}
+                  </div>
 
-                    <div>
-                      <label
-                        htmlFor="mensagem"
-                        className="block text-sm font-medium text-gray-700 mb-1">
-                        Mensagem
-                      </label>
-                      <textarea
-                        id="mensagem"
-                        rows={3}
-                        value={formData.mensagem}
-                        onChange={(e) =>
-                          setFormData({ ...formData, mensagem: e.target.value })
-                        }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                      />
-                    </div>
+                  <div>
+                    <label
+                      htmlFor="mensagem"
+                      className="block text-sm font-medium text-gray-700">
+                      Mensagem
+                    </label>
+                    <textarea
+                      id="mensagem"
+                      rows={3}
+                      value={formData.mensagem}
+                      onChange={(e) =>
+                        setFormData({ ...formData, mensagem: e.target.value })
+                      }
+                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
+                  </div>
 
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-[5px] shadow-sm text-sm font-medium text-white bg-gray-600 « focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
-                        {loading ? "Enviando..." : "Enviar Inscrição"}
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
+                  <div className="flex justify-end space-x-3 pt-4">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-2 px-4 border border-transparent rounded-[5px] shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50">
+                      {loading ? "Enviando..." : "Enviar Inscrição"}
+                    </button>
+                  </div>
+                </form>
+              )}
             </motion.div>
           </div>
         )}

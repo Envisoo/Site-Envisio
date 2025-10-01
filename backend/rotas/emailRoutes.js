@@ -1,10 +1,14 @@
 /** @format */
 
-import { Router } from "express";
-import { enviarEmail } from "../controllers/emailController.js";
+import express from "express";
+import {
+    enviarEmail,
+    uploadMiddleware,
+} from "../controllers/emailController.js";
 
-const router = Router();
+const router = express.Router();
 
-router.post("/email", enviarEmail);
+// Rota para envio de email com upload de arquivos
+router.post("/email", uploadMiddleware, enviarEmail);
 
 export default router;

@@ -61,4 +61,28 @@
 }
 
 
+/* In your CSS file */
+
+.form-container {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af #e5e7eb;
+}
+
+.form-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-container::-webkit-scrollbar-track {
+    background: #e5e7eb;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 4px;
+}
+
+
 /* Ou se preferir usar o Tailwind, adicione ao tailwind.config.js */

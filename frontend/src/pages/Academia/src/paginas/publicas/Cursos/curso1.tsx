@@ -34,6 +34,9 @@ import {
   Bookmark,
   ChevronDown,
   FileText,
+  Smartphone,
+  Clock,
+  BookCheck,
 } from "lucide-react";
 import Spinner from "../../../componentes/Spinner";
 import ModalVideo from "../../../componentes/ModalVideo";
@@ -83,21 +86,21 @@ export default function CursoDetalhe() {
       "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP para empresas.",
     categoria: "Gestão/ERP",
     duracao: 2 as any,
-    nivel: "iniciante" as any,
+    horas: "130" as any,
     imagemUrl: "",
-    requisitos: ["Noções de gestão empresarial"],
+    requisitos: ["Nenhum requisito"],
   } as unknown as Curso;
 
   const cursoExibir = (id ? dadosCurso.curso : (cursoLocal as Curso)) as Curso;
 
-  // Fallback local para quando esta página é acessada sem :id na rota
+  // Fallback local para quando esta página é acessada sem :id na rotas
   const cursoLocalFallback: Curso = {
     id: "javascript-basico-ao-avancado",
     titulo: "JavaScript Básico ao Avançado",
     descricao:
       "Aprenda JavaScript do zero até conceitos avançados com conteúdo prático e direto ao ponto.",
     categoria: "Programação",
-    duracao: 20,
+    duracao: 2,
     nivel: "iniciante",
     imagemUrl: "",
     requisitos: ["Computador e internet"],
@@ -214,227 +217,526 @@ export default function CursoDetalhe() {
 
   const modulosDefinidosAqui: Modulo[] = [
     {
-      id: "m1-1",
-      titulo: "Módulo 1: Conceitos Base de ERP",
+      id: "m1",
+      titulo: "Módulo 1: Instalação e Administração do ERP Primavera",
       duracaoTotal: "",
-      aulas: [
-        { id: "m1-1-a1", titulo: "O que é um ERP", duracao: "", tipo: "texto" },
-        {
-          id: "m1-1-a2",
-          titulo: "História e evolução do ERP",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-1-a3",
-          titulo: "Por que é importante",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-1-a4",
-          titulo: "Como funciona um sistema ERP",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-1-a5",
-          titulo: "Tipos de implementação de ERP",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-1-a6",
-          titulo: "Seis principais benefícios do ERP",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
-      ordem: 0,
-    },
-    {
-      id: "m1-2",
-      titulo: "Módulo 2: Instalação e Administração do ERP Cegid Primavera",
-      duracaoTotal: "",
-      aulas: [
-        { id: "m1-2-a1", titulo: "Instalação", duracao: "", tipo: "texto" },
-        {
-          id: "m1-2-a2",
-          titulo: "Criação de Empresas",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-2-a3",
-          titulo: "Manutenção de Dados",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-2-a4",
-          titulo: "Gestão de Utilizadores e Segurança",
-          duracao: "",
-          tipo: "texto",
-        },
-        { id: "m1-2-a5", titulo: "Licenciamento", duracao: "", tipo: "texto" },
-        {
-          id: "m1-2-a6",
-          titulo: "Outras Funcionalidades",
-          duracao: "",
-          tipo: "texto",
-        },
-        { id: "m1-2-a7", titulo: "Caso Prático", duracao: "", tipo: "texto" },
-      ],
       ordem: 1,
+      aulas: [
+        { id: "m1-t1", titulo: "Instalação", tipo: "texto", duracao: "" },
+        { id: "m1-t2", titulo: "Enquadramento", tipo: "texto", duracao: "" },
+        {
+          id: "m1-t3",
+          titulo: "Criação de Empresas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m1-t4",
+          titulo: "Manutenção de Dados",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m1-t5",
+          titulo: "Gestão de Utilizadores e Segurança",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m1-t6",
+          titulo: "Outras funcionalidades",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
     },
     {
-      id: "m1-3",
-      titulo: "Módulo 3: Processo de Gestão - Compras",
+      id: "m2",
+      titulo: "Módulo 2: Laboratório de Instalação ERP",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-3-a1",
-          titulo: "Ficha de Fornecedores",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a2",
-          titulo: "Registo de documentos de Compra",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a3",
-          titulo: "Reprodução de conteúdos entre documentos",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a4",
-          titulo: "Operações de estorno",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a5",
-          titulo: "Obrigações Fiscais",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a6",
-          titulo: "Reimpressão de documentos",
-          duracao: "",
-          tipo: "texto",
-        },
-        {
-          id: "m1-3-a7",
-          titulo: "Mapas de Análises",
-          duracao: "",
-          tipo: "texto",
-        },
-        { id: "m1-3-a8", titulo: "Caso Prático", duracao: "", tipo: "texto" },
-      ],
       ordem: 2,
+      aulas: [{ id: "m2-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
     },
     {
-      id: "m1-4",
-      titulo: "Módulo 4: Processo de Gestão - Inventário",
+      id: "m3",
+      titulo: "Módulo 3: Using – Gestão de Inventário",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-4-a1",
-          titulo: "Conceitos e operações de Inventário",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
       ordem: 3,
-    },
-    {
-      id: "m1-5",
-      titulo: "Módulo 5: Processo de Gestão - Logística",
-      duracaoTotal: "",
       aulas: [
+        { id: "m3-t1", titulo: "Enquadramento", tipo: "texto", duracao: "" },
+        { id: "m3-t2", titulo: "Dados Mestre", tipo: "texto", duracao: "" },
         {
-          id: "m1-5-a1",
-          titulo: "Fluxos e processos de Logística",
-          duracao: "",
+          id: "m3-t3",
+          titulo: "Operações de Expedição e Receção",
           tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m3-t4",
+          titulo: "Valorização do stock",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m3-t5",
+          titulo: "Atributos dos Artigos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m3-t6",
+          titulo: "O processo de Inventariação",
+          tipo: "texto",
+          duracao: "",
         },
       ],
+    },
+    {
+      id: "m4",
+      titulo: "Módulo 4: Laboratório de Inventário",
+      duracaoTotal: "",
       ordem: 4,
+      aulas: [{ id: "m4-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
     },
     {
-      id: "m1-6",
-      titulo: "Módulo 6: Tesouraria",
+      id: "m5",
+      titulo: "Módulo 5: Using – Compras",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-6-a1",
-          titulo: "Gestão de Tesouraria",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
       ordem: 5,
+      aulas: [
+        { id: "m5-t1", titulo: "Entidades", tipo: "texto", duracao: "" },
+        {
+          id: "m5-t2",
+          titulo: "Circuito Documental",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-t3",
+          titulo: "Operações de estorno",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-t4",
+          titulo: "Obrigações Fiscais",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m5-t5", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
     },
     {
-      id: "m1-7",
-      titulo: "Módulo 7: Contabilidade e Fiscalidade",
+      id: "m6",
+      titulo: "Módulo 6: Using – Vendas",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-7-a1",
-          titulo: "Configuração e processos de Contabilidade e Fiscalidade",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
       ordem: 6,
+      aulas: [
+        { id: "m6-t1", titulo: "Entidades", tipo: "texto", duracao: "" },
+        {
+          id: "m6-t2",
+          titulo: "Documentos de Venda - Circuito Documental",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m6-t3",
+          titulo: "Gestão de Documentos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m6-t4",
+          titulo: "Operações de anulação/estorno",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m6-t5",
+          titulo: "Obrigações Fiscais",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m6-t6", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
     },
     {
-      id: "m1-8",
-      titulo: "Módulo 8: Gestão de Ativos",
+      id: "m7",
+      titulo: "Módulo 7: Laboratório de Compras e Vendas",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-8-a1",
-          titulo: "Processos de Gestão de Ativos",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
       ordem: 7,
+      aulas: [{ id: "m7-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
     },
     {
-      id: "m1-9",
-      titulo: "Módulo 9: Processamento de Salários",
+      id: "m8",
+      titulo: "Módulo 8: Laboratório de Administração do ERP",
       duracaoTotal: "",
-      aulas: [
-        {
-          id: "m1-9-a1",
-          titulo: "Processos de Processamento de Salários",
-          duracao: "",
-          tipo: "texto",
-        },
-      ],
       ordem: 8,
+      aulas: [{ id: "m8-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
     },
     {
-      id: "m1-10",
-      titulo: "Módulo 10: Caso Prático",
+      id: "m9",
+      titulo: "Módulo 9: Configuring – Logística",
       duracaoTotal: "",
+      ordem: 9,
       aulas: [
         {
-          id: "m1-10-a1",
-          titulo: "Caso Prático – Integração dos módulos",
-          duracao: "",
+          id: "m9-t1",
+          titulo: "Documentos de Compras",
           tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m9-t2",
+          titulo: "Documentos de Vendas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m9-t3",
+          titulo: "Documentos Internos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m9-t4",
+          titulo: "Documentos de Transferência",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m9-t5", titulo: "Configurações", tipo: "texto", duracao: "" },
+      ],
+    },
+    {
+      id: "m10",
+      titulo: "Módulo 10: Laboratório de Logística",
+      duracaoTotal: "",
+      ordem: 10,
+      aulas: [
+        {
+          id: "m10-t1",
+          titulo: "Esclarecimento de dúvidas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-t2",
+          titulo: "Exercícios adicionais",
+          tipo: "texto",
+          duracao: "",
         },
       ],
-      ordem: 9,
+    },
+    {
+      id: "m11",
+      titulo: "Módulo 11: Using – Tesouraria",
+      duracaoTotal: "",
+      ordem: 11,
+      aulas: [
+        {
+          id: "m11-t1",
+          titulo: "Gestão de Contas Correntes",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m11-t2",
+          titulo: "Gestão de Bancos",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m12",
+      titulo: "Módulo 12: Laboratório de Tesouraria I",
+      duracaoTotal: "",
+      ordem: 12,
+      aulas: [{ id: "m12-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+    },
+    {
+      id: "m13",
+      titulo: "Módulo 13: Configuring – Tesouraria",
+      duracaoTotal: "",
+      ordem: 13,
+      aulas: [
+        {
+          id: "m13-t1",
+          titulo: "Contas Correntes",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m13-t2", titulo: "Caixa e Bancos", tipo: "texto", duracao: "" },
+        {
+          id: "m13-t3",
+          titulo: "Operações de Estorno",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m14",
+      titulo: "Módulo 14: Laboratório de Tesouraria II",
+      duracaoTotal: "",
+      ordem: 14,
+      aulas: [
+        {
+          id: "m14-t1",
+          titulo: "Esclarecimento de dúvidas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m14-t2",
+          titulo: "Exercícios adicionais",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m15",
+      titulo: "Módulo 15: Conceitos Básicos de Contabilidade",
+      duracaoTotal: "",
+      ordem: 15,
+      aulas: [],
+    },
+    {
+      id: "m16",
+      titulo: "Módulo 16: Using – Contabilidade e Fiscalidade",
+      duracaoTotal: "",
+      ordem: 16,
+      aulas: [
+        {
+          id: "m16-t1",
+          titulo: "Elementos base da Contabilidade",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m16-t2",
+          titulo: "Registo de Movimentos Contabilísticos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m16-t3",
+          titulo: "Report Financeiro",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m16-t4",
+          titulo: "Operações de Validação e Diagnóstico",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m16-t5",
+          titulo: "Apuramentos Periódicos",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m16-t6", titulo: "Mapas Fiscais", tipo: "texto", duracao: "" },
+        {
+          id: "m16-t7",
+          titulo: "Operações de Fecho e Abertura",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m17",
+      titulo: "Módulo 17: Laboratório de Contabilidade I",
+      duracaoTotal: "",
+      ordem: 17,
+      aulas: [{ id: "m17-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+    },
+    {
+      id: "m18",
+      titulo: "Módulo 18: Configuring – Financeira",
+      duracaoTotal: "",
+      ordem: 18,
+      aulas: [
+        {
+          id: "m18-t1",
+          titulo: "Configurações para o registo de Movimentos Contabilísticos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m18-t2",
+          titulo: "Entidades e Utilitários",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m18-t3",
+          titulo: "Configurações para Apuramentos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m18-t4",
+          titulo: "Integração de Vendas com Contabilidade",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m19",
+      titulo: "Módulo 19: Laboratório de Contabilidade II",
+      duracaoTotal: "",
+      ordem: 19,
+      aulas: [
+        {
+          id: "m19-t1",
+          titulo: "Esclarecimento de dúvidas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m19-t2",
+          titulo: "Exercícios adicionais",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m20",
+      titulo:
+        "Módulo 20: Gestão de Ativos – Perspetiva Fiscal e Contabilística",
+      duracaoTotal: "",
+      ordem: 20,
+      aulas: [],
+    },
+    {
+      id: "m21",
+      titulo: "Módulo 21: Using – Gestão de Ativos",
+      duracaoTotal: "",
+      ordem: 21,
+      aulas: [
+        {
+          id: "m21-t1",
+          titulo: "Critérios de depreciação",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m21-t2",
+          titulo: "Criação da Ficha do bem",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m21-t3",
+          titulo: "Operações sobre os bens",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m21-t4", titulo: "Exploração", tipo: "texto", duracao: "" },
+        {
+          id: "m21-t5",
+          titulo: "Operações de fim de vida do ativo",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m22",
+      titulo: "Módulo 22: Laboratório de Ativos",
+      duracaoTotal: "",
+      ordem: 22,
+      aulas: [{ id: "m22-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+    },
+    {
+      id: "m23",
+      titulo: "Módulo 23: Using – Processamento de Salários",
+      duracaoTotal: "",
+      ordem: 23,
+      aulas: [
+        {
+          id: "m23-t1",
+          titulo: "Ficha do funcionário",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m23-t2",
+          titulo: "Processamento de Vencimento",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m23-t3", titulo: "Subsídios", tipo: "texto", duracao: "" },
+        {
+          id: "m23-t4",
+          titulo: "Recibos e Pagamento",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m23-t5", titulo: "Retroativos", tipo: "texto", duracao: "" },
+        {
+          id: "m23-t6",
+          titulo: "Obrigações Fiscais",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m23-t7", titulo: "Cadastro", tipo: "texto", duracao: "" },
+        {
+          id: "m23-t8",
+          titulo: "Mapas de Análise",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
+    },
+    {
+      id: "m24",
+      titulo: "Módulo 24: Laboratório de Recursos Humanos I",
+      duracaoTotal: "",
+      ordem: 24,
+      aulas: [{ id: "m24-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+    },
+    {
+      id: "m25",
+      titulo: "Módulo 25: Configuring – Recursos Humanos",
+      duracaoTotal: "",
+      ordem: 25,
+      aulas: [
+        { id: "m25-t1", titulo: "Dados mestre", tipo: "texto", duracao: "" },
+        {
+          id: "m25-t2",
+          titulo: "Instrumento de Regulamentação do Trabalho",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m25-t3", titulo: "Configurações", tipo: "texto", duracao: "" },
+      ],
+    },
+    {
+      id: "m26",
+      titulo: "Módulo 26: Laboratório de Recursos Humanos II",
+      duracaoTotal: "",
+      ordem: 26,
+      aulas: [
+        {
+          id: "m26-t1",
+          titulo: "Esclarecimento de dúvidas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m26-t2",
+          titulo: "Exercícios adicionais",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
     },
   ];
 
@@ -662,7 +964,7 @@ export default function CursoDetalhe() {
                   }
                 </p>
               </div>
-              {/* Informações do Curso */}
+
               {/* Informações do Curso */}
               <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
                 <h3 className="font-semibold text-lg mb-4">
@@ -676,10 +978,8 @@ export default function CursoDetalhe() {
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
-                    <span className="text-gray-500">Nível</span>
-                    <span className="font-medium">
-                      {curso?.nivel || "Todos"}
-                    </span>
+                    <span className="text-gray-500">Horas</span>
+                    <span className="font-medium">130h</span>
                   </li>
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Idioma</span>
@@ -688,104 +988,51 @@ export default function CursoDetalhe() {
                 </ul>
               </div>
 
-              <div className="bg-white rounded-[5px] shadow-sm p-6 mt-6 border border-gray-100">
-                <h3 className="font-semibold text-lg mb-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="font-medium text-base mb-4 text-gray-900">
                   O que este curso inclui
                 </h3>
-                <div className="space-y-4">
-                  {/* Certificado */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Award className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Certificado de conclusão
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Receba um certificado reconhecido ao completar o curso
-                      </p>
-                    </div>
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Award className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">
+                      Certificado de conclusão
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <FileText className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Material complementar</span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Headphones className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Suporte ao aluno</span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Play className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Exercícios práticos</span>
+                  </li>
+                </ul>
+              </div>
+              {/* Módulos e Aulas */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
+                <h3 className="font-medium text-base mb-4 text-gray-900">
+                  Conteúdo do Curso
+                </h3>
+                <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r   mt-6">
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <BookOpen className="w-4 h-4 text-gray-500" />
                   </div>
-
-                  {/* Suporte */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100">
-                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Headphones className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Suporte do instrutor
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Tire dúvidas diretamente com especialistas
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Material */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
-                    <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <FileText className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Material complementar
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Slides, PDFs e recursos extras para apoio à aula
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Exercícios */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100">
-                    <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Play className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Exercícios práticos
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Atividades hands-on para fixar o aprendizado
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Casos reais */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100">
-                    <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Users className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Casos de uso reais
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Exemplos práticos do mercado de trabalho
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Conteúdo do curso */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 mt-6">
-                    <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <BookOpen className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        {modulosFonte.length} módulos completos
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {modulosFonte.reduce(
-                          (total, modulo) =>
-                            total + (modulo.aulas?.length || 0),
-                          0
-                        )}{" "}
-                        aulas em total • Acesso vitalício
-                      </p>
-                    </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-base">
+                      {modulosFonte.length} módulos completos
+                    </h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {modulosFonte.reduce(
+                        (total, modulo) => total + (modulo.aulas?.length || 0),
+                        0
+                      )}{" "}
+                      aulas em total
+                    </p>
                   </div>
                 </div>
               </div>

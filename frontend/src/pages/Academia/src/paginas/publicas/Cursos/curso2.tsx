@@ -740,7 +740,6 @@ export default function CursoDetalhe() {
               </div>
             </div>
 
-            {/* Barra Lateral */}
             <div className="space-y-6">
               {/* Instrutor */}
               <div className="bg-whiterounded-[5px] shadow-sm p-6 border border-gray-100">
@@ -785,105 +784,54 @@ export default function CursoDetalhe() {
                   </li>
                 </ul>
               </div>
+
               {/* O que este curso inclui */}
-              <div className="bg-white rounded-[5px] shadow-sm p-6 border border-gray-100">
-                <h3 className="font-semibold text-lg mb-4">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="font-medium text-base mb-4 text-gray-900">
                   O que este curso inclui
                 </h3>
-                <div className="space-y-4">
-                  {/* Certificado */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Award className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Certificado de conclusão
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Receba um certificado reconhecido ao completar o curso
-                      </p>
-                    </div>
-                  </div>
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Award className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">
+                      Certificado de conclusão
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <FileText className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Material complementar</span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Headphones className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Suporte ao aluno</span>
+                  </li>
+                  <li className="flex items-center space-x-3 text-sm">
+                    <Play className="w-4 h-4 text-gray-500" />
+                    <span className="text-gray-600">Exercícios práticos</span>
+                  </li>
+                </ul>
+              </div>
 
-                  {/* Suporte */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100">
-                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Headphones className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Suporte do instrutor
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Tire dúvidas diretamente com especialistas
-                      </p>
-                    </div>
+              {/* Módulos e Aulas */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
+                <h3 className="font-medium text-base mb-4 text-gray-900">
+                  Conteúdo do Curso
+                </h3>
+                <div className="flex items-center p-3 rounded-lg">
+                  <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-4 h-4 text-gray-500" />
                   </div>
-
-                  {/* Material */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
-                    <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <FileText className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Material complementar
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Slides, PDFs e recursos extras para apoio à aula
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Exercícios */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100">
-                    <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Play className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Exercícios práticos
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Atividades hands-on para fixar o aprendizado
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Casos reais */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100">
-                    <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Users className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        Casos de uso reais
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Exemplos práticos do mercado de trabalho
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Conteúdo do curso */}
-                  <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 mt-6">
-                    <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <BookOpen className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 text-base">
-                        {modulosFonte.length} módulos completos
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {modulosFonte.reduce(
-                          (total, modulo) =>
-                            total + (modulo.aulas?.length || 0),
-                          0
-                        )}{" "}
-                        aulas em total
-                      </p>
-                    </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">
+                      {modulosFonte.length} módulos completos
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {modulosFonte.reduce(
+                        (total, modulo) => total + (modulo.aulas?.length || 0),
+                        0
+                      )}{" "}
+                      aulas no total
+                    </p>
                   </div>
                 </div>
               </div>
