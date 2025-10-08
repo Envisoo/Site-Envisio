@@ -85,7 +85,7 @@ export default function CursoDetalhe() {
     descricao:
       "Aprenda a dominar o ERP mais utilizado em Angola e Portugal para gestão empresarial completa.",
     categoria: "Gestão/ERP",
-    duracao: 2 as any,
+    duracao: 1 as any,
     horas: "130" as any,
     imagemUrl: "",
     requisitos: ["Nenhum requisito"],
@@ -100,7 +100,7 @@ export default function CursoDetalhe() {
     descricao:
       "Aprenda JavaScript do zero até conceitos avançados com conteúdo prático e direto ao ponto.",
     categoria: "Programação",
-    duracao: 2,
+    duracao: 1,
     nivel: "iniciante",
     imagemUrl: "",
     requisitos: ["Computador e internet"],
@@ -222,28 +222,28 @@ export default function CursoDetalhe() {
       duracaoTotal: "",
       ordem: 1,
       aulas: [
-        { id: "m1-t1", titulo: "Instalação", tipo: "texto", duracao: "" },
-        { id: "m1-t2", titulo: "Enquadramento", tipo: "texto", duracao: "" },
+        { id: "m1-a1", titulo: "Instalação", tipo: "texto", duracao: "" },
+        { id: "m1-a2", titulo: "Enquadramento", tipo: "texto", duracao: "" },
         {
-          id: "m1-t3",
+          id: "m1-a3",
           titulo: "Criação de Empresas",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m1-t4",
+          id: "m1-a4",
           titulo: "Manutenção de Dados",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m1-t5",
+          id: "m1-a5",
           titulo: "Gestão de Utilizadores e Segurança",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m1-t6",
+          id: "m1-a6",
           titulo: "Outras funcionalidades",
           tipo: "texto",
           duracao: "",
@@ -252,40 +252,77 @@ export default function CursoDetalhe() {
     },
     {
       id: "m2",
-      titulo: "Módulo 2: Laboratório de Instalação ERP",
+      titulo: "Módulo 2: Logística – Configuração",
       duracaoTotal: "",
       ordem: 2,
-      aulas: [{ id: "m2-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+      aulas: [
+        {
+          id: "m2-a1",
+          titulo: "Documentos de Compras",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m2-a2",
+          titulo: "Documentos de Vendas",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m2-a3",
+          titulo: "Documentos Internos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m2-a4",
+          titulo: "Documentos de Transferência",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m2-a5",
+          titulo: "Configurações e Valorização de Stock",
+          tipo: "texto",
+          duracao: "",
+        },
+      ],
     },
     {
       id: "m3",
-      titulo: "Módulo 3: Using – Gestão de Inventário",
+      titulo: "Módulo 3: Gestão de Inventário – Utilização",
       duracaoTotal: "",
       ordem: 3,
       aulas: [
-        { id: "m3-t1", titulo: "Enquadramento", tipo: "texto", duracao: "" },
-        { id: "m3-t2", titulo: "Dados Mestre", tipo: "texto", duracao: "" },
+        { id: "m3-a1", titulo: "Enquadramento", tipo: "texto", duracao: "" },
         {
-          id: "m3-t3",
+          id: "m3-a2",
+          titulo: "Gestão de Inventário",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m3-a3",
+          titulo: "Movimentos de Stock",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m3-a4", titulo: "Dados Mestre", tipo: "texto", duracao: "" },
+        {
+          id: "m3-a5",
           titulo: "Operações de Expedição e Receção",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m3-t4",
-          titulo: "Valorização do stock",
+          id: "m3-a6",
+          titulo: "Valorização do Stock",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m3-t5",
-          titulo: "Atributos dos Artigos",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m3-t6",
-          titulo: "O processo de Inventariação",
+          id: "m3-a7",
+          titulo: "Processo de Inventariação",
           tipo: "texto",
           duracao: "",
         },
@@ -293,135 +330,193 @@ export default function CursoDetalhe() {
     },
     {
       id: "m4",
-      titulo: "Módulo 4: Laboratório de Inventário",
+      titulo: "Módulo 4: Compras – Utilização",
       duracaoTotal: "",
       ordem: 4,
-      aulas: [{ id: "m4-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
-    },
-    {
-      id: "m5",
-      titulo: "Módulo 5: Using – Compras",
-      duracaoTotal: "",
-      ordem: 5,
       aulas: [
-        { id: "m5-t1", titulo: "Entidades", tipo: "texto", duracao: "" },
         {
-          id: "m5-t2",
+          id: "m4-a1",
+          titulo: "Entidades e Artigos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m4-a2",
+          titulo: "Registo de Documentos de Compra",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m4-a3",
           titulo: "Circuito Documental",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m5-t3",
-          titulo: "Operações de estorno",
+          id: "m4-a4",
+          titulo: "Operações de Estorno e Anulação",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m4-a5", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
+    },
+    {
+      id: "m5",
+      titulo: "Módulo 5: Vendas – Utilização",
+      duracaoTotal: "",
+      ordem: 5,
+      aulas: [
+        {
+          id: "m5-a1",
+          titulo: "Criar Entidades e Artigos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m5-t4",
-          titulo: "Obrigações Fiscais",
+          id: "m5-a2",
+          titulo: "Documentos de Venda",
           tipo: "texto",
           duracao: "",
         },
-        { id: "m5-t5", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+        { id: "m5-a3", titulo: "Editor de Vendas", tipo: "texto", duracao: "" },
+        {
+          id: "m5-a4",
+          titulo: "Operações de Anulação/Estorno",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-a5",
+          titulo: "Obrigações Fiscais e Comunicação de Documentos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-a6",
+          titulo: "Mapas e Estatísticas de Vendas",
+          tipo: "texto",
+          duracao: "",
+        },
       ],
     },
     {
       id: "m6",
-      titulo: "Módulo 6: Using – Vendas",
+      titulo: "Módulo 6: POS (Point of Sales)",
       duracaoTotal: "",
       ordem: 6,
       aulas: [
-        { id: "m6-t1", titulo: "Entidades", tipo: "texto", duracao: "" },
+        { id: "m6-a1", titulo: "Configuração POS", tipo: "texto", duracao: "" },
         {
-          id: "m6-t2",
-          titulo: "Documentos de Venda - Circuito Documental",
+          id: "m6-a2",
+          titulo: "Operações (Abertura, Fecho, Vendas, Estornos, Exploração)",
           tipo: "texto",
           duracao: "",
         },
-        {
-          id: "m6-t3",
-          titulo: "Gestão de Documentos",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m6-t4",
-          titulo: "Operações de anulação/estorno",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m6-t5",
-          titulo: "Obrigações Fiscais",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m6-t6", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
       ],
     },
     {
       id: "m7",
-      titulo: "Módulo 7: Laboratório de Compras e Vendas",
+      titulo: "Módulo 7: Tesouraria – Configuração",
       duracaoTotal: "",
       ordem: 7,
-      aulas: [{ id: "m7-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+      aulas: [
+        { id: "m7-a1", titulo: "Contas Correntes", tipo: "texto", duracao: "" },
+        { id: "m7-a2", titulo: "Caixa e Bancos", tipo: "texto", duracao: "" },
+      ],
     },
     {
       id: "m8",
-      titulo: "Módulo 8: Laboratório de Administração do ERP",
+      titulo: "Módulo 8: Tesouraria – Utilização",
       duracaoTotal: "",
       ordem: 8,
-      aulas: [{ id: "m8-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
+      aulas: [
+        {
+          id: "m8-a1",
+          titulo: "Gestão de Contas Correntes",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m8-a2",
+          titulo: "Operações sobre Pendentes",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m8-a3",
+          titulo: "Planos de Pagamento e Retenção",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m8-a4", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
     },
     {
       id: "m9",
-      titulo: "Módulo 9: Configuring – Logística",
+      titulo: "Módulo 9: Recursos Humanos – Configuração",
       duracaoTotal: "",
       ordem: 9,
       aulas: [
         {
-          id: "m9-t1",
-          titulo: "Documentos de Compras",
+          id: "m9-a1",
+          titulo: "Dados Mestre – Ficha do Funcionário",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m9-t2",
-          titulo: "Documentos de Vendas",
+          id: "m9-a2",
+          titulo: "Configurações no Administrador",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m9-t3",
-          titulo: "Documentos Internos",
+          id: "m9-a3",
+          titulo: "Configurações de Processamentos e Alterações Mensais",
           tipo: "texto",
           duracao: "",
         },
-        {
-          id: "m9-t4",
-          titulo: "Documentos de Transferência",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m9-t5", titulo: "Configurações", tipo: "texto", duracao: "" },
       ],
     },
     {
       id: "m10",
-      titulo: "Módulo 10: Laboratório de Logística",
+      titulo: "Módulo 10: Recursos Humanos – Utilização",
       duracaoTotal: "",
       ordem: 10,
       aulas: [
         {
-          id: "m10-t1",
-          titulo: "Esclarecimento de dúvidas",
+          id: "m10-a1",
+          titulo: "Ficha do Funcionário",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-t2",
-          titulo: "Exercícios adicionais",
+          id: "m10-a2",
+          titulo: "Processamento de Vencimento",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a3",
+          titulo: "Alterações Mensais",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a4",
+          titulo: "Ausências, Férias e Remunerações",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a5",
+          titulo: "Obrigações Fiscais",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a6",
+          titulo: "Cadastro e Mapas de Análise",
           tipo: "texto",
           duracao: "",
         },
@@ -429,19 +524,37 @@ export default function CursoDetalhe() {
     },
     {
       id: "m11",
-      titulo: "Módulo 11: Using – Tesouraria",
+      titulo: "Módulo 11: Gestão de Ativos",
       duracaoTotal: "",
       ordem: 11,
       aulas: [
         {
-          id: "m11-t1",
-          titulo: "Gestão de Contas Correntes",
+          id: "m11-a1",
+          titulo: "Critérios e Planos de Depreciação",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m11-t2",
-          titulo: "Gestão de Bancos",
+          id: "m11-a2",
+          titulo: "Criação de Fichas de Bens",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m11-a3",
+          titulo: "Operações sobre os Bens",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m11-a4",
+          titulo: "Exploração e Mapas Fiscais",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m11-a5",
+          titulo: "Operações de Fim de Vida do Ativo",
           tipo: "texto",
           duracao: "",
         },
@@ -449,290 +562,69 @@ export default function CursoDetalhe() {
     },
     {
       id: "m12",
-      titulo: "Módulo 12: Laboratório de Tesouraria I",
+      titulo: "Módulo 12: Financeira – Configuração",
       duracaoTotal: "",
       ordem: 12,
-      aulas: [{ id: "m12-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
-    },
-    {
-      id: "m13",
-      titulo: "Módulo 13: Configuring – Tesouraria",
-      duracaoTotal: "",
-      ordem: 13,
       aulas: [
         {
-          id: "m13-t1",
-          titulo: "Contas Correntes",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m13-t2", titulo: "Caixa e Bancos", tipo: "texto", duracao: "" },
-        {
-          id: "m13-t3",
-          titulo: "Operações de Estorno",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m14",
-      titulo: "Módulo 14: Laboratório de Tesouraria II",
-      duracaoTotal: "",
-      ordem: 14,
-      aulas: [
-        {
-          id: "m14-t1",
-          titulo: "Esclarecimento de dúvidas",
+          id: "m12-a1",
+          titulo: "Configurações de Movimentos Contabilísticos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m14-t2",
-          titulo: "Exercícios adicionais",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m15",
-      titulo: "Módulo 15: Conceitos Básicos de Contabilidade",
-      duracaoTotal: "",
-      ordem: 15,
-      aulas: [],
-    },
-    {
-      id: "m16",
-      titulo: "Módulo 16: Using – Contabilidade e Fiscalidade",
-      duracaoTotal: "",
-      ordem: 16,
-      aulas: [
-        {
-          id: "m16-t1",
-          titulo: "Elementos base da Contabilidade",
+          id: "m12-a2",
+          titulo: "Criação e Transferência de Contas",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m16-t2",
-          titulo: "Registo de Movimentos Contabilísticos",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m16-t3",
-          titulo: "Report Financeiro",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m16-t4",
-          titulo: "Operações de Validação e Diagnóstico",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m16-t5",
-          titulo: "Apuramentos Periódicos",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m16-t6", titulo: "Mapas Fiscais", tipo: "texto", duracao: "" },
-        {
-          id: "m16-t7",
-          titulo: "Operações de Fecho e Abertura",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m17",
-      titulo: "Módulo 17: Laboratório de Contabilidade I",
-      duracaoTotal: "",
-      ordem: 17,
-      aulas: [{ id: "m17-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
-    },
-    {
-      id: "m18",
-      titulo: "Módulo 18: Configuring – Financeira",
-      duracaoTotal: "",
-      ordem: 18,
-      aulas: [
-        {
-          id: "m18-t1",
-          titulo: "Configurações para o registo de Movimentos Contabilísticos",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m18-t2",
-          titulo: "Entidades e Utilitários",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m18-t3",
+          id: "m12-a3",
           titulo: "Configurações para Apuramentos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m18-t4",
-          titulo: "Integração de Vendas com Contabilidade",
+          id: "m12-a4",
+          titulo: "Integração com Contabilidade",
           tipo: "texto",
           duracao: "",
         },
       ],
     },
     {
-      id: "m19",
-      titulo: "Módulo 19: Laboratório de Contabilidade II",
+      id: "m13",
+      titulo: "Módulo 13: Contabilidade e Fiscalidade – Utilização",
       duracaoTotal: "",
-      ordem: 19,
+      ordem: 13,
       aulas: [
         {
-          id: "m19-t1",
-          titulo: "Esclarecimento de dúvidas",
+          id: "m13-a1",
+          titulo: "Elementos Base da Contabilidade",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m19-t2",
-          titulo: "Exercícios adicionais",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m20",
-      titulo:
-        "Módulo 20: Gestão de Ativos – Perspetiva Fiscal e Contabilística",
-      duracaoTotal: "",
-      ordem: 20,
-      aulas: [],
-    },
-    {
-      id: "m21",
-      titulo: "Módulo 21: Using – Gestão de Ativos",
-      duracaoTotal: "",
-      ordem: 21,
-      aulas: [
-        {
-          id: "m21-t1",
-          titulo: "Critérios de depreciação",
+          id: "m13-a2",
+          titulo: "Registo de Movimentos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m21-t2",
-          titulo: "Criação da Ficha do bem",
+          id: "m13-a3",
+          titulo: "Reports e Mapas Fiscais",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m21-t3",
-          titulo: "Operações sobre os bens",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m21-t4", titulo: "Exploração", tipo: "texto", duracao: "" },
-        {
-          id: "m21-t5",
-          titulo: "Operações de fim de vida do ativo",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m22",
-      titulo: "Módulo 22: Laboratório de Ativos",
-      duracaoTotal: "",
-      ordem: 22,
-      aulas: [{ id: "m22-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
-    },
-    {
-      id: "m23",
-      titulo: "Módulo 23: Using – Processamento de Salários",
-      duracaoTotal: "",
-      ordem: 23,
-      aulas: [
-        {
-          id: "m23-t1",
-          titulo: "Ficha do funcionário",
+          id: "m13-a4",
+          titulo: "Operações de Validação e Apuramento",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m23-t2",
-          titulo: "Processamento de Vencimento",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m23-t3", titulo: "Subsídios", tipo: "texto", duracao: "" },
-        {
-          id: "m23-t4",
-          titulo: "Recibos e Pagamento",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m23-t5", titulo: "Retroativos", tipo: "texto", duracao: "" },
-        {
-          id: "m23-t6",
-          titulo: "Obrigações Fiscais",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m23-t7", titulo: "Cadastro", tipo: "texto", duracao: "" },
-        {
-          id: "m23-t8",
-          titulo: "Mapas de Análise",
-          tipo: "texto",
-          duracao: "",
-        },
-      ],
-    },
-    {
-      id: "m24",
-      titulo: "Módulo 24: Laboratório de Recursos Humanos I",
-      duracaoTotal: "",
-      ordem: 24,
-      aulas: [{ id: "m24-t1", titulo: "Prática", tipo: "texto", duracao: "" }],
-    },
-    {
-      id: "m25",
-      titulo: "Módulo 25: Configuring – Recursos Humanos",
-      duracaoTotal: "",
-      ordem: 25,
-      aulas: [
-        { id: "m25-t1", titulo: "Dados mestre", tipo: "texto", duracao: "" },
-        {
-          id: "m25-t2",
-          titulo: "Instrumento de Regulamentação do Trabalho",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m25-t3", titulo: "Configurações", tipo: "texto", duracao: "" },
-      ],
-    },
-    {
-      id: "m26",
-      titulo: "Módulo 26: Laboratório de Recursos Humanos II",
-      duracaoTotal: "",
-      ordem: 26,
-      aulas: [
-        {
-          id: "m26-t1",
-          titulo: "Esclarecimento de dúvidas",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m26-t2",
-          titulo: "Exercícios adicionais",
+          id: "m13-a5",
+          titulo: "Fecho e Abertura de Exercício",
           tipo: "texto",
           duracao: "",
         },
@@ -797,11 +689,45 @@ export default function CursoDetalhe() {
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <button
-                  onClick={() => setModalInscricaoAberto(true)} // Open the FormularioInscricao modal
-                  className="bg-gray-600  text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                <motion.button
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: "#4B5563", // Cor ligeiramente mais clara no hover
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                  }}
+                  onClick={() => setModalInscricaoAberto(true)}
+                  className="bg-gray-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
-                </button>
+                </motion.button>
+
+                <motion.a
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                  }}
+                  href="https://wa.me/244947137676?text=Olá%20Envisio,%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" w-[200px] border text-white border-gray-300 bg-transparent  font-semibold py-3 px-8 rounded-[5px] transition-all duration-300 flex items-center justify-center">
+                  Mais informações
+                </motion.a>
               </div>
             </div>
           </div>
@@ -954,7 +880,7 @@ export default function CursoDetalhe() {
                     <span className="text-white font-bold text-xl">I</span>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">{"Instrutor"}</h4>
+                    <h4 className="font-medium text-gray-900">{"Lucas"}</h4>
                     <p className="text-sm text-gray-500">{"Especialista"}</p>
                   </div>
                 </div>
@@ -974,7 +900,7 @@ export default function CursoDetalhe() {
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
                     <span className="font-medium">
-                      {curso?.duracao || "N/A"} Semanas
+                      {curso?.duracao || "N/A"} mês
                     </span>
                   </li>
                   <li className="flex justify-between text-sm">
@@ -1013,28 +939,40 @@ export default function CursoDetalhe() {
                   </li>
                 </ul>
               </div>
-              {/* Módulos e Aulas */}
+
+              {/* Benefícios do Curso */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
                 <h3 className="font-medium text-base mb-4 text-gray-900">
-                  Conteúdo do Curso
+                  O que você vai conquistar:
                 </h3>
-                <div className="flex items-start space-x-4 p-3 rounded-lg bg-gradient-to-r   mt-6">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <BookOpen className="w-4 h-4 text-gray-500" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 text-base">
-                      {modulosFonte.length} módulos completos
-                    </h4>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {modulosFonte.reduce(
-                        (total, modulo) => total + (modulo.aulas?.length || 0),
-                        0
-                      )}{" "}
-                      aulas em total
-                    </p>
-                  </div>
-                </div>
+                <ul className="space-y-4">
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Competência Sólida</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">
+                        Reconhecimento Profissional
+                      </span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Confiança Total</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Networking</span>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

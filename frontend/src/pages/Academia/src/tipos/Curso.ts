@@ -51,5 +51,6 @@ export interface Curso {
   criado_em?: string;
   aulas?: number;
   horas?: number;
+
   
 }

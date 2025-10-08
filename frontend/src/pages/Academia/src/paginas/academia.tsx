@@ -18,6 +18,7 @@ const Academia = () => {
     empresa: "",
     mensagem: "",
     turno: "",
+    nivelExperiencia: "",
   });
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [arquivos, setArquivos] = useState<FileList | null>(null);
@@ -119,6 +120,7 @@ const Academia = () => {
           empresa: "",
           mensagem: "",
           turno: "",
+          nivelExperiencia: "",
         });
         setFileNames([]);
         setArquivos(null);
@@ -161,7 +163,7 @@ const Academia = () => {
     id: "cegid-primavera",
     titulo: "Cegid Primavera: Funcionalidades e Módulos",
     descricao:
-      "Aprenda a dominar o ERP mais utilizado em Angola e Portugal para gestão empresarial completa.",
+      "O software de gestão mais robusto de Portugal não precisa ser um mistério. Aprenda na prática, do zero ao avançado, e torne-se o profissional que resolve problemas, não que os cria.",
     imagemUrl: "",
     requisitos: ["Nenhum requisito"],
   } as unknown as Curso;
@@ -284,10 +286,15 @@ const Academia = () => {
         <div className=" max-w-6xl mx-auto px-4 absolute inset-0 z-10">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-1">
-              <h1 className="text-3xl md:text-5xl text-white font-bold mt-[20%]">
-                {cursoExibir.titulo}
+              <h1 className=" md:text-5xl font-bold mt-[16%]">
+                <span className="text-7xl text-gray-400 ml-[7px]">
+                  Cegid Primavera
+                </span>
+                <h3 className="text-7xl mt-2 text-white md:text-3xl ml-[1%] font-normal">
+                  Funcionalidades e Módulos
+                </h3>
               </h1>
-              <p className="text-lg mt-4 text-white max-w-4xl mb-6">
+              <p className="text-lg mt-4 ml-[1%] text-white max-w-4xl mb-6">
                 {cursoExibir.descricao}
               </p>
             </div>
@@ -430,16 +437,23 @@ const Academia = () => {
                   />
                 </div>
                 <div className="p-4 space-y- ">
-                  <div className="flex flex-col  justify-center  gap-4">
-                    <CourseFeature icon="clock" text="Duração: 2 Semanas" />
-                    <CourseFeature icon="book" text="10 módulos completos" />
-
-                    <CourseFeature icon="video" text="Material de apoio" />
-                    <CourseFeature
-                      icon="certificate"
-                      text="Certificado oficial"
-                    />
-                  </div>
+                  <h3 className="font-semibold text-lg mb-4">
+                    Informações do Curso
+                  </h3>
+                  <ul className="space-y-3">
+                    <li className="flex justify-between text-sm">
+                      <span className="text-gray-500">Duração</span>
+                      <span className="font-medium">mês</span>
+                    </li>
+                    <li className="flex justify-between text-sm">
+                      <span className="text-gray-500">Horas</span>
+                      <span className="font-medium">130h</span>
+                    </li>
+                    <li className="flex justify-between text-sm">
+                      <span className="text-gray-500">Idioma</span>
+                      <span className="font-medium">Português</span>
+                    </li>
+                  </ul>
                   <button
                     onClick={() => setIsModalOpen(true)}
                     className="w-full md:w-full bg-gray-600 text-white font-bold mt-8 md:mt-12 py-4 px-6 rounded-[5px]
@@ -452,7 +466,7 @@ const Academia = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full mt-4 border border-gray-300 bg-white text-gray-600 font-semibold py-3 px-6 rounded-[5px] transition duration-300 transform hover:scale-105 hover:bg-gray-50 block text-center">
-                    Contacta-nos
+                    Mais informações
                   </a>
                 </div>
               </div>
@@ -602,27 +616,197 @@ const Academia = () => {
                     />
                   </div>
 
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Selecione o turno desejado *
+                      </label>
+
+                      {/* Categoria Diurno */}
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          Diurno
+                        </h4>
+                        <div className="space-y-2">
+                          <label
+                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                              formData.turno ===
+                              "Segunda a Sexta - 8h às 17h (Presencial)"
+                                ? "border-black bg-gray-100"
+                                : "border-gray-200 hover:bg-gray-50"
+                            }`}>
+                            <input
+                              type="radio"
+                              name="turno"
+                              value="Segunda a Sexta - 8h às 17h (Presencial)"
+                              checked={
+                                formData.turno ===
+                                "Segunda a Sexta - 8h às 17h (Presencial)"
+                              }
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  turno: e.target.value,
+                                })
+                              }
+                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                              disabled={loading}
+                            />
+                            <span
+                              className={`ml-3 text-sm ${
+                                formData.turno ===
+                                "Segunda a Sexta - 8h às 17h (Presencial)"
+                                  ? "text-black font-medium"
+                                  : "text-gray-600"
+                              }`}>
+                              Segunda a Sexta - 8h às 17h (Presencial)
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Categoria Noturno */}
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          Noturno
+                        </h4>
+                        <div className="space-y-2">
+                          <label
+                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                              formData.turno ===
+                              "Terça e Quinta - 19h às 21h (Online)"
+                                ? "border-black bg-gray-100"
+                                : "border-gray-200 hover:bg-gray-50"
+                            }`}>
+                            <input
+                              type="radio"
+                              name="turno"
+                              value="Terça e Quinta - 19h às 21h (Online)"
+                              checked={
+                                formData.turno ===
+                                "Terça e Quinta - 19h às 21h (Online)"
+                              }
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  turno: e.target.value,
+                                })
+                              }
+                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                              disabled={loading}
+                            />
+                            <span
+                              className={`ml-3 text-sm ${
+                                formData.turno ===
+                                "Terça e Quinta - 19h às 21h (Online)"
+                                  ? "text-black font-medium"
+                                  : "text-gray-600"
+                              }`}>
+                              Terça - Feira - 19h às 21h (Online)
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label
+                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                            formData.turno === "Quarta - 19h às 21h (Online)"
+                              ? "border-black bg-gray-100"
+                              : "border-gray-200 hover:bg-gray-50"
+                          }`}>
+                          <input
+                            type="radio"
+                            name="turno"
+                            value="Quarta - 19h às 21h (Online)"
+                            checked={
+                              formData.turno === "Quarta - 19h às 21h (Online)"
+                            }
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                turno: e.target.value,
+                              })
+                            }
+                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            disabled={loading}
+                          />
+                          <span
+                            className={`ml-3 text-sm ${
+                              formData.turno === "Quinta - 19h às 21h (Online)"
+                                ? "text-black font-medium"
+                                : "text-gray-600"
+                            }`}>
+                            Quarta - Feira - 19h às 21h (Online)
+                          </span>
+                        </label>
+                      </div>
+
+                      {/* Categoria Final de Semana */}
+                      <div className="mb-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          Final de Semana
+                        </h4>
+                        <div className="space-y-2">
+                          <label
+                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                              formData.turno === "Domingo - 9h às 17h"
+                                ? "border-black bg-gray-100"
+                                : "border-gray-200 hover:bg-gray-50"
+                            }`}>
+                            <input
+                              type="radio"
+                              name="turno"
+                              value="Domingo - 9h às 17h"
+                              checked={formData.turno === "Domingo - 9h às 17h"}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  turno: e.target.value,
+                                })
+                              }
+                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                              disabled={loading}
+                            />
+                            <span
+                              className={`ml-3 text-sm ${
+                                formData.turno === "Domingo - 9h às 17h"
+                                  ? "text-black font-medium"
+                                  : "text-gray-600"
+                              }`}>
+                              Domingo - 9h às 17h (Presencial)
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {!formData.turno && (
+                      <p className="text-sm text-red-500">
+                        Por favor, selecione um turno
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Adicione este bloco após o campo de seleção de turno */}
                   <div>
-                    <label
-                      htmlFor="turno"
-                      className="block text-sm font-medium text-gray-700">
-                      Turno *
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Nível de Experiência *
                     </label>
                     <select
-                      id="turno"
-                      value={formData.turno}
+                      required
+                      value={formData.nivelExperiencia}
                       onChange={(e) =>
-                        setFormData({ ...formData, turno: e.target.value })
+                        setFormData({
+                          ...formData,
+                          nivelExperiencia: e.target.value,
+                        })
                       }
-                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 pr-8 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 appearance-none"
-                      required>
-                      <option value="">Selecione um turno</option>
-                      <option value="Segunda a Sexta - 9h às 17h">
-                        Segunda a Sexta - 9h às 17h
-                      </option>
-                      <option value="Sábado - 8h às 17h">
-                        Sábado - (8h às 12h) e Domingo - (8h às 17h)
-                      </option>
+                      className="w-full px-4 py-2 border border-gray-300 rounded-[5px]"
+                      disabled={loading}>
+                      <option value="">Selecione seu nível</option>
+                      <option value="Iniciante">Iniciante</option>
+                      <option value="Intermediário">Intermediário</option>
+                      <option value="Avançado">Avançado</option>
                     </select>
                   </div>
 
@@ -829,43 +1013,44 @@ const CourseFeature = ({ icon, text }: CourseFeatureProps) => (
 // Dados dos módulos
 const modules = [
   {
-    title: "Módulo 1: Conceitos Base de ERP",
+    title: "Módulo 1: Instalação e Administração do ERP Primavera",
     topics: [
-      "O que é um ERP",
-      "História e evolução do ERP",
-      "Por que é importante",
-      "Como funciona um sistema ERP",
-      "Tipos de implementação de ERP",
-      "Seis principais benefícios do ERP",
+      "Instalação do software",
+      "Enquadramento e conceitos iniciais",
+      "Criação e gestão de empresas",
+      "Manutenção de dados fundamentais",
+      "Gestão de utilizadores e segurança",
+      "Configurações avançadas",
     ],
   },
   {
-    title: "Módulo 2: Instalação e Administração do ERP Cegid Primavera",
+    title: "Módulo 2: Logística e Gestão de Inventário",
     topics: [
-      "Instalação",
-      "Criação de Empresas",
-      "Manutenção de Dados",
-      "Gestão de Utilizadores e Segurança",
-      "Licenciamento",
-      "Outras Funcionalidades",
-      "Caso Prático",
+      "Documentos de compras e vendas",
+      "Gestão de stock e inventário",
+      "Movimentos e validações",
+      "Relatórios e análises",
+      "Processos de inventariação",
     ],
   },
   {
-    title: "Módulo 3: Processo de Gestão - Compras",
+    title: "Módulo 3: Gestão Financeira e Contabilística",
     topics: [
-      "Ficha de Fornecedores",
-      "Registo de documentos de Compra",
-      "Reprodução de conteúdos entre documentos",
-      "Operações de estorno",
-      "Obrigações Fiscais",
-      "Reimpressão de documentos",
-      "Mapas de Análises",
-      "Caso Prático",
+      "Contabilidade básica",
+      "Gestão de tesouraria",
+      "Processos contabilísticos",
+      "Relatórios financeiros",
+      "Encerramento de contas",
     ],
   },
   {
-    title: "Módulo 4: Processo de Gestão - Inventário",
-    topics: ["Conceitos e operações de Inventário"],
+    title: "Módulo 4: Recursos Humanos e Folha de Pagamentos",
+    topics: [
+      "Gestão de colaboradores",
+      "Processamento de vencimentos",
+      "Obrigações fiscais",
+      "Relatórios de recursos humanos",
+      "Gestão de ausências e férias",
+    ],
   },
 ];

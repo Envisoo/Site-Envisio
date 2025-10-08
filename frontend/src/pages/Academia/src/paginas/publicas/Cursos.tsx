@@ -313,7 +313,7 @@ export default function Cursos() {
             "Domine o Cegid Primavera: conceitos, parametrização e boas práticas no ERP. Aprenda desde os fundamentos até técnicas avançadas de gestão empresarial.",
           categoria: "Gestão/ERP",
           status: "disponivel",
-          imagemUrl: "/academia/Primavera.jpg",
+          imagemUrl: "/academia/primavera.svg",
         } as Partial<Curso>;
       case 1:
         return {
@@ -323,7 +323,7 @@ export default function Cursos() {
             "HTML, CSS e JavaScript modernos. Crie interfaces responsivas com boas práticas e as melhores ferramentas do mercado atual.",
           categoria: "Programação",
           status: "breve",
-          imagemUrl: "/academia/frontend.jpg",
+          imagemUrl: "/academia/linguagem.svg",
         } as Partial<Curso>;
       case 2:
         return {
@@ -333,7 +333,7 @@ export default function Cursos() {
             "Fundamentos essenciais: variáveis, decisões, loops e resolução de problemas. Prepare-se para qualquer linguagem de programação.",
           categoria: "Programação",
           status: "breve",
-          imagemUrl: "/academia/logica.png",
+          imagemUrl: "/academia/logica.svg",
         } as Partial<Curso>;
       case 3:
         return {
@@ -343,7 +343,7 @@ export default function Cursos() {
             "Consultas SQL, modelagem, procedures, views e administração básica. Domine um dos bancos de dados mais utilizados no mercado.",
           categoria: "Banco de Dados",
           status: "breve",
-          imagemUrl: "/academia/sql.png",
+          imagemUrl: "/academia/sql.svg",
         } as Partial<Curso>;
       default:
         return null;

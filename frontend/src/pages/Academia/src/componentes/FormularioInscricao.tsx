@@ -12,6 +12,7 @@ interface FormData {
   empresa: string;
   mensagem: string;
   turno: string;
+  nivelExperiencia: string;
   arquivos: FileList | null;
 }
 
@@ -46,6 +47,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
     empresa: "",
     mensagem: "",
     turno: "",
+    nivelExperiencia: "",
   });
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [arquivos, setArquivos] = useState<FileList | null>(null);
@@ -112,6 +114,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
           empresa: "",
           mensagem: "",
           turno: "",
+          nivelExperiencia: "",
         });
         setArquivos(null);
         setFileNames([]);
@@ -278,25 +281,197 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                   />
                 </div>
 
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Selecione o turno desejado *
+                    </label>
+
+                    {/* Categoria Diurno */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">
+                        Diurno
+                      </h4>
+                      <div className="space-y-2">
+                        <label
+                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                            formData.turno ===
+                            "Segunda a Sexta - 8h às 17h (Presencial)"
+                              ? "border-black bg-gray-100"
+                              : "border-gray-200 hover:bg-gray-50"
+                          }`}>
+                          <input
+                            type="radio"
+                            name="turno"
+                            value="Segunda a Sexta - 8h às 17h (Presencial)"
+                            checked={
+                              formData.turno ===
+                              "Segunda a Sexta - 8h às 17h (Presencial)"
+                            }
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                turno: e.target.value,
+                              })
+                            }
+                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            disabled={loading}
+                          />
+                          <span
+                            className={`ml-3 text-sm ${
+                              formData.turno ===
+                              "Segunda a Sexta - 8h às 17h (Presencial)"
+                                ? "text-black font-medium"
+                                : "text-gray-600"
+                            }`}>
+                            Segunda a Sexta - 8h às 17h (Presencial)
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Categoria Noturno */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">
+                        Noturno
+                      </h4>
+                      <div className="space-y-2">
+                        <label
+                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                            formData.turno ===
+                            "Terça e Quinta - 19h às 21h (Online)"
+                              ? "border-black bg-gray-100"
+                              : "border-gray-200 hover:bg-gray-50"
+                          }`}>
+                          <input
+                            type="radio"
+                            name="turno"
+                            value="Terça e Quinta - 19h às 21h (Online)"
+                            checked={
+                              formData.turno ===
+                              "Terça e Quinta - 19h às 21h (Online)"
+                            }
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                turno: e.target.value,
+                              })
+                            }
+                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            disabled={loading}
+                          />
+                          <span
+                            className={`ml-3 text-sm ${
+                              formData.turno ===
+                              "Terça e Quinta - 19h às 21h (Online)"
+                                ? "text-black font-medium"
+                                : "text-gray-600"
+                            }`}>
+                            Terça - Feira - 19h às 21h (Online)
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label
+                        className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                          formData.turno === "Quarta - 19h às 21h (Online)"
+                            ? "border-black bg-gray-100"
+                            : "border-gray-200 hover:bg-gray-50"
+                        }`}>
+                        <input
+                          type="radio"
+                          name="turno"
+                          value="Quarta - 19h às 21h (Online)"
+                          checked={
+                            formData.turno === "Quarta - 19h às 21h (Online)"
+                          }
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              turno: e.target.value,
+                            })
+                          }
+                          className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                          disabled={loading}
+                        />
+                        <span
+                          className={`ml-3 text-sm ${
+                            formData.turno === "Quinta - 19h às 21h (Online)"
+                              ? "text-black font-medium"
+                              : "text-gray-600"
+                          }`}>
+                          Quarta - Feira - 19h às 21h (Online)
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Categoria Final de Semana */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">
+                        Final de Semana
+                      </h4>
+                      <div className="space-y-2">
+                        <label
+                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                            formData.turno === "Domingo - 9h às 17h"
+                              ? "border-black bg-gray-100"
+                              : "border-gray-200 hover:bg-gray-50"
+                          }`}>
+                          <input
+                            type="radio"
+                            name="turno"
+                            value="Domingo - 9h às 17h"
+                            checked={formData.turno === "Domingo - 9h às 17h"}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                turno: e.target.value,
+                              })
+                            }
+                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            disabled={loading}
+                          />
+                          <span
+                            className={`ml-3 text-sm ${
+                              formData.turno === "Domingo - 9h às 17h"
+                                ? "text-black font-medium"
+                                : "text-gray-600"
+                            }`}>
+                            Domingo - 9h às 17h (Presencial)
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {!formData.turno && (
+                    <p className="text-sm text-red-500">
+                      Por favor, selecione um turno
+                    </p>
+                  )}
+                </div>
+
+                {/* Adicione este bloco após o campo de seleção de turno */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Turno *
+                    Nível de Experiência *
                   </label>
                   <select
                     required
-                    value={formData.turno}
+                    value={formData.nivelExperiencia}
                     onChange={(e) =>
-                      setFormData({ ...formData, turno: e.target.value })
+                      setFormData({
+                        ...formData,
+                        nivelExperiencia: e.target.value,
+                      })
                     }
                     className="w-full px-4 py-2 border border-gray-300 rounded-[5px]"
                     disabled={loading}>
-                    <option value="">Selecione um turno</option>
-                    <option value="Segunda a Sexta - 9h às 17h">
-                      Segunda a Sexta - 9h às 17h
-                    </option>
-                    <option value="Sábado - 8h às 17h">
-                      Sábado - (8h às 12h) e Domingo - (8h às 17h)
-                    </option>
+                    <option value="">Selecione seu nível</option>
+                    <option value="Iniciante">Iniciante</option>
+                    <option value="Intermediário">Intermediário</option>
+                    <option value="Avançado">Avançado</option>
                   </select>
                 </div>
 

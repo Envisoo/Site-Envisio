@@ -44,6 +44,8 @@ import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
 } from "../../../data/Modulo";
+import { motion } from "framer-motion";
+import { text } from "stream/consumers";
 
 interface Avaliacao {
   id: string;
@@ -84,7 +86,7 @@ export default function CursoDetalhe() {
     duracao: 2,
     nivel: "iniciante",
     imagemUrl: "",
-    requisitos: ["Computador"],
+    requisitos: ["Lógica de programação"],
   } as Curso;
 
   // Seleciona a fonte de dados do curso: API (quando há id) ou local (sem id)
@@ -594,11 +596,45 @@ export default function CursoDetalhe() {
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <button
-                  onClick={() => setModalInscricaoAberto(true)} // Open the FormularioInscricao modal
-                  className="bg-gray-600  text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
+                <motion.button
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: "#4B5563", // Cor ligeiramente mais clara no hover
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                  }}
+                  onClick={() => setModalInscricaoAberto(true)}
+                  className="bg-gray-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
                   Inscreva-se Agora
-                </button>
+                </motion.button>
+
+                <motion.a
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                  }}
+                  href="https://wa.me/244947137676?text=Olá%20Envisio,%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" w-[200px] border text-white border-gray-300 bg-transparent  font-semibold py-3 px-8 rounded-[5px] transition-all duration-300 flex items-center justify-center">
+                  Mais informações
+                </motion.a>
               </div>
             </div>
           </div>
@@ -812,28 +848,39 @@ export default function CursoDetalhe() {
                 </ul>
               </div>
 
-              {/* Módulos e Aulas */}
+              {/* Benefícios do Curso */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
                 <h3 className="font-medium text-base mb-4 text-gray-900">
-                  Conteúdo do Curso
+                  O que você vai conquistar:
                 </h3>
-                <div className="flex items-center p-3 rounded-lg">
-                  <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-4 h-4 text-gray-500" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900">
-                      {modulosFonte.length} módulos completos
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {modulosFonte.reduce(
-                        (total, modulo) => total + (modulo.aulas?.length || 0),
-                        0
-                      )}{" "}
-                      aulas no total
-                    </p>
-                  </div>
-                </div>
+                <ul className="space-y-4">
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Competência Sólida</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">
+                        Reconhecimento Profissional
+                      </span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Confiança Total</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <div>
+                      <span className="font-medium">Networking</span>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

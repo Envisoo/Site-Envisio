@@ -36,6 +36,16 @@ export const enviarEmail = async(req, res) => {
             console.log("📝 Dados do formulário:", req.body);
             console.log("📁 Arquivos anexados:", req.files || "Nenhum arquivo");
 
+            const attachments = [];
+            if (req.files && req.files.length > 0) {
+                req.files.forEach((file) => {
+                    attachments.push({
+                        Name: file.originalname,
+                        Content: file.buffer.toString("base64"),
+                        ContentType: file.mimetype,
+                    });
+                });
+            }
             // Acessa os campos do formulário
             const {
                 nome,
@@ -47,6 +57,7 @@ export const enviarEmail = async(req, res) => {
                 turno,
                 curso,
                 area,
+                nivelExperiencia,
             } = req.body;
 
             // Verifica campos obrigatórios
@@ -80,6 +91,11 @@ export const enviarEmail = async(req, res) => {
           ${curso ? `<p><strong>Curso:</strong> ${curso}</p>` : ""}
           ${area ? `<p><strong>Área:</strong> ${area}</p>` : ""}
           <p><strong>Turno:</strong> ${turno}</p>
+          ${
+            nivelExperiencia
+              ? `<p><strong>Nível de Experiência:</strong> ${nivelExperiencia}</p>`
+              : ""
+          }
           
           ${
             mensagem
@@ -129,18 +145,8 @@ export const enviarEmail = async(req, res) => {
       Subject: subject,
       HtmlBody: message,
       ReplyTo: email,
+      Attachments: attachments,
     });
-
-    const attachments = [];
-    if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        attachments.push({
-          Name: file.originalname,
-          Content: file.buffer.toString("base64"),
-          ContentType: file.mimetype,
-        });
-      });
-    }
 
     console.log("✅ Email enviado com sucesso! MessageID:", response.MessageID);
 
