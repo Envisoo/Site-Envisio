@@ -42,12 +42,6 @@ const heroSlides = [
     label: "Consultoria",
   },
   {
-    src: "/images/imagem home/banner_hero2.webp",
-    srcMobile: "/images/imagem home/mobile/banner_mobile1.webp", // Adicione a versão mobile
-    link: "/servicos/software",
-    label: "Serviços Técnicos",
-  },
-  {
     src: "/images/imagem home/cabeamento.webp",
     srcMobile: "/images/imagem home/mobile/banner_mobile2.webp", // Adicione a versão mobile
     link: "/servicos/hardware",
@@ -128,13 +122,6 @@ const businessSegments: Record<SegmentKey, Segment> = {
 
 // Serviços oferecidos (mock para exibição na seção de serviços)
 const services = [
-  {
-    title: "Soluções de ERP",
-    description:
-      "Implementação, customização e suporte de sistemas de gestão empresarial.",
-    tipo: "software",
-    image: "/images/imagem cads/Destaque2.webp",
-  },
   {
     title: "Renting de Equipamentos",
     description:

@@ -38,21 +38,7 @@ const softwareServices = [
     ],
     image: "/images/imagem soft/Consultoria.webp",
   },
-  {
-    id: 2,
-    title: "Soluções de ERP",
-    description:
-      "Sistemas de gestão empresarial completos que integram todos os departamentos numa única plataforma, proporcionando eficiência operacional e visão estratégica do negócio.",
-    icon: <Cpu className="w-8 h-8 text-red-500" />,
-    items: [
-      "Integração total de dados entre departamentos",
-      "Automação de processos manuais e repetitivos",
-      "Visão em tempo real do negócio com painéis de controlo",
-      "Otimização de custos operacionais",
-      "Controlo e segurança de dados avançados",
-    ],
-    image: "/images/imagem soft/Primavera.webp",
-  },
+
   {
     id: 3,
     title: "Desenvolvimento de Software",
@@ -269,7 +255,7 @@ const ServicosSoftware = () => {
             <Cloud className="w-10 h-10 text-red-500 flex-shrink-0" />
             <div>
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
-                Cloud, ERP & Integrações
+                Cloud & Integrações
               </h5>
               <p
                 className="text-gray-600 text-sm"
@@ -336,7 +322,7 @@ const ServicosSoftware = () => {
                     1
                 )
               }
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
+              className="absolute left-[-20px] top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
               aria-label="Anterior">
               <ChevronLeft className="w-7 h-7 text-red-600" />
             </button>
@@ -373,7 +359,7 @@ const ServicosSoftware = () => {
                     1
                 )
               }
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
+              className="absolute right-[400px] top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-[5px] p-3 border border-gray-200 transition-all"
               aria-label="Próximo">
               <ChevronRight className="w-7 h-7 text-red-600" />
             </button>
@@ -392,6 +378,7 @@ const ServicosSoftware = () => {
           </AnimatePresence>
         </div>
       </section>
+
       {/* Seção de Diferenciais */}
       <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-6">
