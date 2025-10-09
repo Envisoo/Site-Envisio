@@ -231,7 +231,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                 style={formContainerStyle}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Primeiro Nome *
                     </label>
                     <input
@@ -241,13 +241,13 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                       onChange={(e) =>
                         setFormData({ ...formData, nome: e.target.value })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-[5px] "
+                      className="w-full px-4 py-2 border border-gray-300 rounded-[1px] "
                       placeholder="Primeiro nome"
                       disabled={loading}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Último Nome *
                     </label>
                     <input
@@ -257,7 +257,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                       onChange={(e) =>
                         setFormData({ ...formData, sobrenome: e.target.value })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-[5px] "
+                      className="w-full px-4 py-2 border border-gray-300 rounded-[1px] "
                       placeholder="Último nome"
                       disabled={loading}
                     />
@@ -265,7 +265,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
                     E-mail *
                   </label>
                   <input
@@ -275,7 +275,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-[5px]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-[1px]"
                     placeholder="seu@email.com"
                     disabled={loading}
                   />
@@ -283,165 +283,94 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Selecione o turno desejado *
+                    <label className="block text-sm font-semibold text-black mb-2">
+                      Selecione o turno*
                     </label>
 
-                    {/* Categoria Diurno */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">
-                        Diurno
-                      </h4>
-                      <div className="space-y-2">
-                        <label
-                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                            formData.turno ===
-                            "Segunda a Sexta - 8h às 17h (Presencial)"
-                              ? "border-black bg-gray-100"
-                              : "border-gray-200 hover:bg-gray-50"
-                          }`}>
+                    {/* Turno A */}
+                    <div className="mb-4 border border-gray-200 border-b-gray-300 rounded-[1px] overflow-hidden">
+                      <div className="p-4 bg-gray-100">
+                        <label className="flex items-center cursor-pointer">
                           <input
                             type="radio"
                             name="turno"
-                            value="Segunda a Sexta - 8h às 17h (Presencial)"
-                            checked={
-                              formData.turno ===
-                              "Segunda a Sexta - 8h às 17h (Presencial)"
+                            value="Turno A"
+                            checked={formData.turno === "Turno A"}
+                            onChange={() =>
+                              setFormData({ ...formData, turno: "Turno A" })
                             }
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                turno: e.target.value,
-                              })
-                            }
-                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            className="h-4 w-4 text-black ring-black border-b-gray-300 border-gray-300"
                             disabled={loading}
                           />
-                          <span
-                            className={`ml-3 text-sm ${
-                              formData.turno ===
-                              "Segunda a Sexta - 8h às 17h (Presencial)"
-                                ? "text-black font-medium"
-                                : "text-gray-600"
-                            }`}>
-                            Segunda a Sexta - 8h às 17h (Presencial)
+                          <span className="ml-3 text-sm font-semibold text-blue-700">
+                            Turno A
                           </span>
                         </label>
                       </div>
+                      {formData.turno === "Turno A" && (
+                        <div className="bg-white p-4 mt-[-10px]">
+                          <div className="space-y-1">
+                            {["Segunda a Sexta - 8h às 17h (Presencial)"].map(
+                              (option) => (
+                                <div
+                                  key={option}
+                                  className="py-2 px-3 hover:bg-gray-50 rounded transition-colors">
+                                  <div className="flex items-center">
+                                    <div className="flex-shrink-0 w-1.5 h-1.5 bg-gray-600 rounded-full mr-3"></div>
+                                    <span className="text-sm text-gray-700">
+                                      {option}
+                                    </span>
+                                  </div>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Categoria Noturno */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">
-                        Noturno
-                      </h4>
-                      <div className="space-y-2">
-                        <label
-                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                            formData.turno ===
-                            "Terça e Quinta - 19h às 21h (Online)"
-                              ? "border-black bg-gray-100"
-                              : "border-gray-200 hover:bg-gray-50"
-                          }`}>
+                    {/* Turno B */}
+                    <div className="mb-4 border border-gray-200 border-b-gray-300 rounded-[1px] overflow-hidden">
+                      <div className="p-4 bg-gray-100">
+                        <label className="flex items-center cursor-pointer">
                           <input
                             type="radio"
                             name="turno"
-                            value="Terça e Quinta - 19h às 21h (Online)"
-                            checked={
-                              formData.turno ===
-                              "Terça e Quinta - 19h às 21h (Online)"
+                            value="Turno B"
+                            checked={formData.turno === "Turno B"}
+                            onChange={() =>
+                              setFormData({ ...formData, turno: "Turno B" })
                             }
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                turno: e.target.value,
-                              })
-                            }
-                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                            className="h-4 w-4 text-black ring-black border-b-gray-300 border-gray-300"
                             disabled={loading}
                           />
-                          <span
-                            className={`ml-3 text-sm ${
-                              formData.turno ===
-                              "Terça e Quinta - 19h às 21h (Online)"
-                                ? "text-black font-medium"
-                                : "text-gray-600"
-                            }`}>
-                            Terça - Feira - 19h às 21h (Online)
+                          <span className="ml-3 text-sm font-semibold text-blue-700">
+                            Turno B
                           </span>
                         </label>
                       </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label
-                        className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                          formData.turno === "Quarta - 19h às 21h (Online)"
-                            ? "border-black bg-gray-100"
-                            : "border-gray-200 hover:bg-gray-50"
-                        }`}>
-                        <input
-                          type="radio"
-                          name="turno"
-                          value="Quarta - 19h às 21h (Online)"
-                          checked={
-                            formData.turno === "Quarta - 19h às 21h (Online)"
-                          }
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              turno: e.target.value,
-                            })
-                          }
-                          className="h-4 w-4 text-black focus:ring-black border-gray-300"
-                          disabled={loading}
-                        />
-                        <span
-                          className={`ml-3 text-sm ${
-                            formData.turno === "Quinta - 19h às 21h (Online)"
-                              ? "text-black font-medium"
-                              : "text-gray-600"
-                          }`}>
-                          Quarta - Feira - 19h às 21h (Online)
-                        </span>
-                      </label>
-                    </div>
-
-                    {/* Categoria Final de Semana */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">
-                        Final de Semana
-                      </h4>
-                      <div className="space-y-2">
-                        <label
-                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                            formData.turno === "Domingo - 9h às 17h"
-                              ? "border-black bg-gray-100"
-                              : "border-gray-200 hover:bg-gray-50"
-                          }`}>
-                          <input
-                            type="radio"
-                            name="turno"
-                            value="Domingo - 9h às 17h"
-                            checked={formData.turno === "Domingo - 9h às 17h"}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                turno: e.target.value,
-                              })
-                            }
-                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
-                            disabled={loading}
-                          />
-                          <span
-                            className={`ml-3 text-sm ${
-                              formData.turno === "Domingo - 9h às 17h"
-                                ? "text-black font-medium"
-                                : "text-gray-600"
-                            }`}>
-                            Domingo - 9h às 17h (Presencial)
-                          </span>
-                        </label>
-                      </div>
+                      {formData.turno === "Turno B" && (
+                        <div className="bg-white p-4 mt-[-10px]">
+                          <div className="space-y-1">
+                            {[
+                              "Terça - Feira - 19h às 21h (Online)",
+                              "Quarta - Feira - 19h às 21h (Online)",
+                              "Domingo - 9h às 17h (Presencial)",
+                            ].map((option) => (
+                              <div
+                                key={option}
+                                className="py-2 px-3 hover:bg-gray-50 rounded transition-colors">
+                                <div className="flex items-center">
+                                  <div className="flex-shrink-0 w-1.5 h-1.5 bg-gray-600 rounded-full mr-3"></div>
+                                  <span className="text-sm text-gray-700">
+                                    {option}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -454,7 +383,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
 
                 {/* Adicione este bloco após o campo de seleção de turno */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
                     Nível de Experiência *
                   </label>
                   <select
@@ -466,7 +395,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                         nivelExperiencia: e.target.value,
                       })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-[5px]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-[1px]"
                     disabled={loading}>
                     <option value="">Selecione seu nível</option>
                     <option value="Iniciante">Iniciante</option>
@@ -476,7 +405,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
                     Telefone
                   </label>
                   <input
@@ -488,14 +417,14 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                         telefone: e.target.value,
                       })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-[5px] "
+                    className="w-full px-4 py-2 border border-gray-300 rounded-[1px] "
                     placeholder="(XXX) XXX-XXX-XXXX"
                     disabled={loading}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
                     Empresa
                   </label>
                   <input
@@ -507,15 +436,15 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                         empresa: e.target.value,
                       })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-[5px] "
+                    className="w-full px-4 py-2 border border-gray-300 rounded-[1px] "
                     placeholder="Sua empresa (opcional)"
                     disabled={loading}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Anexar Documentos (PDF)
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Anexar Ficheiros (PDF) *
                   </label>
                   <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                     <div className="space-y-1 text-center">
@@ -545,44 +474,27 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                             multiple
                             accept=".pdf"
                             onChange={handleFileChange}
-                            disabled={loading}
                           />
                         </label>
                         <p className="pl-1">ou arraste e solte</p>
                       </div>
-                      <p className="text-xs text-gray-500">PDF até 10MB cada</p>
-                      {fileNames.length > 0 && (
-                        <div className="mt-4 text-left">
-                          <p className="text-sm font-medium text-gray-700 mb-2">
-                            Ficheiros selecionados:
-                          </p>
-                          <ul className="text-sm text-gray-600 space-y-1 max-h-32 overflow-y-auto">
-                            {fileNames.map((file, index) => (
-                              <li key={index} className="flex items-center">
-                                <svg
-                                  className="flex-shrink-0 h-4 w-4 text-gray-500 mr-2"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24">
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                  />
-                                </svg>
-                                {file}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                      <p className="text-xs text-gray-500">PDF até 10MB</p>
                     </div>
                   </div>
+                  {fileNames.length > 0 && (
+                    <div className="mt-2 text-sm text-gray-600">
+                      <p>Ficheiros selecionados:</p>
+                      <ul className="list-disc pl-5">
+                        {fileNames.map((name, index) => (
+                          <li key={index}>{name}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
                     Mensagem
                   </label>
                   <textarea
@@ -594,7 +506,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                       })
                     }
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-[5px] "
+                    className="w-full px-4 py-2 border border-gray-300 rounded-[1px] "
                     placeholder="Alguma observação ou dúvida?"
                     disabled={loading}
                   />
@@ -609,7 +521,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gray-600 text-white py-3 px-4 rounded-[5px] transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="w-full bg-gray-600 text-white py-3 px-4 rounded-[1px] transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   {loading ? (
                     <span className="flex items-center justify-center">
                       <svg

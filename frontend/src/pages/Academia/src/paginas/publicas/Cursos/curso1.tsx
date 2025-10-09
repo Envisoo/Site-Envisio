@@ -85,8 +85,8 @@ export default function CursoDetalhe() {
     descricao:
       "Aprenda a dominar o ERP mais utilizado em Angola e Portugal para gestão empresarial completa.",
     categoria: "Gestão/ERP",
-    duracao: 1 as any,
-    horas: "130" as any,
+    duracao: "120h" as any,
+    horas: "120" as any,
     imagemUrl: "",
     requisitos: ["Nenhum requisito"],
   } as unknown as Curso;
@@ -100,7 +100,7 @@ export default function CursoDetalhe() {
     descricao:
       "Aprenda JavaScript do zero até conceitos avançados com conteúdo prático e direto ao ponto.",
     categoria: "Programação",
-    duracao: 1,
+    duracao: "" as any,
     nivel: "iniciante",
     imagemUrl: "",
     requisitos: ["Computador e internet"],
@@ -218,33 +218,38 @@ export default function CursoDetalhe() {
   const modulosDefinidosAqui: Modulo[] = [
     {
       id: "m1",
-      titulo: "Módulo 1: Instalação e Administração do ERP Primavera",
+      titulo: "Módulo 1: Conceitos Base de ERP",
       duracaoTotal: "",
       ordem: 1,
       aulas: [
-        { id: "m1-a1", titulo: "Instalação", tipo: "texto", duracao: "" },
-        { id: "m1-a2", titulo: "Enquadramento", tipo: "texto", duracao: "" },
+        { id: "m1-a1", titulo: "O que é um ERP", tipo: "texto", duracao: "" },
+        {
+          id: "m1-a2",
+          titulo: "História e evolução do ERP",
+          tipo: "texto",
+          duracao: "",
+        },
         {
           id: "m1-a3",
-          titulo: "Criação de Empresas",
+          titulo: "Por que é importante",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m1-a4",
-          titulo: "Manutenção de Dados",
+          titulo: "Como funciona um sistema ERP",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m1-a5",
-          titulo: "Gestão de Utilizadores e Segurança",
+          titulo: "Tipos de implementação de ERP",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m1-a6",
-          titulo: "Outras funcionalidades",
+          titulo: "Seis principais benefícios do ERP",
           tipo: "texto",
           duracao: "",
         },
@@ -252,37 +257,33 @@ export default function CursoDetalhe() {
     },
     {
       id: "m2",
-      titulo: "Módulo 2: Logística – Configuração",
+      titulo: "Módulo 2: Instalação e Administração do ERP Primavera",
       duracaoTotal: "",
       ordem: 2,
       aulas: [
-        {
-          id: "m2-a1",
-          titulo: "Documentos de Compras",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m2-a2",
-          titulo: "Documentos de Vendas",
-          tipo: "texto",
-          duracao: "",
-        },
+        { id: "m2-a1", titulo: "Instalação", tipo: "texto", duracao: "" },
+        { id: "m2-a2", titulo: "Enquadramento", tipo: "texto", duracao: "" },
         {
           id: "m2-a3",
-          titulo: "Documentos Internos",
+          titulo: "Criação de Empresas",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m2-a4",
-          titulo: "Documentos de Transferência",
+          titulo: "Manutenção de Dados",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m2-a5",
-          titulo: "Configurações e Valorização de Stock",
+          titulo: "Gestão de Utilizadores e Segurança",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m2-a6",
+          titulo: "Outras funcionalidades",
           tipo: "texto",
           duracao: "",
         },
@@ -290,39 +291,37 @@ export default function CursoDetalhe() {
     },
     {
       id: "m3",
-      titulo: "Módulo 3: Gestão de Inventário – Utilização",
+      titulo: "Módulo 3: Logística – Configuração",
       duracaoTotal: "",
       ordem: 3,
       aulas: [
-        { id: "m3-a1", titulo: "Enquadramento", tipo: "texto", duracao: "" },
+        {
+          id: "m3-a1",
+          titulo: "Documentos de Compras",
+          tipo: "texto",
+          duracao: "",
+        },
         {
           id: "m3-a2",
-          titulo: "Gestão de Inventário",
+          titulo: "Documentos de Vendas",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m3-a3",
-          titulo: "Movimentos de Stock",
+          titulo: "Documentos Internos",
           tipo: "texto",
           duracao: "",
         },
-        { id: "m3-a4", titulo: "Dados Mestre", tipo: "texto", duracao: "" },
+        {
+          id: "m3-a4",
+          titulo: "Documentos de Transferência",
+          tipo: "texto",
+          duracao: "",
+        },
         {
           id: "m3-a5",
-          titulo: "Operações de Expedição e Receção",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m3-a6",
-          titulo: "Valorização do Stock",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m3-a7",
-          titulo: "Processo de Inventariação",
+          titulo: "Configurações e Valorização de Stock",
           tipo: "texto",
           duracao: "",
         },
@@ -330,70 +329,110 @@ export default function CursoDetalhe() {
     },
     {
       id: "m4",
-      titulo: "Módulo 4: Compras – Utilização",
+      titulo: "Módulo 4: Gestão de Inventário – Utilização",
       duracaoTotal: "",
       ordem: 4,
       aulas: [
-        {
-          id: "m4-a1",
-          titulo: "Entidades e Artigos",
-          tipo: "texto",
-          duracao: "",
-        },
+        { id: "m4-a1", titulo: "Enquadramento", tipo: "texto", duracao: "" },
         {
           id: "m4-a2",
-          titulo: "Registo de Documentos de Compra",
+          titulo: "Gestão de Inventário",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m4-a3",
-          titulo: "Circuito Documental",
+          titulo: "Movimentos de Stock",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m4-a4", titulo: "Dados Mestre", tipo: "texto", duracao: "" },
+        {
+          id: "m4-a5",
+          titulo: "Operações de Expedição e Receção",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m4-a4",
-          titulo: "Operações de Estorno e Anulação",
+          id: "m4-a6",
+          titulo: "Valorização do Stock",
           tipo: "texto",
           duracao: "",
         },
-        { id: "m4-a5", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+        {
+          id: "m4-a7",
+          titulo: "Processo de Inventariação",
+          tipo: "texto",
+          duracao: "",
+        },
       ],
     },
     {
       id: "m5",
-      titulo: "Módulo 5: Vendas – Utilização",
+      titulo: "Módulo 5: Compras – Utilização",
       duracaoTotal: "",
       ordem: 5,
       aulas: [
         {
           id: "m5-a1",
-          titulo: "Criar Entidades e Artigos",
+          titulo: "Entidades e Artigos",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m5-a2",
+          titulo: "Registo de Documentos de Compra",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-a3",
+          titulo: "Circuito Documental",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m5-a4",
+          titulo: "Operações de Estorno e Anulação",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m5-a5", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
+    },
+    {
+      id: "m6",
+      titulo: "Módulo 6: Vendas – Utilização",
+      duracaoTotal: "",
+      ordem: 6,
+      aulas: [
+        {
+          id: "m6-a1",
+          titulo: "Criar Entidades e Artigos",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m6-a2",
           titulo: "Documentos de Venda",
           tipo: "texto",
           duracao: "",
         },
-        { id: "m5-a3", titulo: "Editor de Vendas", tipo: "texto", duracao: "" },
+        { id: "m6-a3", titulo: "Editor de Vendas", tipo: "texto", duracao: "" },
         {
-          id: "m5-a4",
+          id: "m6-a4",
           titulo: "Operações de Anulação/Estorno",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m5-a5",
+          id: "m6-a5",
           titulo: "Obrigações Fiscais e Comunicação de Documentos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m5-a6",
+          id: "m6-a6",
           titulo: "Mapas e Estatísticas de Vendas",
           tipo: "texto",
           duracao: "",
@@ -401,14 +440,14 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m6",
-      titulo: "Módulo 6: POS (Point of Sales)",
+      id: "m7",
+      titulo: "Módulo 7: POS (Point of Sales)",
       duracaoTotal: "",
-      ordem: 6,
+      ordem: 7,
       aulas: [
-        { id: "m6-a1", titulo: "Configuração POS", tipo: "texto", duracao: "" },
+        { id: "m7-a1", titulo: "Configuração POS", tipo: "texto", duracao: "" },
         {
-          id: "m6-a2",
+          id: "m7-a2",
           titulo: "Operações (Abertura, Fecho, Vendas, Estornos, Exploração)",
           tipo: "texto",
           duracao: "",
@@ -416,62 +455,62 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m7",
-      titulo: "Módulo 7: Tesouraria – Configuração",
-      duracaoTotal: "",
-      ordem: 7,
-      aulas: [
-        { id: "m7-a1", titulo: "Contas Correntes", tipo: "texto", duracao: "" },
-        { id: "m7-a2", titulo: "Caixa e Bancos", tipo: "texto", duracao: "" },
-      ],
-    },
-    {
       id: "m8",
-      titulo: "Módulo 8: Tesouraria – Utilização",
+      titulo: "Módulo 8: Tesouraria – Configuração",
       duracaoTotal: "",
       ordem: 8,
       aulas: [
-        {
-          id: "m8-a1",
-          titulo: "Gestão de Contas Correntes",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m8-a2",
-          titulo: "Operações sobre Pendentes",
-          tipo: "texto",
-          duracao: "",
-        },
-        {
-          id: "m8-a3",
-          titulo: "Planos de Pagamento e Retenção",
-          tipo: "texto",
-          duracao: "",
-        },
-        { id: "m8-a4", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+        { id: "m8-a1", titulo: "Contas Correntes", tipo: "texto", duracao: "" },
+        { id: "m8-a2", titulo: "Caixa e Bancos", tipo: "texto", duracao: "" },
       ],
     },
     {
       id: "m9",
-      titulo: "Módulo 9: Recursos Humanos – Configuração",
+      titulo: "Módulo 9: Tesouraria – Utilização",
       duracaoTotal: "",
       ordem: 9,
       aulas: [
         {
           id: "m9-a1",
-          titulo: "Dados Mestre – Ficha do Funcionário",
+          titulo: "Gestão de Contas Correntes",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m9-a2",
-          titulo: "Configurações no Administrador",
+          titulo: "Operações sobre Pendentes",
           tipo: "texto",
           duracao: "",
         },
         {
           id: "m9-a3",
+          titulo: "Planos de Pagamento e Retenção",
+          tipo: "texto",
+          duracao: "",
+        },
+        { id: "m9-a4", titulo: "Mapas de Análise", tipo: "texto", duracao: "" },
+      ],
+    },
+    {
+      id: "m10",
+      titulo: "Módulo 10: Recursos Humanos – Configuração",
+      duracaoTotal: "",
+      ordem: 10,
+      aulas: [
+        {
+          id: "m10-a1",
+          titulo: "Dados Mestre – Ficha do Funcionário",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a2",
+          titulo: "Configurações no Administrador",
+          tipo: "texto",
+          duracao: "",
+        },
+        {
+          id: "m10-a3",
           titulo: "Configurações de Processamentos e Alterações Mensais",
           tipo: "texto",
           duracao: "",
@@ -479,43 +518,43 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m10",
-      titulo: "Módulo 10: Recursos Humanos – Utilização",
+      id: "m11",
+      titulo: "Módulo 11: Recursos Humanos – Utilização",
       duracaoTotal: "",
-      ordem: 10,
+      ordem: 11,
       aulas: [
         {
-          id: "m10-a1",
+          id: "m11-a1",
           titulo: "Ficha do Funcionário",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-a2",
+          id: "m11-a2",
           titulo: "Processamento de Vencimento",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-a3",
+          id: "m11-a3",
           titulo: "Alterações Mensais",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-a4",
+          id: "m11-a4",
           titulo: "Ausências, Férias e Remunerações",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-a5",
+          id: "m11-a5",
           titulo: "Obrigações Fiscais",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m10-a6",
+          id: "m11-a6",
           titulo: "Cadastro e Mapas de Análise",
           tipo: "texto",
           duracao: "",
@@ -523,37 +562,37 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m11",
-      titulo: "Módulo 11: Gestão de Ativos",
+      id: "m12",
+      titulo: "Módulo 12: Gestão de Ativos",
       duracaoTotal: "",
-      ordem: 11,
+      ordem: 12,
       aulas: [
         {
-          id: "m11-a1",
+          id: "m12-a1",
           titulo: "Critérios e Planos de Depreciação",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m11-a2",
+          id: "m12-a2",
           titulo: "Criação de Fichas de Bens",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m11-a3",
+          id: "m12-a3",
           titulo: "Operações sobre os Bens",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m11-a4",
+          id: "m12-a4",
           titulo: "Exploração e Mapas Fiscais",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m11-a5",
+          id: "m12-a5",
           titulo: "Operações de Fim de Vida do Ativo",
           tipo: "texto",
           duracao: "",
@@ -561,31 +600,31 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m12",
-      titulo: "Módulo 12: Financeira – Configuração",
+      id: "m13",
+      titulo: "Módulo 13: Financeira – Configuração",
       duracaoTotal: "",
-      ordem: 12,
+      ordem: 13,
       aulas: [
         {
-          id: "m12-a1",
+          id: "m13-a1",
           titulo: "Configurações de Movimentos Contabilísticos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m12-a2",
+          id: "m13-a2",
           titulo: "Criação e Transferência de Contas",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m12-a3",
+          id: "m13-a3",
           titulo: "Configurações para Apuramentos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m12-a4",
+          id: "m13-a4",
           titulo: "Integração com Contabilidade",
           tipo: "texto",
           duracao: "",
@@ -593,37 +632,37 @@ export default function CursoDetalhe() {
       ],
     },
     {
-      id: "m13",
-      titulo: "Módulo 13: Contabilidade e Fiscalidade – Utilização",
+      id: "m14",
+      titulo: "Módulo 14: Contabilidade e Fiscalidade – Utilização",
       duracaoTotal: "",
-      ordem: 13,
+      ordem: 14,
       aulas: [
         {
-          id: "m13-a1",
+          id: "m14-a1",
           titulo: "Elementos Base da Contabilidade",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m13-a2",
+          id: "m14-a2",
           titulo: "Registo de Movimentos",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m13-a3",
+          id: "m14-a3",
           titulo: "Reports e Mapas Fiscais",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m13-a4",
+          id: "m14-a4",
           titulo: "Operações de Validação e Apuramento",
           tipo: "texto",
           duracao: "",
         },
         {
-          id: "m13-a5",
+          id: "m14-a5",
           titulo: "Fecho e Abertura de Exercício",
           tipo: "texto",
           duracao: "",
@@ -899,14 +938,9 @@ export default function CursoDetalhe() {
                 <ul className="space-y-3">
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Duração</span>
-                    <span className="font-medium">
-                      {curso?.duracao || "N/A"} mês
-                    </span>
-                  </li>
-                  <li className="flex justify-between text-sm">
-                    <span className="text-gray-500">Horas</span>
                     <span className="font-medium">130h</span>
                   </li>
+
                   <li className="flex justify-between text-sm">
                     <span className="text-gray-500">Idioma</span>
                     <span className="font-medium">Português</span>

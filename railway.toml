@@ -1,24 +1,8 @@
-# railway.toml
-
 [build]
 builder = "DOCKERFILE"
 
+[env]
+PORT = "8080"
+
 [deploy]
 startCommand = "npm start"
-
-[env]
-NODE_ENV = "production"
-PORT = "3000"
-
-
-[services.backend]
-root = "backend"
-dockerfile = "backend/Dockerfile"
-autoDeploy = true
-startCommand = "npm start"
-
-[services.frontend]
-root = "frontend"
-dockerfile = "frontend/Dockerfile"
-autoDeploy = true
-startCommand = "serve -s build -l $PORT"

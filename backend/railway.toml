@@ -1,7 +1,0 @@
-# Configuração de múltiplos serviços
-
-[build]
-root = "."
-
-[start]
-cmd = "npm start"

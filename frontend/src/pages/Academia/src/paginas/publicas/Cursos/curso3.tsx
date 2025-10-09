@@ -450,25 +450,20 @@ export default function Curso3() {
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <motion.button
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "#4B5563", // Cor ligeiramente mais clara no hover
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                  }}
-                  whileTap={{
-                    scale: 0.98,
-                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 10,
-                  }}
-                  onClick={() => setModalInscricaoAberto(true)}
-                  className="bg-gray-700 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center">
-                  Inscreva-se Agora
-                </motion.button>
+                <div className="relative">
+                  <motion.button
+                    disabled
+                    whileHover={{}}
+                    whileTap={{}}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 10,
+                    }}
+                    className="bg-gray-400 text-white px-8 py-3 rounded-[5px] font-medium transition-colors flex items-center cursor-not-allowed opacity-70">
+                    Inscreva-se Agora
+                  </motion.button>
+                </div>
 
                 <motion.a
                   whileHover={{

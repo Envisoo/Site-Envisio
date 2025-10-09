@@ -443,12 +443,9 @@ const Academia = () => {
                   <ul className="space-y-3">
                     <li className="flex justify-between text-sm">
                       <span className="text-gray-500">Duração</span>
-                      <span className="font-medium">mês</span>
+                      <span className="font-medium">120h</span>
                     </li>
-                    <li className="flex justify-between text-sm">
-                      <span className="text-gray-500">Horas</span>
-                      <span className="font-medium">130h</span>
-                    </li>
+
                     <li className="flex justify-between text-sm">
                       <span className="text-gray-500">Idioma</span>
                       <span className="font-medium">Português</span>
@@ -456,7 +453,7 @@ const Academia = () => {
                   </ul>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-full md:w-full bg-gray-600 text-white font-bold mt-8 md:mt-12 py-4 px-6 rounded-[5px]
+                    className="w-full md:w-full bg-gray-600 text-white  mt-8 md:mt-12 py-4 px-6 rounded-[5px]
      transition duration-300 transform hover:scale-105">
                     Inscrever-me no Curso
                   </button>
@@ -528,7 +525,7 @@ const Academia = () => {
                     <div>
                       <label
                         htmlFor="nome"
-                        className="block text-sm font-medium text-gray-700">
+                        className="block text-sm font-semibold text-gray-700">
                         Primeiro Nome *
                       </label>
                       <input
@@ -538,14 +535,14 @@ const Academia = () => {
                         onChange={(e) =>
                           setFormData({ ...formData, nome: e.target.value })
                         }
-                        className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                        className="mt-1 block w-full border border-gray-300 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                         required
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="sobrenome"
-                        className="block text-sm font-medium text-gray-700">
+                        className="block text-sm font-semibold text-gray-700">
                         Último Nome *
                       </label>
                       <input
@@ -558,7 +555,7 @@ const Academia = () => {
                             sobrenome: e.target.value,
                           })
                         }
-                        className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                        className="mt-1 block w-full border border-gray-300 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                         required
                       />
                     </div>
@@ -567,7 +564,7 @@ const Academia = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm font-semibold text-gray-700">
                       Email *
                     </label>
                     <input
@@ -577,7 +574,7 @@ const Academia = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                      className="mt-1 block w-full border border-gray-300 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                       required
                     />
                   </div>
@@ -585,7 +582,7 @@ const Academia = () => {
                   <div>
                     <label
                       htmlFor="telefone"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm font-semibold text-gray-700">
                       Telefone
                     </label>
                     <input
@@ -595,14 +592,14 @@ const Academia = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, telefone: e.target.value })
                       }
-                      className="mt-1 block w-full border border-gray-400 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                      className="mt-1 block w-full border border-gray-400 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="empresa"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm font-semibold text-gray-700">
                       Empresa
                     </label>
                     <input
@@ -612,171 +609,100 @@ const Academia = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, empresa: e.target.value })
                       }
-                      className="mt-1 block w-full border border-gray-400 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                      className="mt-1 block w-full border border-gray-400 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
                     />
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Selecione o turno desejado *
+                      <label className="block text-sm font-bold text-black mb-2">
+                        Selecione o turno*
                       </label>
 
-                      {/* Categoria Diurno */}
-                      <div className="mb-4">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">
-                          Diurno
-                        </h4>
-                        <div className="space-y-2">
-                          <label
-                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                              formData.turno ===
-                              "Segunda a Sexta - 8h às 17h (Presencial)"
-                                ? "border-black bg-gray-100"
-                                : "border-gray-200 hover:bg-gray-50"
-                            }`}>
+                      {/* Turno A */}
+                      <div className="mb-4 border border-gray-200 border-b-gray-300 rounded-[1px] overflow-hidden">
+                        <div className="p-4 bg-gray-100">
+                          <label className="flex items-center cursor-pointer">
                             <input
                               type="radio"
                               name="turno"
-                              value="Segunda a Sexta - 8h às 17h (Presencial)"
-                              checked={
-                                formData.turno ===
-                                "Segunda a Sexta - 8h às 17h (Presencial)"
+                              value="Turno A"
+                              checked={formData.turno === "Turno A"}
+                              onChange={() =>
+                                setFormData({ ...formData, turno: "Turno A" })
                               }
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  turno: e.target.value,
-                                })
-                              }
-                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                              className="h-4 w-4 text-black ring-black border-b-gray-300 border-gray-300"
                               disabled={loading}
                             />
-                            <span
-                              className={`ml-3 text-sm ${
-                                formData.turno ===
-                                "Segunda a Sexta - 8h às 17h (Presencial)"
-                                  ? "text-black font-medium"
-                                  : "text-gray-600"
-                              }`}>
-                              Segunda a Sexta - 8h às 17h (Presencial)
+                            <span className="ml-3 text-sm font-semibold text-blue-700">
+                              Turno A
                             </span>
                           </label>
                         </div>
+                        {formData.turno === "Turno A" && (
+                          <div className="bg-white p-4 mt-[-10px]">
+                            <div className="space-y-1">
+                              {["Segunda a Sexta - 8h às 17h (Presencial)"].map(
+                                (option) => (
+                                  <div
+                                    key={option}
+                                    className="py-2 px-3 hover:bg-gray-50 rounded transition-colors">
+                                    <div className="flex items-center">
+                                      <div className="flex-shrink-0 w-1.5 h-1.5 bg-gray-600 rounded-full mr-3"></div>
+                                      <span className="text-sm text-gray-700">
+                                        {option}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
-                      {/* Categoria Noturno */}
-                      <div className="mb-4">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">
-                          Noturno
-                        </h4>
-                        <div className="space-y-2">
-                          <label
-                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                              formData.turno ===
-                              "Terça e Quinta - 19h às 21h (Online)"
-                                ? "border-black bg-gray-100"
-                                : "border-gray-200 hover:bg-gray-50"
-                            }`}>
+                      {/* Turno B */}
+                      <div className="mb-4 border border-gray-200 border-b-gray-300 rounded-[1px] overflow-hidden">
+                        <div className="p-4 bg-gray-100">
+                          <label className="flex items-center cursor-pointer">
                             <input
                               type="radio"
                               name="turno"
-                              value="Terça e Quinta - 19h às 21h (Online)"
-                              checked={
-                                formData.turno ===
-                                "Terça e Quinta - 19h às 21h (Online)"
+                              value="Turno B"
+                              checked={formData.turno === "Turno B"}
+                              onChange={() =>
+                                setFormData({ ...formData, turno: "Turno B" })
                               }
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  turno: e.target.value,
-                                })
-                              }
-                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
+                              className="h-4 w-4 text-black ring-black border-b-gray-300 border-gray-300"
                               disabled={loading}
                             />
-                            <span
-                              className={`ml-3 text-sm ${
-                                formData.turno ===
-                                "Terça e Quinta - 19h às 21h (Online)"
-                                  ? "text-black font-medium"
-                                  : "text-gray-600"
-                              }`}>
-                              Terça - Feira - 19h às 21h (Online)
+                            <span className="ml-3 text-sm font-semibold text-blue-700">
+                              Turno B
                             </span>
                           </label>
                         </div>
-                      </div>
-                      <div className="space-y-2">
-                        <label
-                          className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                            formData.turno === "Quarta - 19h às 21h (Online)"
-                              ? "border-black bg-gray-100"
-                              : "border-gray-200 hover:bg-gray-50"
-                          }`}>
-                          <input
-                            type="radio"
-                            name="turno"
-                            value="Quarta - 19h às 21h (Online)"
-                            checked={
-                              formData.turno === "Quarta - 19h às 21h (Online)"
-                            }
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                turno: e.target.value,
-                              })
-                            }
-                            className="h-4 w-4 text-black focus:ring-black border-gray-300"
-                            disabled={loading}
-                          />
-                          <span
-                            className={`ml-3 text-sm ${
-                              formData.turno === "Quinta - 19h às 21h (Online)"
-                                ? "text-black font-medium"
-                                : "text-gray-600"
-                            }`}>
-                            Quarta - Feira - 19h às 21h (Online)
-                          </span>
-                        </label>
-                      </div>
-
-                      {/* Categoria Final de Semana */}
-                      <div className="mb-4">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">
-                          Final de Semana
-                        </h4>
-                        <div className="space-y-2">
-                          <label
-                            className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                              formData.turno === "Domingo - 9h às 17h"
-                                ? "border-black bg-gray-100"
-                                : "border-gray-200 hover:bg-gray-50"
-                            }`}>
-                            <input
-                              type="radio"
-                              name="turno"
-                              value="Domingo - 9h às 17h"
-                              checked={formData.turno === "Domingo - 9h às 17h"}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  turno: e.target.value,
-                                })
-                              }
-                              className="h-4 w-4 text-black focus:ring-black border-gray-300"
-                              disabled={loading}
-                            />
-                            <span
-                              className={`ml-3 text-sm ${
-                                formData.turno === "Domingo - 9h às 17h"
-                                  ? "text-black font-medium"
-                                  : "text-gray-600"
-                              }`}>
-                              Domingo - 9h às 17h (Presencial)
-                            </span>
-                          </label>
-                        </div>
+                        {formData.turno === "Turno B" && (
+                          <div className="bg-white p-4 mt-[-10px]">
+                            <div className="space-y-1">
+                              {[
+                                "Terça - Feira - 19h às 21h (Online)",
+                                "Quarta - Feira - 19h às 21h (Online)",
+                                "Domingo - 9h às 17h (Presencial)",
+                              ].map((option) => (
+                                <div
+                                  key={option}
+                                  className="py-2 px-3 hover:bg-gray-50 rounded transition-colors">
+                                  <div className="flex items-center">
+                                    <div className="flex-shrink-0 w-1.5 h-1.5 bg-gray-600 rounded-full mr-3"></div>
+                                    <span className="text-sm text-gray-700">
+                                      {option}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -789,7 +715,7 @@ const Academia = () => {
 
                   {/* Adicione este bloco após o campo de seleção de turno */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Nível de Experiência *
                     </label>
                     <select
@@ -801,7 +727,7 @@ const Academia = () => {
                           nivelExperiencia: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-[5px]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-[1px]"
                       disabled={loading}>
                       <option value="">Selecione seu nível</option>
                       <option value="Iniciante">Iniciante</option>
@@ -811,7 +737,7 @@ const Academia = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                       Anexar Ficheiros (PDF) *
                     </label>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -864,7 +790,7 @@ const Academia = () => {
                   <div>
                     <label
                       htmlFor="mensagem"
-                      className="block text-sm font-medium text-gray-700">
+                      className="block text-sm font-semibold text-gray-700">
                       Mensagem
                     </label>
                     <textarea
@@ -874,7 +800,7 @@ const Academia = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, mensagem: e.target.value })
                       }
-                      className="mt-1 block w-full border border-gray-300 rounded-[5px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
+                      className="mt-1 block w-full border border-gray-300 rounded-[1px] py-2 px-3 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
                   </div>
 
                   <div className="flex justify-end space-x-3 pt-4">
@@ -1013,7 +939,18 @@ const CourseFeature = ({ icon, text }: CourseFeatureProps) => (
 // Dados dos módulos
 const modules = [
   {
-    title: "Módulo 1: Instalação e Administração do ERP Primavera",
+    title: "Módulo 1: Conceitos Base de ERP",
+    topics: [
+      "O que é um ERP",
+      "História e evolução do ERP",
+      "Por que é importante",
+      "Como funciona um sistema ERP",
+      "Tipos de implementação de ERP",
+      "Seis principais benefícios do ERP",
+    ],
+  },
+  {
+    title: "Módulo 2: Instalação e Administração do ERP Primavera",
     topics: [
       "Instalação do software",
       "Enquadramento e conceitos iniciais",
@@ -1024,7 +961,7 @@ const modules = [
     ],
   },
   {
-    title: "Módulo 2: Logística e Gestão de Inventário",
+    title: "Módulo 3: Logística e Gestão de Inventário",
     topics: [
       "Documentos de compras e vendas",
       "Gestão de stock e inventário",
@@ -1034,23 +971,13 @@ const modules = [
     ],
   },
   {
-    title: "Módulo 3: Gestão Financeira e Contabilística",
+    title: "Módulo 4: Gestão Financeira e Contabilística",
     topics: [
       "Contabilidade básica",
       "Gestão de tesouraria",
       "Processos contabilísticos",
       "Relatórios financeiros",
       "Encerramento de contas",
-    ],
-  },
-  {
-    title: "Módulo 4: Recursos Humanos e Folha de Pagamentos",
-    topics: [
-      "Gestão de colaboradores",
-      "Processamento de vencimentos",
-      "Obrigações fiscais",
-      "Relatórios de recursos humanos",
-      "Gestão de ausências e férias",
     ],
   },
 ];
