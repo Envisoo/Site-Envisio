@@ -2,8 +2,8 @@
 
 import express from "express";
 import {
-    enviarEmail,
-    uploadMiddleware,
+  enviarEmail,
+  uploadMiddleware,
 } from "../controllers/emailController.js";
 
 const router = express.Router();
