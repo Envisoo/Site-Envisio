@@ -2,16 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  BookOpen,
-  Play,
-  CheckCircle,
-  Clock,
-  Star,
-  Heart,
-  Eye,
-  Calendar,
-} from "lucide-react";
+import { BookOpen, CheckCircle, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "../../utils/api";
 

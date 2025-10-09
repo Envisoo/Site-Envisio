@@ -1,15 +1,7 @@
 /** @format */
 
 import { motion } from "framer-motion";
-import {
-  GraduationCap,
-  Users,
-  Award,
-  Clock,
-  Globe,
-  Target,
-  CheckCircle,
-} from "lucide-react";
+import { GraduationCap, Users, Award, Globe, Target } from "lucide-react";
 
 export default function Sobre() {
   const valores = [

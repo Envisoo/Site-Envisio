@@ -11,29 +11,12 @@ import {
   BookOpen,
   Star,
   TrendingUp,
-  Activity,
-  Calendar,
   Target,
   Award,
-  Eye,
-  Download,
   Clock,
-  Video,
-  MessageSquare,
-  FileText,
-  BarChart3,
   TrendingDown,
   CheckCircle,
-  AlertCircle,
-  Info,
-  PieChart,
-  LineChart,
-  BarChart,
-  Activity as ActivityIcon,
-  Zap,
-  Target as TargetIcon,
   Users as UsersIcon,
-  BookOpen as BookOpenIcon,
 } from "lucide-react";
 import api from "../../utils/api";
 
@@ -45,6 +28,7 @@ export default function Estatisticas() {
 
   useEffect(() => {
     carregarEstatisticas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [periodoSelecionado, categoriaSelecionada]);
 
   const carregarEstatisticas = async () => {

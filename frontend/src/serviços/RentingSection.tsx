@@ -6,28 +6,15 @@ import React from "react";
 import {
   Printer,
   Shield,
-  Zap,
-  Settings,
   Calculator,
-  Quote,
   Check,
-  BadgeCheck,
   ChevronLeft,
   ChevronRight,
   DollarSign,
   RefreshCw,
-  FileText,
-  Image,
-  MonitorSmartphone,
-  Smartphone,
   Headphones,
   Laptop,
-  Cpu,
-  HardDrive,
-  Monitor,
   Server,
-  Database,
-  Network,
 } from "lucide-react";
 import RentingFeaturesPanel from "../components/RentingFeaturesPanel";
 

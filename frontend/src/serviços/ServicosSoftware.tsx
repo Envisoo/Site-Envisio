@@ -3,22 +3,14 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Cpu,
   BadgeCheck,
   Code2,
   Cloud,
   ChevronRight,
   ChevronLeft,
-  Quote,
-  Zap,
   Clock,
   Headphones,
   Shield,
-  Database,
-  Network,
-  DollarSign,
-  TrendingUp,
-  GitBranch,
 } from "lucide-react";
 
 // Dados dos serviços de software
@@ -56,11 +48,6 @@ const softwareServices = [
   },
 ];
 
-// Tipos auxiliares
-type Feature = {
-  icon: React.ReactElement<any>;
-  text: string;
-};
 type Service = (typeof softwareServices)[number];
 type ServiceCardProps = {
   service: Service;
@@ -158,7 +145,6 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           </ul>
         </div>
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3"></h4>
           <div className="grid grid-cols-2 gap-3 p-3"></div>
         </div>
       </div>

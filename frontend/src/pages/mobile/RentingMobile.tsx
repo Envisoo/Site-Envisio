@@ -6,28 +6,13 @@ import React from "react";
 import {
   Printer,
   Shield,
-  Zap,
-  Settings,
-  Calculator,
-  Quote,
   Check,
-  BadgeCheck,
-  ChevronLeft,
-  ChevronRight,
   DollarSign,
   RefreshCw,
-  FileText,
-  Image,
-  MonitorSmartphone,
-  Smartphone,
   Headphones,
   Laptop,
-  Cpu,
-  HardDrive,
-  Monitor,
   Server,
-  Database,
-  Network,
+  Calculator,
 } from "lucide-react";
 import RentingFeaturesPanel from "../../components/RentingFeaturesPanel";
 
@@ -232,24 +217,6 @@ const RentingSection = () => {
   const [activeService, setActiveService] = useState(rentingServices[0]);
 
   const carouselRef = useRef<HTMLDivElement>(null);
-
-  // Função para navegação do carrossel (circular)
-  const scrollToCard = (index: number) => {
-    let newIndex = index;
-    if (index < 0) newIndex = rentingServices.length - 1;
-    if (index >= rentingServices.length) newIndex = 0;
-    if (carouselRef.current) {
-      const card = carouselRef.current.children[newIndex] as HTMLElement;
-      if (card) {
-        card.scrollIntoView({
-          behavior: "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-      }
-    }
-    setActiveService(rentingServices[newIndex]);
-  };
 
   return (
     <div className="bg-white">

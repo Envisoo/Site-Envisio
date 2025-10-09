@@ -10,25 +10,14 @@ import {
   Users,
   BookOpen,
   Star,
-  Bell,
   TrendingUp,
-  Activity,
-  Calendar,
   Target,
   Award,
-  Eye,
-  Download,
-  Settings,
   Plus,
-  Search,
-  Filter,
   Clock,
   Video,
   MessageSquare,
-  FileText,
   BarChart3,
-  Zap,
-  Target as TargetIcon,
   TrendingDown,
   CheckCircle,
   AlertCircle,
@@ -40,7 +29,7 @@ import api from "../../utils/api";
 export default function InstrutorPainel() {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [carregando, setCarregando] = useState(true);
-  const [notificacoes, setNotificacoes] = useState(3);
+  const [, setNotificacoes] = useState(3);
   const navigate = useNavigate();
 
   useEffect(() => {

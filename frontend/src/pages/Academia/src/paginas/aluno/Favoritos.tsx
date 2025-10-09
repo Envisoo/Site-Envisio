@@ -1,9 +1,14 @@
+/**
+ * eslint-disable react-hooks/exhaustive-deps
+ *
+ * @format
+ */
+
 /** @format */
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, BookOpen, Star, Clock, User, Eye, Trash2 } from "lucide-react";
-import { AuthContext } from "../../contextos/AuthContext";
 import api from "../../utils/api";
 
 interface CursoFavorito {
@@ -21,7 +26,6 @@ export default function Favoritos() {
   const [favoritos, setFavoritos] = useState<CursoFavorito[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-  const { usuario } = useContext(AuthContext);
 
   // Dados mockados como fallback
   const favoritosMock: CursoFavorito[] = [
@@ -56,7 +60,7 @@ export default function Favoritos() {
 
   useEffect(() => {
     carregarFavoritos();
-  }, []);
+  });
 
   const carregarFavoritos = async () => {
     try {

@@ -1,11 +1,10 @@
 /** @format */
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { partners } from "../../types/partners";
 import { MobileCarousel } from "../../components/Carousel";
-import { OptimizedImage } from "../../components/OptimizedImage"; // Importe o componente aqui
 
 // Importando os mesmos dados da Home principal
 const heroSlides = [

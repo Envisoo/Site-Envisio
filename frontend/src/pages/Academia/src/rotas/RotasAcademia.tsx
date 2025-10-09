@@ -2,10 +2,8 @@
 
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Usuario, TipoPapel } from "../tipos/Usuario";
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 import NavbarAcademia from "../componentes/NavbarAcademia";
-import { useAuth } from "../contextos/AuthContext";
 import LayoutAcademia from "../componentes/LayoutAcademia";
 import LayoutAluno from "../componentes/LayoutAluno";
 import LayoutInstrutor from "../componentes/LayoutInstrutor";
@@ -36,30 +34,6 @@ import Favoritos from "../paginas/aluno/Favoritos";
 import Avaliacoes from "../paginas/aluno/Avaliacoes";
 import Aula from "../paginas/aluno/Aula";
 import AlunoConfiguracoes from "../paginas/aluno/Configuracoes";
-
-// Lazy loading dos componentes
-const Login = React.lazy(() => import("../paginas/autenticacao/Login"));
-const Cadastro = React.lazy(() => import("../paginas/autenticacao/Cadastro"));
-const Home = React.lazy(() => import("../paginas/academia"));
-
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-  roles?: TipoPapel[];
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
-  const { usuario, isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/academia/login" replace />;
-  }
-
-  if (roles && usuario && !roles.includes(usuario.papel)) {
-    return <Navigate to="/academia" replace />;
-  }
-
-  return <>{children}</>;
-};
 
 const RotasAcademia = () => {
   return (

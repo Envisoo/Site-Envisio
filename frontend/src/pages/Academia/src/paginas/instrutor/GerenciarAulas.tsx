@@ -10,24 +10,10 @@ import {
   Video,
   FileText,
   Clock,
-  Lock,
-  Unlock,
   Play,
-  Pause,
-  Download,
-  Share,
   Search,
-  Filter,
-  Calendar,
-  Users,
-  Star,
   BookOpen,
-  Settings,
-  Upload,
-  Link,
-  ExternalLink,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import api from "../../utils/api";
 
 interface Modulo {
@@ -315,7 +301,6 @@ export default function GerenciarAulas() {
   const [modalAulaAberto, setModalAulaAberto] = useState(false);
   const [aulaEditando, setAulaEditando] = useState<Aula | null>(null);
   const [filtro, setFiltro] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     carregarCursos();
@@ -331,7 +316,7 @@ export default function GerenciarAulas() {
     if (moduloSelecionado) {
       carregarAulas(moduloSelecionado);
     }
-  }, [moduloSelecionado]);
+  });
 
   const carregarCursos = async () => {
     try {

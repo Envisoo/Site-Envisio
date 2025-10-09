@@ -5,26 +5,19 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import {
-  BarChart3,
   TrendingUp,
   Users,
   BookOpen,
   DollarSign,
   Download,
-  Calendar,
-  Filter,
   Eye,
   FileText,
-  PieChart,
   Activity,
   ArrowLeft,
   Download as DownloadIcon,
   Share2,
-  Printer,
   RefreshCw,
   Target,
-  Award,
-  Clock,
   TrendingDown,
 } from "lucide-react";
 import api from "../../utils/api";
@@ -605,34 +598,5 @@ function StatCard({
       <div className="text-3xl font-extrabold text-white">{value}</div>
       <div className="text-white/80 text-sm font-medium">{label}</div>
     </motion.div>
-  );
-}
-
-// Card de ação rápida
-function ActionCard({
-  color,
-  icon,
-  label,
-  description,
-  onClick,
-}: {
-  color: string;
-  icon: any;
-  label: string;
-  description: string;
-  onClick: () => void;
-}) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.05, y: -5 }}
-      whileTap={{ scale: 0.97 }}
-      onClick={onClick}
-      className={`rounded-2xl p-6 shadow-lg text-white font-bold flex flex-col items-center justify-center space-y-3 text-center transition-all duration-300 ${color} hover:shadow-2xl`}>
-      <div className="p-3 bg-white/20 rounded-full">{icon}</div>
-      <div>
-        <div className="text-lg font-bold">{label}</div>
-        <div className="text-sm opacity-80 font-normal">{description}</div>
-      </div>
-    </motion.button>
   );
 }

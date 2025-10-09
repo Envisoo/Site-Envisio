@@ -4,29 +4,16 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Server,
-  Camera,
-  ShieldCheck,
-  KeyRound,
-  Wifi,
-  Cctv,
-  Lock,
-  Fingerprint,
   ChevronRight,
   ChevronLeft,
-  Quote,
   BadgeCheck,
-  Zap,
   Clock,
   Headphones,
   Shield,
-  Database,
-  Network,
   HardDrive,
   Settings,
-  RefreshCw,
   Video,
   Key,
-  Smartphone,
 } from "lucide-react";
 
 // Dados dos serviços de hardware
@@ -89,12 +76,6 @@ const hardwareServices = [
     image: "/images/imagem hard/Suporte.webp",
   },
 ];
-
-// Componente de Card de Serviço Premium
-type Feature = {
-  icon: React.ReactElement;
-  text: string;
-};
 
 type Service = {
   id: number;

@@ -1,35 +1,17 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
-  Mail,
-  Phone,
-  MapPin,
-  Globe,
   Camera,
   Save,
-  Eye,
-  EyeOff,
   Shield,
   Bell,
-  Palette,
-  Download,
-  Upload,
-  Trash2,
-  Edit,
-  Plus,
-  X,
-  Check,
   AlertCircle,
   Info,
-  Settings,
   Key,
-  CreditCard,
-  FileText,
   Lock,
-  Unlock,
   ArrowLeft,
 } from "lucide-react";
 import { useAuth } from "../../contextos/AuthContext";

@@ -4,29 +4,16 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Server,
-  Camera,
-  ShieldCheck,
-  KeyRound,
-  Wifi,
-  Cctv,
-  Lock,
-  Fingerprint,
   ChevronRight,
   ChevronLeft,
-  Quote,
   BadgeCheck,
-  Zap,
   Clock,
   Headphones,
   Shield,
-  Database,
-  Network,
   HardDrive,
   Settings,
-  RefreshCw,
   Video,
   Key,
-  Smartphone,
 } from "lucide-react";
 
 // Dados dos serviços de hardware
@@ -91,10 +78,6 @@ const hardwareServices = [
 ];
 
 // Componente de Card de Serviço Premium
-type Feature = {
-  icon: React.ReactElement;
-  text: string;
-};
 
 type Service = {
   id: number;
@@ -198,7 +181,6 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
         </div>
 
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3"></h4>
           <div className="grid grid-cols-2 gap-3 p-3"></div>
         </div>
       </div>
@@ -208,7 +190,7 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
 
 const ServicosHardware = () => {
   const [activeService, setActiveService] = useState(hardwareServices[0]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Função para navegação do carrossel (circular)

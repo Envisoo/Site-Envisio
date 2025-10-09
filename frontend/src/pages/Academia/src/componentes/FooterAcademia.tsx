@@ -1,17 +1,6 @@
 /** @format */
 
 import { Link } from "react-router-dom";
-import {
-  GraduationCap,
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
-} from "lucide-react";
 
 export default function FooterAcademia() {
   return (

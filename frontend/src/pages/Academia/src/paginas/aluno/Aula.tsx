@@ -5,15 +5,11 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Play,
-  Pause,
   SkipBack,
   SkipForward,
-  BookOpen,
   CheckCircle,
-  Clock,
   ArrowLeft,
   ArrowRight,
-  Star,
   Heart,
   Share2,
   Download,
@@ -47,24 +43,26 @@ export default function Aula() {
   const { id, moduloId, licaoId } = useParams();
   const navigate = useNavigate();
   const [licao, setLicao] = useState<Licao | null>(null);
-  const [modulo, setModulo] = useState<Modulo | null>(null);
-  const [curso, setCurso] = useState<Curso | null>(null);
+  const [modulo] = useState<Modulo | null>(null);
+  const [curso] = useState<Curso | null>(null);
   const [licoes, setLicoes] = useState<Licao[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-  const [progresso, setProgresso] = useState(0);
+  const [, setProgresso] = useState(0);
   const [tempoAssistido, setTempoAssistido] = useState(0);
 
   useEffect(() => {
     if (moduloId) {
       carregarLicoes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moduloId]);
 
   useEffect(() => {
     if (licaoId) {
       carregarLicao();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [licaoId]);
 
   const carregarLicoes = async () => {

@@ -2,7 +2,7 @@
 
 // Importações de bibliotecas e hooks
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { partners } from "../types/partners";
 import { DesktopCarousel, MobileCarousel } from "../components/Carousel";
@@ -161,14 +161,11 @@ export function HeroSection() {
   const navigate = useNavigate();
 
   // Estado do carrossel de slides do topo
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [, setCarouselIndex] = useState(0);
+  const [isPaused] = useState(false);
 
   // Estado do carrossel de depoimentos
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Estado para verificar se está em um dispositivo móvel
-  const [isMobile, setIsMobile] = useState(false);
 
   // Efeito para alternar slides do topo automaticamente
   useEffect(() => {

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
 import Avatar from "../../components/Avatar";
 import { TeamMember } from "../../types/Team";
 import LinhaDoTempo from "../../components/LinhaDoTempo";

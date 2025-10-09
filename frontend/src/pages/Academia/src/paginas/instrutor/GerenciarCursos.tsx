@@ -408,7 +408,7 @@ export default function GerenciarCursos() {
 
   const carregarCursos = useCallback(async () => {
     await recarregar();
-  }, [recarregar, filtroStatus]);
+  }, [recarregar]);
 
   useEffect(() => {
     carregarCursos();

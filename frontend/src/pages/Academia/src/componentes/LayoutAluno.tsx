@@ -14,10 +14,7 @@ import {
   X,
   LogOut,
   Home,
-  GraduationCap,
-  FileText,
   Star,
-  Bell,
   ChevronDown,
 } from "lucide-react";
 

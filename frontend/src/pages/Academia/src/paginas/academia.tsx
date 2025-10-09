@@ -4,7 +4,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaLaptopCode, FaBookOpen, FaFileAlt, FaAward } from "react-icons/fa";
+
 import { Curso } from "../tipos";
 
 const Academia = () => {
@@ -134,29 +134,6 @@ const Academia = () => {
       setLoading(false);
     }
   };
-
-  const toggleModule = (index: number) => {
-    setOpenModuleIndex(openModuleIndex === index ? null : index);
-  };
-
-  const features = [
-    {
-      text: "Solução ERP Completa",
-      icon: <FaLaptopCode className="text-white" />,
-    },
-    {
-      text: "Módulos Práticos",
-      icon: <FaBookOpen className="text-white" />,
-    },
-    {
-      text: "Material de Apoio",
-      icon: <FaFileAlt className="text-white" />,
-    },
-    {
-      text: "Certificado Oficial",
-      icon: <FaAward className="text-white" />,
-    },
-  ];
 
   // Fallback local para rota fixa (sem :id)
   const cursoLocal: Curso = {
@@ -921,20 +898,6 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
     </motion.div>
   );
 };
-
-type CourseFeatureProps = {
-  icon: string;
-  text: string;
-};
-
-const CourseFeature = ({ icon, text }: CourseFeatureProps) => (
-  <div className="flex items-center space-x-3">
-    <span className="text-red-600">
-      <i className={`fas fa-${icon} text-xl`}></i>
-    </span>
-    <span className="text-gray-700">{text}</span>
-  </div>
-);
 
 // Dados dos módulos
 const modules = [

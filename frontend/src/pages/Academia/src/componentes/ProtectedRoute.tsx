@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../contextos/AuthContext";
 import { TipoPapel } from "../tipos/Usuario";
-import LoadingSpinner from "./Spinner";
+
 import Spinner from "./Spinner";
 
 interface ProtectedRouteProps {

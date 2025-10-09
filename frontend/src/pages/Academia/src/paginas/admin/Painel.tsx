@@ -13,7 +13,6 @@ import {
   Bell,
   TrendingUp,
   Activity,
-  Calendar,
   Target,
   Award,
   Eye,

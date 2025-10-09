@@ -21,14 +21,7 @@ export default function ModalVideo({
           className="absolute -top-12 right-0 text-white hover:text-gray-300 transition">
           <X size={32} />
         </button>
-        <div className="aspect-w-16 aspect-h-9 bg-black rounded-xl overflow-hidden">
-          <iframe
-            src={videoUrl}
-            className="w-full h-full"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen></iframe>
-        </div>
+        <div className="aspect-w-16 aspect-h-9 bg-black rounded-xl overflow-hidden"></div>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ interface PerfilUsuario {
 }
 
 export default function Configuracoes() {
-  const { usuario, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const [perfil, setPerfil] = useState<PerfilUsuario | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);

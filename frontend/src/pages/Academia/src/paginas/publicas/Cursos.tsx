@@ -2,54 +2,12 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import {
-  Search,
-  Filter,
-  Grid3X3,
-  List,
-  Heart,
-  Eye,
-  Star,
-  Clock,
-  Users,
-  BookOpen,
-  Download,
-  Play,
-  Calendar,
-  MapPin,
-  Bell,
-  TrendingUp,
-  Award,
-  CheckCircle,
-  X,
-  ChevronDown,
-  ChevronUp,
-  Sliders,
-  BarChart3,
-  Share2,
-  ArrowRight,
-  Bookmark,
-  User,
-  BarChart,
-} from "lucide-react";
+import { BookOpen, X, ChevronDown, Share2, ArrowRight } from "lucide-react";
 import { useCursos } from "../../hooks/useCursos";
 import { Curso } from "../../tipos/Curso";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useModulos } from "../../hooks/useModulos";
-
-// Interface para os filtros
-interface Filtros {
-  precoMin?: string;
-  precoMax?: string;
-  duracaoMin?: string;
-  duracaoMax?: string;
-  nivel?: string;
-  status?: string;
-  certificado?: boolean;
-  acessoVitalicio?: boolean;
-  suporte?: boolean;
-}
 
 // Componente de card de curso
 const CursoCard = ({
@@ -68,7 +26,7 @@ const CursoCard = ({
   destino?: string;
 }) => {
   const [ref, inView] = useInView({ triggerOnce: true });
-  const isFavorito = favoritos.includes(curso.id);
+
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -258,11 +216,11 @@ const CursoCard = ({
 // Componente principal
 export default function Cursos() {
   const { cursos, carregando, erro } = useCursos();
-  const [filtros, setFiltros] = useState<Filtros>({});
+
   const [favoritos, setFavoritos] = useState<string[]>([]);
   const [cursoSelecionado, setCursoSelecionado] = useState<Curso | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
-  const [busca, setBusca] = useState("");
+  const [busca] = useState("");
   const { modulos, carregando: carregandoModulos } = useModulos(
     cursoSelecionado?.id
   );

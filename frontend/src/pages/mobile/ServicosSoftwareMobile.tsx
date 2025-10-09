@@ -9,16 +9,9 @@ import {
   Cloud,
   ChevronRight,
   ChevronLeft,
-  Quote,
-  Zap,
   Clock,
   Headphones,
   Shield,
-  Database,
-  Network,
-  DollarSign,
-  TrendingUp,
-  GitBranch,
 } from "lucide-react";
 
 // Dados dos serviços de software
@@ -70,75 +63,7 @@ const softwareServices = [
   },
 ];
 
-// Tipos auxiliares
-type Feature = {
-  icon: React.ReactElement<any>;
-  text: string;
-};
 type Service = (typeof softwareServices)[number];
-type ServiceCardProps = {
-  service: Service;
-  active: boolean;
-  onClick: () => void;
-};
-// Componente de Card de Serviço Premium
-const ServiceCard: React.FC<ServiceCardProps> = ({
-  service,
-  active,
-  onClick,
-}) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const maxLength = 100;
-  const shouldTruncate = service.description.length > maxLength;
-  const displayText = isExpanded
-    ? service.description
-    : `${service.description.substring(0, maxLength)}${
-        shouldTruncate ? "..." : ""
-      }`;
-
-  return (
-    <motion.div
-      onClick={onClick}
-      whileHover={{ scale: 1.03 }}
-      className={`cursor-pointer rounded-[5px] p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
-        active
-          ? "border-red-500 bg-white shadow-2xl"
-          : "border-transparent bg-white/50 shadow-lg"
-      }`}>
-      <div>
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 rounded-[5px] bg-gradient-to-br from-red-50 to-white shadow">
-            {service.icon}
-          </div>
-          <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
-        </div>
-        <div className="mb-4">
-          <p
-            className="text-gray-600"
-            style={{ fontFamily: "Segoe UI Regular" }}>
-            {displayText}
-          </p>
-          {shouldTruncate && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsExpanded(!isExpanded);
-              }}
-              className="text-red-600 hover:text-red-800 text-sm font-medium mt-1 focus:outline-none"
-              style={{ fontFamily: "Segoe UI Regular" }}>
-              {isExpanded ? "Mostrar menos" : "Ler mais"}
-            </button>
-          )}
-        </div>
-      </div>
-      <a
-        href="/contato"
-        className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all w-full flex items-center justify-center">
-        Solicitar Orçamento
-      </a>
-    </motion.div>
-  );
-};
 
 // Componente de Destaque de Serviço
 const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
@@ -172,7 +97,6 @@ const ServiceHighlight: React.FC<{ service: Service }> = ({ service }) => (
           </ul>
         </div>
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3"></h4>
           <div className="grid grid-cols-2 gap-3 p-3"></div>
         </div>
       </div>

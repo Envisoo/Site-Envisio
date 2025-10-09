@@ -1,26 +1,20 @@
 /** @format */
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   BookOpen,
   CheckCircle,
   Award,
-  Heart,
-  Eye,
-  Download,
   Star,
-  User,
-  Settings,
   Calendar,
-  RefreshCw,
   AlertCircle,
   TrendingUp,
   Clock,
   Target,
   BarChart3,
 } from "lucide-react";
-import { AuthContext } from "../../contextos/AuthContext";
+
 import api from "../../utils/api";
 
 interface PerfilAluno {
@@ -125,7 +119,6 @@ export default function AlunoPainel() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
   const [usandoDadosMockados, setUsandoDadosMockados] = useState(false);
-  const { usuario } = useContext(AuthContext);
 
   useEffect(() => {
     carregarPerfil();

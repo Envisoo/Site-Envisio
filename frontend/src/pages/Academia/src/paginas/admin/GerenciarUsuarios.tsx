@@ -15,19 +15,12 @@ import {
   Shield,
   User,
   ArrowLeft,
-  Plus,
-  Eye,
   Mail,
   Calendar,
-  TrendingUp,
   AlertCircle,
-  CheckCircle,
-  Clock,
   Download,
   FileText,
   Share2,
-  BookOpen,
-  Settings,
 } from "lucide-react";
 import api from "../../utils/api";
 
@@ -42,7 +35,7 @@ interface Usuario {
 export default function GerenciarUsuarios() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState<string | null>(null);
+  const [, setErro] = useState<string | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [usuariosPorPagina] = useState(10);

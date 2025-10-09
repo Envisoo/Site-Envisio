@@ -1,9 +1,8 @@
 /** @format */
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star, BookOpen, Calendar, Edit, Trash2, Plus } from "lucide-react";
-import { AuthContext } from "../../contextos/AuthContext";
+import { Star, BookOpen, Calendar, Edit, Trash2 } from "lucide-react";
 import api from "../../utils/api";
 
 interface Avaliacao {
@@ -18,7 +17,6 @@ export default function Avaliacoes() {
   const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-  const { usuario } = useContext(AuthContext);
 
   // Dados mockados como fallback
   const avaliacoesMock: Avaliacao[] = [
@@ -47,6 +45,7 @@ export default function Avaliacoes() {
 
   useEffect(() => {
     carregarAvaliacoes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const carregarAvaliacoes = async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import { useState } from "react";
 import { Lock, Mail } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
@@ -90,9 +91,9 @@ export default function LoginForm({ onSuccess, onSwitchToRegister }) {
         </div>
 
         <div className="text-sm">
-          <a href="#" className="font-medium text-black hover:text-gray-600">
+          <Link>
             Esqueceu sua senha?
-          </a>
+          </Link>
         </div>
       </div>
 

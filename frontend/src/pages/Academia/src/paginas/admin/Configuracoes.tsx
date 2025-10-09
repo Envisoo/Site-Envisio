@@ -14,17 +14,9 @@ import {
   Mail,
   Bell,
   Palette,
-  Globe,
-  Lock,
-  Users,
-  FileText,
   Download,
-  Upload,
-  Trash2,
   Eye,
   EyeOff,
-  CheckCircle,
-  AlertCircle,
   Clock,
   Zap,
   Server,
@@ -33,7 +25,6 @@ import {
   Cpu,
   // Memory, // Removido porque não existe exportação 'Memory' em 'lucide-react'
 } from "lucide-react";
-import api from "../../utils/api";
 
 interface ConfiguracoesSistema {
   geral: {

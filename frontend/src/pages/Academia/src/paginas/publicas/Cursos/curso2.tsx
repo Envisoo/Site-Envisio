@@ -6,32 +6,20 @@ import {
   ReactElement,
   ReactNode,
   ReactPortal,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../contextos/AuthContext";
+
 import { useCurso } from "../../../hooks/useCurso";
 import { useModulos } from "../../../hooks/useModulos";
-import { Helmet } from "react-helmet-async";
+
 import {
-  Star,
-  Users,
   Award,
-  CheckCircle,
   ArrowLeft,
   BookOpen,
   Play,
-  Lock,
-  Video,
-  Eye,
   Headphones,
-  Infinity,
-  MessageCircle,
-  CheckCircle2,
-  PlayCircle,
-  Bookmark,
   ChevronDown,
   FileText,
 } from "lucide-react";
@@ -39,13 +27,12 @@ import Spinner from "../../../componentes/Spinner";
 import ModalVideo from "../../../componentes/ModalVideo";
 import FormularioInscricao from "../../../componentes/FormularioInscricao"; // Import the FormularioInscricao component
 import api from "../../../utils/api";
-import { Curso, Instrutor, Modulo, Aula } from "../../../tipos/Curso";
+import { Curso, Modulo, Aula } from "../../../tipos/Curso";
 import {
   modulosDataFallback,
   modulosPorCurso as modulosDict,
 } from "../../../data/Modulo";
 import { motion } from "framer-motion";
-import { text } from "stream/consumers";
 
 interface Avaliacao {
   id: string;
@@ -58,23 +45,18 @@ interface Avaliacao {
 export default function CursoDetalhe() {
   const { id } = useParams<{ id: string }>();
   const dadosCurso = useCurso(id || "");
-  const { usuario } = useContext(AuthContext);
   const navigate = useNavigate();
   const [modalAberto, setModalAberto] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [tab, setTab] = useState("sobre");
-  const [aulas, setAulas] = useState<any[]>([]);
-  const [carregandoAulas, setCarregandoAulas] = useState(true);
-  const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
-  const [mediaAvaliacoes, setMediaAvaliacoes] = useState(0);
-  const [carregandoAvaliacoes, setCarregandoAvaliacoes] = useState(true);
+  const [videoUrl] = useState("");
+
+  const [, setAulas] = useState<any[]>([]);
+  const [, setCarregandoAulas] = useState(true);
+  const [, setAvaliacoes] = useState<Avaliacao[]>([]);
+  const [, setMediaAvaliacoes] = useState(0);
+  const [, setCarregandoAvaliacoes] = useState(true);
   const [moduloAberto, setModuloAberto] = useState<number | null>(null);
   const [modalInscricaoAberto, setModalInscricaoAberto] = useState(false); // Add the state for the FormularioInscricao modal
-  const {
-    modulos,
-    carregando: carregandoModulos,
-    erro: erroModulos,
-  } = useModulos(id);
+  const { modulos, carregando: carregandoModulos } = useModulos(id);
 
   // Fallback local para quando esta página é acessada sem :id na rota
   const cursoLocal: Curso = {
@@ -121,41 +103,6 @@ export default function CursoDetalhe() {
       })
       .finally(() => setCarregandoAvaliacoes(false));
   }, [id]);
-
-  // Corrige o tipo do instrutor
-  const instrutor =
-    typeof curso?.instrutor === "object"
-      ? curso?.instrutor
-      : {
-          nome: curso?.instrutor || "Instrutor",
-          avaliacao: 0,
-          alunos: 0,
-          aulas: 0,
-        };
-
-  // Permissão de acesso às aulas
-  const podeAcessarAula = (aula: Aula): boolean => {
-    if (!usuario) return false;
-    if (usuario.papel === "admin" || usuario.papel === "instrutor") return true;
-    return aula.livre || false;
-  };
-
-  const abrirVideoDemonstrativo = (url: string) => {
-    setVideoUrl(url);
-    setModalAberto(true);
-  };
-
-  // Função para renderizar estrelas
-  const renderizarEstrelas = (nota: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 ${
-          i < nota ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-        }`}
-      />
-    ));
-  };
 
   // normaliza ID para bater com dicionário
   const slugify = (valor: string) =>
