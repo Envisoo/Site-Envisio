@@ -37,19 +37,19 @@ interface Segment {
 const heroSlides = [
   {
     src: "/images/imagem home/banner_hero1.webp",
-    srcMobile: "/images/imagem home/mobile/banner_mobile0.webp", // Adicione a versão mobile
+    srcMobile: "/images/mobile/banner_mobile0.webp", // Adicione a versão mobile
     link: "/servicos/software",
     label: "Consultoria",
   },
   {
     src: "/images/imagem home/cabeamento.webp",
-    srcMobile: "/images/imagem home/mobile/banner_mobile2.webp", // Adicione a versão mobile
+    srcMobile: "/images/mobile/banner_mobile2.webp", // Adicione a versão mobile
     link: "/servicos/hardware",
     label: "Serviços Técnicos",
   },
   {
     src: "/images/imagem home/renting.webp",
-    srcMobile: "/images/imagem home/mobile/renting_mobile.webp", // Adicione a versão mobile
+    srcMobile: "/images/mobile/renting_mobile.webp", // Adicione a versão mobile
     link: "/servicos/renting",
     label: "Serviços Técnicos",
   },

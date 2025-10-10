@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
-import { Usuario, TipoPapel } from "../tipos/Usuario";
+import { Usuario } from "../tipos/Usuario";
 
 // Tipagem do usuário
 export interface Credenciais {
