@@ -33,7 +33,8 @@ npm install
    Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-REACT_APP_API_URL=https://site-envisio-production-9820.up.railway.app
+REACT_APP_API_URL=https://site-envisio-producao-1d15.up.railway.app
+
 REACT_APP_POSTMARK_TOKEN=seu_token_aqui
 ```
 

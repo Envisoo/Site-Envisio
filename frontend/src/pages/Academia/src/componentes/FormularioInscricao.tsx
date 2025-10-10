@@ -97,7 +97,7 @@ const FormularioInscricao: React.FC<FormularioInscricaoProps> = ({
       }
 
       await axios.post(
-        "https://site-envisio-production-9820.up.railway.app/api/email",
+        "//site-envisio-producao-1d15.up.railway.app/api/email",
         formDataToSend,
         {
           headers: {

@@ -63,4 +63,4 @@ npm start
 
 ---
 
-Pronto! O projeto estará rodando em http://localhost:3000 ou http://localhost:5173
+Pronto! O projeto estará rodando em REACT_APP_API_ACADEMIA=https://site-envisio-producao-1d15.up.railway.app

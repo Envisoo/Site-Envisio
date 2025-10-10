@@ -14,7 +14,7 @@ interface EmailResponse {
   error?: string;
 }
 
-const API_URL = "https://site-envisio-production-9820.up.railway.app/api";
+const API_URL = "//site-envisio-producao-1d15.up.railway.app/api";
 
 const emailService = {
   async enviar(data: SupportEmailData): Promise<EmailResponse> {

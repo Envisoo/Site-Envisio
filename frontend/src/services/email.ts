@@ -9,7 +9,7 @@ interface EmailResponse {
 }
 
 
-const API_URL = "https://site-envisio-production-9820.up.railway.app/api/email";
+const API_URL = "https://site-envisio-producao-1d15.up.railway.app/api/email";
 
 export async function enviarEmail(formData: any, tipoCliente: string): Promise<EmailResponse> {
   try {
