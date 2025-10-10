@@ -1,16 +1,6 @@
 import axios from 'axios';
 
-interface EmailData {
-  name: string;
-  email: string;
-  phone?: string;
-  message: string;
-  area: string;
-  empresa?: string;
-  apelido?: string;
-  nif?: string;
-  tipoCliente: string;
-}
+
 
 interface EmailResponse {
   success: boolean;
@@ -18,7 +8,8 @@ interface EmailResponse {
   error?: string;
 }
 
-const API_URL = 'http://localhost:3001/api/email';
+
+const API_URL = "https://site-envisio-production-9820.up.railway.app/api/email";
 
 export async function enviarEmail(formData: any, tipoCliente: string): Promise<EmailResponse> {
   try {
