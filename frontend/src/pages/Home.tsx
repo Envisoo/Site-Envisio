@@ -36,19 +36,19 @@ interface Segment {
 // ======================
 const heroSlides = [
   {
-    src: "/images/imagem home/banner_hero1.webp",
+    src: "/images/banner_hero1.webp",
     srcMobile: "/images/mobile/banner_mobile0.webp", // Adicione a versão mobile
     link: "/servicos/software",
     label: "Consultoria",
   },
   {
-    src: "/images/imagem home/cabeamento.webp",
+    src: "/images/cabeamento.webp",
     srcMobile: "/images/mobile/banner_mobile2.webp", // Adicione a versão mobile
     link: "/servicos/hardware",
     label: "Serviços Técnicos",
   },
   {
-    src: "/images/imagem home/renting.webp",
+    src: "/images/renting.webp",
     srcMobile: "/images/mobile/renting_mobile.webp", // Adicione a versão mobile
     link: "/servicos/renting",
     label: "Serviços Técnicos",
@@ -321,7 +321,7 @@ export function HeroSection() {
                   className="relative z-10">
                   <div className="relative rounded-[8px] overflow-hidden shadow-2xl">
                     <img
-                      src="/images/imagem home/banner_quem.webp"
+                      src="/images/banner_quem.webp"
                       alt="Nossa Equipe"
                       className="w-full h-[600px] object-cover"
                     />
