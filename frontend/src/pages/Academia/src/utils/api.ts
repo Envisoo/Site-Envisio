@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Cria a instância do Axios com base na URL do .env
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080", // Alterado para 3001
+  baseURL: process.env.REACT_APP_API_URL || "https://site-envisio-production-9820.up.railway.app", // Alterado para 3001
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
