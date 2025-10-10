@@ -9,22 +9,18 @@ import { MobileCarousel } from "../../components/Carousel";
 // Importando os mesmos dados da Home principal
 const heroSlides = [
   {
-    srcMobile: "/images/imagem home/mobile/banner_mobile0.webp",
+    srcMobile: "/images/mobile/banner_mobile0.webp",
     link: "/servicos/software",
     label: "Consultoria",
   },
+
   {
-    srcMobile: "/images/imagem home/mobile/banner_mobile1.webp",
-    link: "/servicos/software",
-    label: "Serviços Técnicos",
-  },
-  {
-    srcMobile: "/images/imagem home/mobile/banner_mobile2.webp",
+    srcMobile: "/images/mobile/banner_mobile2.webp",
     link: "/servicos/hardware",
     label: "Serviços Técnicos",
   },
   {
-    srcMobile: "/images/imagem home/mobile/renting_mobile.webp",
+    srcMobile: "/images/mobile/renting_mobile.webp",
     link: "/servicos/renting",
     label: "Serviços Técnicos",
   },
@@ -32,13 +28,6 @@ const heroSlides = [
 
 // Serviços (mesmo array da Home principal)
 const services = [
-  {
-    title: "Cegid Primavera",
-    description:
-      "Implementação, customização e suporte de sistemas de gestão empresarial.",
-    tipo: "software",
-    image: "/images/imagem cads/Destaque2.webp",
-  },
   {
     title: "Renting de Equipamentos",
     description:

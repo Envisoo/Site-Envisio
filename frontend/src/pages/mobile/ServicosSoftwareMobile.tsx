@@ -31,21 +31,7 @@ const softwareServices = [
     ],
     image: "/images/imagem soft/Consultoria.webp",
   },
-  {
-    id: 2,
-    title: "Soluções de ERP",
-    description:
-      "Sistemas de gestão empresarial completos que integram todos os departamentos numa única plataforma, proporcionando eficiência operacional e visão estratégica do negócio.",
-    icon: <Cpu className="w-8 h-8 text-red-500" />,
-    items: [
-      "Integração total de dados entre departamentos",
-      "Automação de processos manuais e repetitivos",
-      "Visão em tempo real do negócio com painéis de controlo",
-      "Otimização de custos operacionais",
-      "Controlo e segurança de dados avançados",
-    ],
-    image: "/images/imagem soft/Primavera.webp",
-  },
+
   {
     id: 3,
     title: "Desenvolvimento de Software",
@@ -193,7 +179,7 @@ const ServicosSoftware = () => {
             <Cloud className="w-10 h-10 text-red-500 flex-shrink-0" />
             <div>
               <h5 className="text-lg font-semibold text-gray-800 mb-1">
-                Cloud, ERP & Integrações
+                Cloud & Integrações
               </h5>
               <p
                 className="text-gray-600 text-sm"
