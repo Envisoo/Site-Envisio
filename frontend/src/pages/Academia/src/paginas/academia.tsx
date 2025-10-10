@@ -102,11 +102,15 @@ const Academia = () => {
         formDataToSend.append(`arquivos`, file);
       });
 
-      await axios.post("http://localhost:8080/api/email", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "site-envisio-production-9820.up.railway.app/api/email",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setSuccess(true);
       setTimeout(() => {
