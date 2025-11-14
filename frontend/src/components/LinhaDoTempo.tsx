@@ -9,7 +9,6 @@ import {
 } from "framer-motion";
 import {
   Calendar,
-  ChevronRight,
   ArrowRight,
   Clock,
   Award,

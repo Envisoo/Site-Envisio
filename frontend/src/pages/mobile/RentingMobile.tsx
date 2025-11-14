@@ -3,16 +3,19 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Printer,
   Shield,
+  Calculator,
   Check,
+  ChevronLeft,
+  ChevronRight,
   DollarSign,
   RefreshCw,
   Headphones,
   Laptop,
   Server,
-  Calculator,
 } from "lucide-react";
 import RentingFeaturesPanel from "../../components/RentingFeaturesPanel";
 
@@ -38,7 +41,7 @@ const rentingServices = [
   {
     id: 2,
     title: "Impressoras",
-    slug: "impressoras",
+    slug: "impressora",
     description:
       "Soluções completas de impressão com manutenção preventiva e suporte técnico especializado.",
     icon: <Printer className="w-8 h-8 text-red-600" />,
@@ -54,10 +57,10 @@ const rentingServices = [
   },
   {
     id: 3,
-    title: "Servidores",
+    title: "Infraestrutura e Servidores",
     slug: "servidores",
     description:
-      "Infraestrutura de TI robusta e segura para garantir a disponibilidade e desempenho dos seus sistemas.",
+      "Instalação, configuração e gerenciamento de servidores físicos e virtuais, oferecendo robustez e escalabilidade para o seu negócio.",
     icon: <Server className="w-8 h-8 text-red-600" />,
     items: [
       "Processamento robusto",
@@ -78,6 +81,7 @@ type Feature = {
 };
 
 type Service = {
+  slug: string;
   id: number;
   title: string;
   description: string;
@@ -98,6 +102,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   active,
   onClick,
 }) => {
+  const navigate = useNavigate();
+
+  const handlePrinterClick = (printerSlug: string) => {
+    if (printerSlug === "impressora") {
+      navigate("/bizhub-c250i");
+    } else {
+      navigate(`/${printerSlug}`);
+    }
+  };
+
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 100;
   const shouldTruncate = service.description.length > maxLength;
@@ -110,11 +124,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: active ? 1.03 : 1 }}
       className={`cursor-pointer rounded-[5px] p-6 border-2 transition-all flex flex-col justify-between h-full min-h-[320px] ${
         active
           ? "border-red-500 bg-white shadow-2xl"
-          : "border-transparent bg-white/50 shadow-lg"
+          : "border-transparent bg-white/50 shadow-lg hover:opacity-75"
       }`}>
       <div>
         <div className="flex items-center gap-4 mb-4">
@@ -150,11 +164,21 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           </div>
         </div>
       </div>
-      <a
-        href="/contato"
-        className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all w-full flex items-center justify-center">
-        Solicitar Orçamento
-      </a>
+      <div className="mt-auto">
+        {service.slug === "impressora" ? (
+          <button
+            onClick={(e) => handlePrinterClick(service.slug)}
+            className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all flex items-center justify-center">
+            Saiba mais
+          </button>
+        ) : (
+          <a
+            href="/contato"
+            className="block w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all text-center">
+            Solicitar Orçamento
+          </a>
+        )}
+      </div>
     </motion.div>
   );
 };
@@ -218,19 +242,37 @@ const RentingSection = () => {
 
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  // Função para navegação do carrossel (circular)
+  const scrollToCard = (index: number) => {
+    let newIndex = index;
+    if (index < 0) newIndex = rentingServices.length - 1;
+    if (index >= rentingServices.length) newIndex = 0;
+    if (carouselRef.current) {
+      const card = carouselRef.current.children[newIndex] as HTMLElement;
+      if (card) {
+        card.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+    }
+    setActiveService(rentingServices[newIndex]);
+  };
+
   return (
     <div className="bg-white">
       {/* Banner com texto sobreposto */}
       <section
         className="relative w-full flex items-center justify-start overflow-hidden bg-white"
-        style={{ height: "clamp(100px, 60vw, 500px)" }}>
+        style={{ height: "clamp(100px, 30vw, 500px)" }}>
         <div className="absolute inset-0 z-10 flex items-center">
-          <div className=" ">
+          <div className="text-white pl-8 md:pl-16 lg:pl-24 w-full max-w-7xl mx-auto">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-[23px] sm:text-3xl md:text-5xl lg:text-5xl font-bold mb-[-5px] md:mb-6"
+              className="text-[30px] sm:text-3xl md:text-5xl lg:text-5xl font-bold mb-4 md:mb-6"
               style={{
                 fontFamily: "Segoe UI semibold",
               }}>
@@ -241,7 +283,7 @@ const RentingSection = () => {
         <img
           src="/images/renting/Banner2.webp"
           alt="Banner Serviços de Renting"
-          className="w-full  object-cover object-center"
+          className="w-full h-full object-cover object-center"
         />
       </section>
 
@@ -335,24 +377,36 @@ const RentingSection = () => {
 
           {/* Carrossel de cards */}
           <div className="relative mb-16">
+            <button
+              onClick={() =>
+                scrollToCard(
+                  rentingServices.findIndex((s) => s.id === activeService.id) -
+                    1
+                )
+              }
+              className="absolute -left-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              aria-label="Anterior">
+              <ChevronLeft className="w-7 h-7 text-red-600" />
+            </button>
+
             <div
               ref={carouselRef}
-              className="flex gap-8 overflow-x-auto no-scrollbar py-4 px-4 md:px-16 snap-x snap-mandatory scroll-smooth justify-start"
+              className="flex gap-8 overflow-x-auto no-scrollbar py-4 px-12 snap-x snap-mandatory scroll-smooth justify-start"
               style={{
                 scrollBehavior: "smooth",
                 scrollbarWidth: "none",
-                scrollSnapType: "x mandatory",
-                scrollPadding: "0 2rem",
+                scrollPaddingLeft: "3rem",
+                scrollPaddingRight: "3rem",
                 fontFamily: "Segoe UI Regular",
-                WebkitOverflowScrolling: "touch",
-                msOverflowStyle: "none",
               }}>
-              {/* Adicionando um item vazio para alinhamento */}
-              <div className="flex-shrink-0 w-[calc(50%-1rem)] md:w-[calc(33.333%-1.5rem)]" />
               {rentingServices.map((service) => (
                 <div
                   key={service.id}
-                  className="flex-shrink-0 w-[calc(100%-2rem)] md:w-[calc(66.666%-2rem)] snap-center">
+                  className={`min-w-[300px] sm:min-w-[350px] snap-start transition-all duration-300 ${
+                    activeService.id !== service.id
+                      ? "opacity-50 blur-[0.5px] scale-95"
+                      : ""
+                  }`}>
                   <ServiceCard
                     service={service}
                     active={activeService.id === service.id}
@@ -360,9 +414,19 @@ const RentingSection = () => {
                   />
                 </div>
               ))}
-              {/* Adicionando um item vazio para alinhamento */}
-              <div className="flex-shrink-0 w-[calc(50%-1rem)] md:w-[calc(33.333%-1.5rem)]" />
             </div>
+
+            <button
+              onClick={() =>
+                scrollToCard(
+                  rentingServices.findIndex((s) => s.id === activeService.id) +
+                    1
+                )
+              }
+              className="absolute -right-8 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-blue-50 shadow-xl rounded-full p-3 border border-gray-200 transition-all"
+              aria-label="Próximo">
+              <ChevronRight className="w-7 h-7 text-red-600" />
+            </button>
           </div>
 
           {/* Destaque do serviço selecionado */}

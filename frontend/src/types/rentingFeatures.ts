@@ -12,7 +12,7 @@ interface RentingFeature {
 }
 
 export const rentingFeatures: Record<string, RentingFeature> = {
-  bizhub301i: {
+  bizhubC3350i: {
     abas: ["IMPRIMIR", "CÓPIA", "DIGITALIZAR", "CAIXA", "FAX", "ACABAMENTO"],
     dados: {
       IMPRIMIR: {
@@ -145,7 +145,9 @@ export const rentingFeatures: Record<string, RentingFeature> = {
       },
     },
   },
-  bizhub251i: {
+
+
+  bizhubC250i : {
     abas: ["IMPRIMIR", "CÓPIA", "DIGITALIZAR", "CAIXA", "FAX", "ACABAMENTO"],
     dados: {
       IMPRIMIR: {

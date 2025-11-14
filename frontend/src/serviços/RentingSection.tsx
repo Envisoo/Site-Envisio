@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Printer,
   Shield,
@@ -40,7 +41,7 @@ const rentingServices = [
   {
     id: 2,
     title: "Impressoras",
-    slug: "impressoras",
+    slug: "impressora",
     description:
       "Soluções completas de impressão com manutenção preventiva e suporte técnico especializado.",
     icon: <Printer className="w-8 h-8 text-red-600" />,
@@ -80,6 +81,7 @@ type Feature = {
 };
 
 type Service = {
+  slug: string;
   id: number;
   title: string;
   description: string;
@@ -100,6 +102,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   active,
   onClick,
 }) => {
+  const navigate = useNavigate();
+
+  const handlePrinterClick = (printerSlug: string) => {
+    if (printerSlug === "impressora") {
+      navigate("/bizhub-c250i");
+    } else {
+      navigate(`/${printerSlug}`);
+    }
+  };
+
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 100;
   const shouldTruncate = service.description.length > maxLength;
@@ -152,11 +164,21 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           </div>
         </div>
       </div>
-      <a
-        href="/contato"
-        className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all w-full flex items-center justify-center">
-        Solicitar Orçamento
-      </a>
+      <div className="mt-auto">
+        {service.slug === "impressora" ? (
+          <button
+            onClick={(e) => handlePrinterClick(service.slug)}
+            className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all flex items-center justify-center">
+            Saiba mais
+          </button>
+        ) : (
+          <a
+            href="/contato"
+            className="block w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-[5px] font-semibold shadow transition-all text-center">
+            Solicitar Orçamento
+          </a>
+        )}
+      </div>
     </motion.div>
   );
 };

@@ -27,6 +27,7 @@ import { useWindowSize } from "./hooks/useWindowSize";
 import ServicosHardwareMobile from "./pages/mobile/ServicosHardwareMobile";
 import ServicosSoftwareMobile from "./pages/mobile/ServicosSoftwareMobile";
 import RentingMobile from "./pages/mobile/RentingMobile";
+import BizhubC250iPage from "./pages/BizhubC250iPage";
 
 // Rotas da Academia
 import { AuthProvider } from "./pages/Academia/src/contextos/AuthContext";
@@ -137,6 +138,16 @@ export function App() {
                     ) : (
                       <ServicosSoftware />
                     )}
+                    <Footer />
+                  </>
+                }
+              />
+              <Route
+                path="/bizhub-c250i"
+                element={
+                  <>
+                    <Navbar />
+                    <BizhubC250iPage />
                     <Footer />
                   </>
                 }

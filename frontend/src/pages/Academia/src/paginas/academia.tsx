@@ -271,7 +271,7 @@ const Academia = () => {
                 <span className="text-7xl text-gray-400 ml-[7px]">
                   Cegid Primavera
                 </span>
-                <h3 className="text-7xl mt-2 text-white md:text-3xl ml-[1%] font-normal">
+                <h3 className="text-3xl mt-2 text-white md:text-3xl ml-[1%] font-normal">
                   Funcionalidades e Módulos
                 </h3>
               </h1>

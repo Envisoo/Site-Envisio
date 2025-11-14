@@ -678,7 +678,7 @@ export default function CursoDetalhe() {
                 {cursoExibir.descricao}
               </p>
 
-              <div className="mt-12 flex flex-wrap gap-4">
+              <div className="mt-[-20px] flex flex-wrap gap-4">
                 <motion.button
                   whileHover={{
                     scale: 1.05,

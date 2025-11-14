@@ -151,7 +151,7 @@ Os arquivos serão gerados na pasta `build/`
 
 ## 👥 Autores
 
-- Teodoro Paulo
+- Teodoro Pedro
 
 ## 📞 Suporte
 
