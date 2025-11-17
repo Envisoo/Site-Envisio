@@ -13,8 +13,9 @@ export default function RentingFeaturesPanel({ tipo }: Props) {
   // Normalize the printer name by removing spaces for the lookup
   const getNormalizedPrinterName = (name: string) => {
     const printerMap: Record<string, string> = {
-      "bizhub-c250i": "bizhubC250i",
-      "bizhub-c3350i": "bizhubC3350i",
+      "bizhub-c301i": "bizhubC301i",
+      "bizhub-4051i": "bizhub4051i",
+      // Modelos antigos mantidos para compatibilidade
       "bizhub-c3351i": "bizhubC3351i",
       "bizhub-c4050i": "bizhubC4050i",
     };
@@ -58,7 +59,7 @@ export default function RentingFeaturesPanel({ tipo }: Props) {
   }, [tipo, abas]);
 
   return (
-    <div className="bg-white py-10 mt-10 border-t border-gray-200">
+    <div className="bg-white py-6 mt-10 border-t border-gray-200">
       <div className="px-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
           Funcionalidades da{" "}

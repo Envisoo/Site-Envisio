@@ -148,7 +148,7 @@ const BizhubC250i: React.FC = () => {
         {/* Coluna Direita - Informações do Produto */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            bizhub C250i - Impressora Multifunções A3
+            bizhub C301i - Impressora Multifunções A3
           </h1>
           <p className="text-gray-700 mb-4">
             Impressora multifunções a cores A3; formatos de papel A6-A4/ A3;

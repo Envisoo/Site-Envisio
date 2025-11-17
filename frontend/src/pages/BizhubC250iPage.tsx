@@ -34,34 +34,36 @@ const BizhubRental = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [impressoraSelecionada, setImpressoraSelecionada] =
-    useState<string>("bizhub-c250i");
+    useState<string>("bizhub-c301i");
 
   const impressoras: { [key: string]: Impressora } = {
-    "bizhub-c250i": {
-      id: "bizhub-c250i",
-      nome: "bizhub C250i",
-      imagem: "/images/impressoras/bizhub-c250i.jpg",
+    "bizhub-c301i": {
+      id: "bizhub-c301i",
+      nome: "bizhub C301i",
+      imagem: "/images/impressoras/bizhub-c301i.jpg",
       descricao:
-        "Impressora multifunções a cores A3; formatos de papel A6-A4/ A3; cópia, impressão, digitalização; painel de utilizador tipo tablet;",
+        'Impressora multifunções a cores A3; formatos de papel A6-A3; cópia, impressão, digitalização; tela touchscreen 10.1";',
       especificacoes: [
-        "A4",
+        "A3",
         "Cor",
         "Cópia",
         "Digitalização",
         "Impressão automática nos 2 lados",
         "Digitalização automática nos 2 lados",
         "WiFi",
+        'Tela touchscreen 10.1"',
+        "Segurança Bitdefender",
       ],
       preco: {
         standard: {
-          "24": 303150.93,
-          "36": 273812.44,
-          "48": 258187.43,
+          "24": 315000.0,
+          "36": 285000.0,
+          "48": 268000.0,
         },
         premium: {
-          "24": 348406.16,
-          "36": 315765.55,
-          "48": 322850.24,
+          "24": 360000.0,
+          "36": 325000.0,
+          "48": 330000.0,
         },
       },
       pacotes: {
@@ -69,31 +71,32 @@ const BizhubRental = () => {
         premium: "4000 Preto e Branco + 1000 Cor páginas",
       },
     },
-    "bizhub-c3350i": {
-      id: "bizhub-c3350i",
-      nome: "bizhub C3350i",
-      imagem: "/images/impressoras/bizhub-c3350i.jpg",
+    "bizhub-4051i": {
+      id: "bizhub-4051i",
+      nome: "bizhub 4051i",
+      imagem: "/images/impressoras/bizhub-4051i.jpg",
       descricao:
-        "Impressora multifunções a cores A3; formatos de papel A6-A4/ A3; cópia, impressão, digitalização; painel de utilizador tipo tablet;",
+        "Impressora multifunções a cores A3; formatos de papel A6-A3; cópia, impressão, digitalização; alta produtividade;",
       especificacoes: [
-        "A4",
+        "A3",
         "Cor",
         "Cópia",
         "Digitalização",
-        "Impressão automática nos 2 lados",
-        "Digitalização automática nos 2 lados",
+        "Até 40 ppm",
+        'Tela touchscreen 10.1"',
         "WiFi",
+        "Segurança avançada",
       ],
       preco: {
         light: {
-          "24": 201000,
-          "36": 181440,
-          "48": 170400,
+          "24": 220000.0,
+          "36": 200000.0,
+          "48": 185000.0,
         },
         basic: {
-          "24": 227689.42,
-          "36": 204811.28,
-          "48": 193536,
+          "24": 245000.0,
+          "36": 220000.0,
+          "48": 205000.0,
         },
       },
       pacotes: {
@@ -107,16 +110,22 @@ const BizhubRental = () => {
   const pacoteKeys = Object.keys(impressoraAtual.pacotes);
 
   const imagensPorImpressora = {
-    "bizhub-c250i": [
-      "/images/renting/bizhub-c250i.webp",
-      "/images/renting/bizhub-c250.webp",
-      "/images/renting/bizhub-c25.webp",
+    "bizhub-c301i": [
+      "/images/renting/c301i/1.webp",
+      "/images/renting/c301i/2.webp",
+      "/images/renting/c301i/3.webp",
+      "/images/renting/c301i/4.webp",
+      "/images/renting/c301i/5.webp",
+      "/images/renting/c301i/6.webp",
+      "/images/renting/c301i/7.webp",
     ],
-    "bizhub-c3350i": [
-      "/images/renting/bizhub-c3350i.webp",
-      "/images/renting/bizhub-c3350.webp",
-      "/images/renting/bizhub-c335.webp",
-      "/images/renting/bizhub-c33.webp",
+    "bizhub-4051i": [
+      "/images/renting/4051i/1.webp",
+      "/images/renting/4051i/2.webp",
+      "/images/renting/4051i/3.webp",
+      "/images/renting/4051i/4.webp",
+      "/images/renting/4051i/5.webp",
+      "/images/renting/4051i/6.webp",
     ],
   };
 

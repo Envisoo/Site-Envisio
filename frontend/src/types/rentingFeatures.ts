@@ -12,6 +12,249 @@ interface RentingFeature {
 }
 
 export const rentingFeatures: Record<string, RentingFeature> = {
+  bizhubC301i: {
+    abas: ["IMPRIMIR", "CÓPIA", "DIGITALIZAR", "SEGURANÇA", "ACABAMENTO"],
+    dados: {
+      IMPRIMIR: {
+      lista: [
+        {
+          titulo: "Impressão em cópia carbono",
+          descricao: "Impressão de página única a partir de várias bandejas"
+        },
+        {
+          titulo: "Modo de economia de toner",
+          descricao: "Ajuda a economizar toner, reduzindo o consumo, por exemplo, em impressões de rascunho"
+        },
+        {
+          titulo: "Impressão direta",
+          descricao: "Impressão sem driver de PDF, XPS, DOCX, XLSX, PPTX, JPEG, TIFF, PS e PCL"
+        },
+        {
+          titulo: "Impressão móvel",
+          descricao: "Possibilidade de imprimir documentos diretamente de um dispositivo móvel"
+        },
+        {
+          titulo: "Meu Tab",
+          descricao: "Personalização do driver de impressão"
+        },
+        {
+          titulo: "Fila de tarefas inteligente",
+          descricao: "Tarefas que não podem ser impressas são ignoradas pelas tarefas subsequentes"
+        }
+      ]
+    },
+    CÓPIA: {
+      lista: [
+        {
+          titulo: "Foto de carta",
+          descricao: "Imprime cópias da frente e do verso do original na mesma página, por exemplo, para passaporte e outros documentos de identificação"
+        },
+        {
+          titulo: "Barra de funções personalizada",
+          descricao: "É possível selecionar livremente até 2 funções de cópia de 7x2 na tela principal de cópia"
+        },
+        {
+          titulo: "Prévia do trabalho",
+          descricao: "Ilustra as funções de cópia selecionadas na tela"
+        },
+        {
+          titulo: "Remoção de página em branco",
+          descricao: "Exclusão automática de páginas em branco, por exemplo, ao copiar documentos com impressão frente e verso automática"
+        }
+      ]
+    },
+    DIGITALIZAR: {
+      lista: [
+        {
+          titulo: "Foto de carta",
+          descricao: "Digitalização da frente e do verso do original na mesma página, ideal para documentos de identificação"
+        },
+        {
+          titulo: "Barra de funções personalizada",
+          descricao: "Permite acesso rápido às funções de digitalização mais usadas"
+        },
+        {
+          titulo: "Prévia do trabalho",
+          descricao: "Visualização das configurações de digitalização antes do processamento"
+        },
+        {
+          titulo: "Remoção de página em branco",
+          descricao: "Exclusão automática de páginas em branco durante a digitalização"
+        }
+      ]
+    },
+    SEGURANÇA: {
+      lista: [
+        {
+          titulo: "Direitos de acesso",
+          descricao: "Os direitos de acesso às funções podem ser concedidos em nível de usuário (até 1.000 contas na MFP)"
+        },
+        {
+          titulo: "Autenticação",
+          descricao: "Acesso do usuário por senha, nome de usuário + senha, cartão de identificação ou leitor de veias da impressão digital"
+        },
+        {
+          titulo: "Serviços SEGUROS bizhub",
+          descricao: "Configure a MFP com segurança para garantir a proteção dos dados da empresa"
+        },
+        {
+          titulo: "Criptografia de dados",
+          descricao: "Criptografia de dados armazenados em disco rígido e proteção por senha para acesso ao disco rígido"
+        },
+        {
+          titulo: "Antivírus integrado",
+          descricao: "Monitoramento em tempo real do status de verificação de vírus com informações detalhadas sobre ameaças"
+        },
+        {
+          titulo: "Ferramenta de apagamento de dados",
+          descricao: "Apaga todos os dados do SSD quando o dispositivo chega ao fim de sua vida útil, incluindo o firmware do dispositivo"
+        },
+        {
+          titulo: "Proteção contra ataques",
+          descricao: "Detecção e notificação de tentativas de ataque de senha e acessos não autorizados"
+        }
+      ]
+    },
+    ACABAMENTO: {
+      lista: [
+        {
+          titulo: "Opções de acabamento",
+          descricao: "Grampeamento, perfuração, dobra de carta"
+        },
+        {
+          titulo: "Capacidade de grampeamento",
+          descricao: "Até 50 folhas (80 g/m²)"
+        }
+      ]
+    }
+      // Adicione as outras abas com suas respectivas listas
+    },
+  },
+  
+  bizhub4051i: {
+    abas: ["IMPRIMIR", "CÓPIA", "DIGITALIZAR", "SEGURANÇA", "ACABAMENTO"],
+    dados: {
+      IMPRIMIR: {
+        lista: [
+          {
+            titulo: "Impressão direta",
+            descricao: "Impressão sem driver de PDF, XPS, DOCX, XLSX, PPTX, JPEG, TIFF, PS e PCL",
+          },
+          {
+            titulo: "Impressão móvel",
+            descricao: "Possibilidade de imprimir documentos diretamente de um dispositivo móvel",
+          },
+          {
+            titulo: "Meu Tab",
+            descricao: "Personalização do driver de impressão",
+          },
+          {
+            titulo: "Fila de tarefas inteligente",
+            descricao: "Tarefas que não podem ser impressas, por exemplo, devido à indisponibilidade do tamanho do papel (cópia, impressão e fax), são ignoradas pelas tarefas subsequentes",
+          },
+          {
+            titulo: "Driver de impressora universal",
+            descricao: "Um único driver para instalar, gerenciar e manter",
+          },
+          {
+            titulo: "Tamanho do papel",
+            descricao: "A3 a A5, tamanhos personalizados",
+          },
+          {
+            titulo: "Modo de economia de tôner",
+            descricao: "Reduz o consumo de tôner para impressões de rascunho",
+          }
+        ]
+      },
+            CÓPIA: {
+        lista: [
+          {
+            titulo: "Remoção de página em branco",
+            descricao: "Exclusão automática de páginas em branco, por exemplo, ao copiar documentos com impressão frente e verso automática"
+          },
+          {
+            titulo: "Nova interface de usuário",
+            descricao: "Interface de usuário leve, simples e moderna, fácil de usar"
+          },
+          {
+            titulo: "Acesso rápido às configurações",
+            descricao: "Com as configurações mais usadas visíveis à primeira vista, selecione-as com um clique, menu suspenso ou menu pop-up"
+          }
+        ]
+      },
+      DIGITALIZAR: {
+        lista: [
+          {
+            titulo: "Anotação de digitalização",
+            descricao: "Carimbo com data/hora, número de arquivo ou texto personalizado em digitalizações para fins de arquivamento"
+          },
+          {
+            titulo: "Pré-visualização da digitalização",
+            descricao: "Fornece uma pré-visualização em tempo real dos originais digitalizados para verificação antes do envio"
+          },
+          {
+            titulo: "Programas de digitalização",
+            descricao: "Pré-configuração do arquivo original, do arquivo de digitalização e do destino para tarefas de digitalização regulares"
+          },
+          {
+            titulo: "Escanear para URL",
+            descricao: "Reduza a carga na rede da empresa enviando um URL simples ao destinatário em vez de um arquivo grande"
+          },
+          {
+            titulo: "Digitalizar para mim/Página inicial",
+            descricao: "Digitalização direta para o próprio endereço de e-mail (Eu) ou pasta SMB (Home) com base nas informações do Active Directory"
+          }
+        ]
+      },
+      SEGURANÇA: {
+        lista: [
+          {
+            titulo: "Direitos de acesso",
+            descricao: "Os direitos de acesso às funções podem ser concedidos em nível de usuário (até 1.000 contas na MFP)"
+          },
+          {
+            titulo: "Autenticação",
+            descricao: "Acesso do usuário por senha, nome de usuário + senha, cartão de identificação ou leitor de veias da impressão digital"
+          },
+          {
+            titulo: "Serviços SEGUROS bizhub",
+            descricao: "Ative os recursos de segurança adequados na MFP para garantir a segurança dos dados corporativos"
+          },
+          {
+            titulo: "Criptografia de dados",
+            descricao: "Criptografia de dados armazenados em disco rígido e proteção por senha para acesso ao disco rígido"
+          },
+          {
+            titulo: "Antivírus integrado (opcional)",
+            descricao: "Mecanismo antivírus Bitdefender que protege contra a propagação de vírus dentro e fora da organização, com monitoramento em tempo real"
+          },
+          {
+            titulo: "Exclusão temporária de dados",
+            descricao: "Dados de trabalhos de cópia, impressão, digitalização e fax são apagados automaticamente após a conclusão do trabalho"
+          },
+          {
+            titulo: "Ferramenta de apagamento de dados",
+            descricao: "Apaga todos os dados do SSD quando o dispositivo chega ao fim de sua vida útil, incluindo o firmware do dispositivo"
+          }
+        ]
+      },
+      ACABAMENTO: {
+        lista: [
+          {
+            titulo: "Opções de acabamento",
+            descricao: "Grampeamento, perfuração, dobra de carta (até 3 folhas)",
+          },
+          {
+            titulo: "Criação de livretos",
+            descricao: "Até 20 folhas (80 páginas) por livreto",
+          },
+        ],
+      },
+      // Adicione as outras abas com suas respectivas listas
+    },
+  },
+  
+  // Modelos antigos mantidos por compatibilidade - podem ser removidos posteriormente
   bizhubC3350i: {
     abas: ["IMPRIMIR", "CÓPIA", "DIGITALIZAR", "CAIXA", "FAX", "ACABAMENTO"],
     dados: {
